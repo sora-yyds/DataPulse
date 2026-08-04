@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sora-yyds/DataPulse/blob/main/docs/evidence/m0/external-environment-profile.schema.v1.json",
+  "title": "DataPulse AI M0 External Environment Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "gateId",
+    "environmentKind",
+    "profileId",
+    "capturedAt",
+    "attributes",
+    "redactionStatement"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./external-environment-profile.schema.v1.json"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "const": "m0-external-environment-profile"
+    },
+    "gateId": {
+      "enum": [
+        "GITHUB-GOVERNANCE",
+        "KDF-DEVICE-MATRIX",
+        "PERFORMANCE-ABSOLUTE",
+        "ALIYUN-IAC",
+        "ALIYUN-TTL"
+      ]
+    },
+    "environmentKind": {
+      "enum": [
+        "github-remote",
+        "reference-device",
+        "representative-mobile-device",
+        "official-alicloud"
+      ]
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]+$"
+    },
+    "capturedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "attributes": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^(?!.*(?:secret|token|password|cookie|authorization|access.?key|device.?id|imei|serial))[a-z0-9][a-z0-9_.-]*$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
+      }
+    },
+    "redactionStatement": {
+      "const": "No credentials, stable device identifiers, user content, or personal data are included."
+    }
+  }
+}

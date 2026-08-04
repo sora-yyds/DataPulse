@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sora-yyds/DataPulse/blob/main/docs/evidence/m0/external-attestation.schema.v1.json",
+  "title": "DataPulse AI M0 External Attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "gateId",
+    "environmentKind",
+    "verificationMethod",
+    "subjectRevision",
+    "subjectPolicySha256",
+    "subjectManifestSha256",
+    "environmentProfileSha256",
+    "executedAt",
+    "executorRef",
+    "runId",
+    "result",
+    "simulation",
+    "assertions"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./external-attestation.schema.v1.json"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "const": "m0-external-attestation"
+    },
+    "gateId": {
+      "enum": [
+        "GITHUB-GOVERNANCE",
+        "KDF-DEVICE-MATRIX",
+        "PERFORMANCE-ABSOLUTE",
+        "ALIYUN-IAC",
+        "ALIYUN-TTL"
+      ]
+    },
+    "environmentKind": {
+      "enum": [
+        "github-remote",
+        "reference-device",
+        "representative-mobile-device",
+        "official-alicloud"
+      ]
+    },
+    "verificationMethod": {
+      "enum": [
+        "github_ruleset_test_pr",
+        "physical_device_matrix",
+        "reference_device_benchmark",
+        "alicloud_iac_apply",
+        "alicloud_ttl_probe"
+      ]
+    },
+    "subjectRevision": {
+      "type": "string",
+      "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+    },
+    "subjectPolicySha256": {
+      "const": "14f771af8e2f64ac0e6a1f6bb80cd9d2477ef9d2c1bee36e04be9ced458dbbdc"
+    },
+    "subjectManifestSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "environmentProfileSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "executedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "executorRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "result": {
+      "const": "passed"
+    },
+    "simulation": {
+      "const": false
+    },
+    "assertions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "executed",
+        "passed",
+        "failed",
+        "skipped"
+      ],
+      "properties": {
+        "executed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "failed": {
+          "const": 0
+        },
+        "skipped": {
+          "const": 0
+        }
+      }
+    }
+  }
+}

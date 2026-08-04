@@ -1,0 +1,1347 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sora-yyds/DataPulse/blob/main/docs/evidence/m0/evidence-index.schema.v1.json",
+  "title": "DataPulse AI M0 Evidence Index",
+  "description": "Machine-readable contract for M0 evidence, requirement progress, gate activation, and environment provenance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "milestone",
+    "updatedAt",
+    "dailyGatePolicy",
+    "exitGatePolicy",
+    "exitGateManifest",
+    "externalSubjectPolicy",
+    "epics",
+    "gateCatalog",
+    "records"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./evidence-index.schema.v1.json"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "milestone": {
+      "const": "M0"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dailyGatePolicy": {
+      "const": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate."
+    },
+    "exitGatePolicy": {
+      "const": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass."
+    },
+    "exitGateManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "const": "docs/evidence/m0/m0-exit-manifest.v1.json"
+        },
+        "sha256": {
+          "const": "cdf959c523c97c59ff5b7ea7dc7e851394231d2f9d30c42d65da55ae10650c0e"
+        }
+      }
+    },
+    "externalSubjectPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "const": "docs/evidence/m0/m0-external-subject-policies.v1.json"
+        },
+        "sha256": {
+          "const": "14f771af8e2f64ac0e6a1f6bb80cd9d2477ef9d2c1bee36e04be9ced458dbbdc"
+        }
+      }
+    },
+    "epics": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "$ref": "#/$defs/epic"
+      }
+    },
+    "gateCatalog": {
+      "type": "array",
+      "minItems": 35,
+      "maxItems": 35,
+      "uniqueItems": true,
+      "prefixItems": [
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "WAVE0-EVIDENCE-CONTRACT"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "WAVE0-OWNERSHIP-REGISTRY"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "WAVE0-TOOLCHAIN-BASELINE"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "REPO-FOUNDATION"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "DEPENDENCY-BOUNDARIES"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "GITHUB-GOVERNANCE"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "RELEASE-DRYRUN"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "FORMAL-STORY-SCHEMA"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "BOUNDED-READER-MIGRATION"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "METRIC-RUNTIME"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "CREATOR-VIEWER-CONTRACT"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "CRYPTO-PRIMITIVES"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "KDF-DEVICE-MATRIX"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "PROJECT-ENVELOPE"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "LOCAL-PROJECT-REPOSITORY"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "PROJECT-ROUNDTRIP"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "IMPORT-ADMISSION"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "LOCAL-ANALYSIS-CONTRACT"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "WORKER-ISOLATION"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "MINIMAL-EVIDENCE-GENERATION"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "RAW-FILE-RESIDENCY"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "PERFORMANCE-RELATIVE"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "PERFORMANCE-ABSOLUTE"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "M0-CORPUS"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "TEST-RUNNERS"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "DETERMINISTIC-UI-A11Y"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "CI-ACTIVATION"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "CREATOR-E2E"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "CLEAN-FORK"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "ORIGIN-POLICY"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "HTTPS-NEGATIVE-MATRIX"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "EPHEMERAL-PORTS"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "COMMUNITY-CLEANUP"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "ALIYUN-IAC"}}
+        },
+        {
+          "type": "object",
+          "$ref": "#/$defs/gateDefinition",
+          "properties": {"id": {"const": "ALIYUN-TTL"}}
+        }
+      ],
+      "items": false
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/evidenceRecord"
+      }
+    }
+  },
+  "$defs": {
+    "taskId": {
+      "type": "string",
+      "pattern": "^M0-[0-9]{3}$"
+    },
+    "requirementId": {
+      "type": "string",
+      "pattern": "^[A-Z]+(?:-[A-Z]+)*-[0-9]{3}$"
+    },
+    "adrId": {
+      "type": "string",
+      "pattern": "^ADR-[0-9]{4}$"
+    },
+    "gateId": {
+      "enum": [
+        "WAVE0-EVIDENCE-CONTRACT",
+        "WAVE0-OWNERSHIP-REGISTRY",
+        "WAVE0-TOOLCHAIN-BASELINE",
+        "REPO-FOUNDATION",
+        "DEPENDENCY-BOUNDARIES",
+        "GITHUB-GOVERNANCE",
+        "RELEASE-DRYRUN",
+        "FORMAL-STORY-SCHEMA",
+        "BOUNDED-READER-MIGRATION",
+        "METRIC-RUNTIME",
+        "CREATOR-VIEWER-CONTRACT",
+        "CRYPTO-PRIMITIVES",
+        "KDF-DEVICE-MATRIX",
+        "PROJECT-ENVELOPE",
+        "LOCAL-PROJECT-REPOSITORY",
+        "PROJECT-ROUNDTRIP",
+        "IMPORT-ADMISSION",
+        "LOCAL-ANALYSIS-CONTRACT",
+        "WORKER-ISOLATION",
+        "MINIMAL-EVIDENCE-GENERATION",
+        "RAW-FILE-RESIDENCY",
+        "PERFORMANCE-RELATIVE",
+        "PERFORMANCE-ABSOLUTE",
+        "M0-CORPUS",
+        "TEST-RUNNERS",
+        "DETERMINISTIC-UI-A11Y",
+        "CI-ACTIVATION",
+        "CREATOR-E2E",
+        "CLEAN-FORK",
+        "ORIGIN-POLICY",
+        "HTTPS-NEGATIVE-MATRIX",
+        "EPHEMERAL-PORTS",
+        "COMMUNITY-CLEANUP",
+        "ALIYUN-IAC",
+        "ALIYUN-TTL"
+      ]
+    },
+    "epic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "taskIds",
+        "requirementIds",
+        "adrIds",
+        "m0ExitRequired"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^M0-E[1-6]$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taskIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/taskId"
+          }
+        },
+        "requirementIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/requirementId"
+          }
+        },
+        "adrIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/adrId"
+          }
+        },
+        "m0ExitRequired": {
+          "const": true
+        }
+      }
+    },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path",
+        "immutable"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "contract",
+            "decision",
+            "report",
+            "test-result",
+            "manual-review",
+            "configuration",
+            "fixture-manifest",
+            "external-record"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "immutable": {
+          "type": "boolean"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "immutable": {
+                "const": true
+              }
+            },
+            "required": [
+              "immutable"
+            ]
+          },
+          "then": {
+            "properties": {
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "sha256"
+            ]
+          }
+        }
+      ]
+    },
+    "fixtureRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "manifestPath",
+        "manifestSha256",
+        "sha256",
+        "generatorVersion"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "manifestPath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "manifestSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "generatorVersion": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "subjectRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "manifestPath",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manifestPath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "hashedFileRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "externalProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "environmentKind",
+        "verificationMethod",
+        "subjectRevision",
+        "subjectPolicySha256",
+        "subjectManifestRef",
+        "executedAt",
+        "executorRef",
+        "runId",
+        "environmentProfileRef",
+        "attestationRef"
+      ],
+      "properties": {
+        "kind": {
+          "const": "external_environment"
+        },
+        "environmentKind": {
+          "enum": [
+            "github-remote",
+            "reference-device",
+            "representative-mobile-device",
+            "official-alicloud"
+          ]
+        },
+        "verificationMethod": {
+          "enum": [
+            "github_ruleset_test_pr",
+            "physical_device_matrix",
+            "reference_device_benchmark",
+            "alicloud_iac_apply",
+            "alicloud_ttl_probe"
+          ]
+        },
+        "subjectRevision": {
+          "type": "string",
+          "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "subjectPolicySha256": {
+          "const": "14f771af8e2f64ac0e6a1f6bb80cd9d2477ef9d2c1bee36e04be9ced458dbbdc"
+        },
+        "subjectManifestRef": {
+          "$ref": "#/$defs/hashedFileRef"
+        },
+        "executedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "executorRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environmentProfileRef": {
+          "$ref": "#/$defs/hashedFileRef"
+        },
+        "attestationRef": {
+          "$ref": "#/$defs/hashedFileRef"
+        }
+      }
+    },
+    "dailyGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eligible",
+        "activated"
+      ],
+      "properties": {
+        "eligible": {
+          "type": "boolean"
+        },
+        "activated": {
+          "type": "boolean"
+        },
+        "checkName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rootScript": {
+          "type": "string",
+          "pattern": "^(?!verify:m0$)[a-z0-9][a-z0-9:-]*$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "activated": {
+                "const": true
+              }
+            },
+            "required": [
+              "activated"
+            ]
+          },
+          "then": {
+            "properties": {
+              "eligible": {
+                "const": true
+              },
+              "checkName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rootScript": {
+                "type": "string",
+                "pattern": "^(?!verify:m0$)[a-z0-9][a-z0-9:-]*$"
+              }
+            },
+            "required": [
+              "checkName",
+              "rootScript"
+            ]
+          }
+        }
+      ]
+    },
+    "gateDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "epicIds",
+        "taskIds",
+        "requirementIds",
+        "governingAdrIds",
+        "coverageKind",
+        "scopeStatement",
+        "environmentKind",
+        "executionKind",
+        "currentEvidenceStatus",
+        "currentRequirementStatus",
+        "dailyGate",
+        "m0ExitRequired",
+        "latestRecordId",
+        "blockerRefs"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/gateId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "epicIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^M0-E[1-6]$"
+          }
+        },
+        "taskIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/taskId"
+          }
+        },
+        "requirementIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/requirementId"
+          }
+        },
+        "governingAdrIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/adrId"
+          }
+        },
+        "coverageKind": {
+          "enum": [
+            "milestone_slice",
+            "full_requirement",
+            "future_requirement"
+          ]
+        },
+        "scopeStatement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environmentKind": {
+          "$ref": "#/$defs/environmentKind"
+        },
+        "executionKind": {
+          "enum": [
+            "automated",
+            "manual_review",
+            "external_environment"
+          ]
+        },
+        "currentEvidenceStatus": {
+          "$ref": "#/$defs/evidenceStatus"
+        },
+        "currentRequirementStatus": {
+          "$ref": "#/$defs/requirementStatus"
+        },
+        "dailyGate": {
+          "$ref": "#/$defs/dailyGate"
+        },
+        "m0ExitRequired": {
+          "const": true
+        },
+        "latestRecordId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-z0-9][a-z0-9-]+$"
+        },
+        "blockerRefs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "currentEvidenceStatus": {
+                "const": "external_blocked"
+              }
+            },
+            "required": [
+              "currentEvidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "blockerRefs": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "currentEvidenceStatus": {
+                "const": "passed"
+              }
+            },
+            "required": [
+              "currentEvidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "latestRecordId": {
+                "type": "string"
+              },
+              "currentRequirementStatus": {
+                "enum": [
+                  "partially_evidenced",
+                  "satisfied"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "executionKind": {
+                "const": "automated"
+              },
+              "currentEvidenceStatus": {
+                "const": "passed"
+              }
+            },
+            "required": [
+              "executionKind",
+              "currentEvidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "dailyGate": {
+                "type": "object",
+                "properties": {
+                  "eligible": {
+                    "const": true
+                  },
+                  "activated": {
+                    "const": true
+                  },
+                  "checkName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rootScript": {
+                    "type": "string",
+                    "pattern": "^(?!verify:m0$)[a-z0-9][a-z0-9:-]*$"
+                  }
+                },
+                "required": [
+                  "eligible",
+                  "activated",
+                  "checkName",
+                  "rootScript"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "executionKind": {
+                "const": "automated"
+              }
+            },
+            "required": [
+              "executionKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "dailyGate": {
+                "type": "object",
+                "properties": {
+                  "eligible": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "dailyGate": {
+                "type": "object",
+                "properties": {
+                  "eligible": {
+                    "const": false
+                  },
+                  "activated": {
+                    "const": false
+                  },
+                  "checkName": false,
+                  "rootScript": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "evidenceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "gateIds",
+        "epicIds",
+        "taskIds",
+        "requirementIds",
+        "adrIds",
+        "evidenceStatus",
+        "requirementStatus",
+        "milestoneScope",
+        "environmentKind",
+        "ownerRef",
+        "recordedAt",
+        "observedAt",
+        "supersedesRecordId",
+        "executionKind",
+        "externalProvenance",
+        "dailyGate",
+        "m0ExitRequired",
+        "fixtureRefs",
+        "subjectRefs",
+        "artifactRefs",
+        "blockerRefs",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gateIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/gateId"
+          }
+        },
+        "epicIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^M0-E[1-6]$"
+          }
+        },
+        "taskIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/taskId"
+          }
+        },
+        "requirementIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/requirementId"
+          }
+        },
+        "adrIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/adrId"
+          }
+        },
+        "evidenceStatus": {
+          "$ref": "#/$defs/evidenceStatus"
+        },
+        "requirementStatus": {
+          "$ref": "#/$defs/requirementStatus"
+        },
+        "milestoneScope": {
+          "const": "M0"
+        },
+        "environmentKind": {
+          "$ref": "#/$defs/environmentKind"
+        },
+        "ownerRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "observedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "supersedesRecordId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-z0-9][a-z0-9-]+$"
+        },
+        "executionKind": {
+          "enum": [
+            "automated",
+            "manual_review",
+            "external_environment"
+          ]
+        },
+        "externalProvenance": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/externalProvenance"
+            }
+          ]
+        },
+        "dailyGate": {
+          "$ref": "#/$defs/dailyGate"
+        },
+        "m0ExitRequired": {
+          "const": true
+        },
+        "fixtureRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fixtureRef"
+          }
+        },
+        "subjectRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subjectRef"
+          }
+        },
+        "artifactRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifactRef"
+          }
+        },
+        "blockerRefs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidenceStatus": {
+                "const": "passed"
+              }
+            },
+            "required": [
+              "evidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requirementStatus": {
+                "enum": [
+                  "partially_evidenced",
+                  "satisfied"
+                ]
+              },
+              "artifactRefs": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "executionKind": {
+                "const": "automated"
+              },
+              "evidenceStatus": {
+                "const": "passed"
+              }
+            },
+            "required": [
+              "executionKind",
+              "evidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "dailyGate": {
+                "type": "object",
+                "properties": {
+                  "eligible": {
+                    "const": true
+                  },
+                  "activated": {
+                    "const": true
+                  },
+                  "checkName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rootScript": {
+                    "type": "string",
+                    "pattern": "^(?!verify:m0$)[a-z0-9][a-z0-9:-]*$"
+                  }
+                },
+                "required": [
+                  "eligible",
+                  "activated",
+                  "checkName",
+                  "rootScript"
+                ]
+              },
+              "artifactRefs": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "test-result"
+                    },
+                    "immutable": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "immutable"
+                  ]
+                },
+                "minContains": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "executionKind": {
+                "const": "external_environment"
+              },
+              "evidenceStatus": {
+                "const": "passed"
+              }
+            },
+            "required": [
+              "executionKind",
+              "evidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "environmentKind": {
+                "enum": [
+                  "github-remote",
+                  "reference-device",
+                  "representative-mobile-device",
+                  "official-alicloud"
+                ]
+              },
+              "subjectRefs": {
+                "type": "array",
+                "minItems": 1
+              },
+              "externalProvenance": {
+                "$ref": "#/$defs/externalProvenance"
+              },
+              "artifactRefs": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "external-record"
+                    },
+                    "immutable": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "immutable"
+                  ]
+                },
+                "minContains": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "executionKind": {
+                "const": "manual_review"
+              },
+              "evidenceStatus": {
+                "const": "passed"
+              }
+            },
+            "required": [
+              "executionKind",
+              "evidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "artifactRefs": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "manual-review"
+                    },
+                    "immutable": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "immutable"
+                  ]
+                },
+                "minContains": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "executionKind": {
+                "enum": [
+                  "automated",
+                  "manual_review"
+                ]
+              }
+            },
+            "required": [
+              "executionKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "externalProvenance": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidenceStatus": {
+                "const": "external_blocked"
+              }
+            },
+            "required": [
+              "evidenceStatus"
+            ]
+          },
+          "then": {
+            "properties": {
+              "blockerRefs": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "executionKind": {
+                "const": "automated"
+              }
+            },
+            "required": [
+              "executionKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "dailyGate": {
+                "type": "object",
+                "properties": {
+                  "eligible": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "dailyGate": {
+                "type": "object",
+                "properties": {
+                  "eligible": {
+                    "const": false
+                  },
+                  "activated": {
+                    "const": false
+                  },
+                  "checkName": false,
+                  "rootScript": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "evidenceStatus": {
+      "enum": [
+        "planned",
+        "in_progress",
+        "passed",
+        "failed",
+        "not_run",
+        "external_blocked"
+      ]
+    },
+    "requirementStatus": {
+      "enum": [
+        "not_started",
+        "partially_evidenced",
+        "satisfied",
+        "not_due"
+      ]
+    },
+    "environmentKind": {
+      "enum": [
+        "documentation",
+        "local-development",
+        "ci",
+        "public-fork",
+        "github-remote",
+        "local-https",
+        "reference-device",
+        "representative-mobile-device",
+        "community-deployment",
+        "official-alicloud"
+      ]
+    }
+  }
+}

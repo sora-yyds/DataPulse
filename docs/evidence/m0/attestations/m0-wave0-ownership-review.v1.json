@@ -1,0 +1,25 @@
+{
+  "$schema": "./manual-review-attestation.schema.v1.json",
+  "schemaVersion": "1.0.0",
+  "kind": "m0-manual-review-attestation",
+  "gateId": "WAVE0-OWNERSHIP-REGISTRY",
+  "recordId": "m0-wave0-ownership-and-resource-registry",
+  "reviewedAt": "2026-08-04T21:34:33+08:00",
+  "reviewerRefs": [
+    "codex-agent:/root"
+  ],
+  "repositoryState": "working_tree_hashes",
+  "subjectArtifacts": [
+    {
+      "path": "docs/governance/m0-ownership-and-resources.md",
+      "sha256": "744147f67494045330547f190646eee9656107c0421a05dcadcc5d27e868b035"
+    }
+  ],
+  "result": "passed",
+  "assertions": {
+    "reviewed": 1,
+    "failed": 0,
+    "unresolvedHighSeverity": 0
+  },
+  "notes": "Wave 0 责任、设备、GitHub、阿里云资源与 FC Node 24 独立阻塞登记已按最终工作树复核。"
+}

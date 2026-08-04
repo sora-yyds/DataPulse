@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sora-yyds/DataPulse/blob/main/docs/evidence/m0/external-subject-manifest.schema.v1.json",
+  "title": "DataPulse AI M0 External Subject Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "policyId",
+    "gateId",
+    "subjectRevision",
+    "artifactDigests",
+    "subjectDigestSha256"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./external-subject-manifest.schema.v1.json"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "const": "m0-external-subject"
+    },
+    "policyId": {
+      "const": "m0-external-subject-policies-v1"
+    },
+    "gateId": {
+      "enum": [
+        "GITHUB-GOVERNANCE",
+        "KDF-DEVICE-MATRIX",
+        "PERFORMANCE-ABSOLUTE",
+        "ALIYUN-IAC",
+        "ALIYUN-TTL"
+      ]
+    },
+    "subjectRevision": {
+      "type": "string",
+      "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+    },
+    "artifactDigests": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "contract",
+              "implementation",
+              "verification"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\#]+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "subjectDigestSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

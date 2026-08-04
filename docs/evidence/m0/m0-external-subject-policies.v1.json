@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.0.0",
+  "policyId": "m0-external-subject-policies-v1",
+  "gatePolicies": {
+    "GITHUB-GOVERNANCE": {
+      "requiredRoles": [
+        {
+          "role": "contract",
+          "minItems": 1,
+          "allowedExactPaths": [
+            "docs/IMPLEMENTATION_PLAN.md",
+            "docs/evidence/m0/m0-exit-manifest.v1.json"
+          ],
+          "allowedPrefixes": [
+            "docs/adr/"
+          ]
+        },
+        {
+          "role": "implementation",
+          "minItems": 1,
+          "allowedExactPaths": [
+            "package.json"
+          ],
+          "allowedPrefixes": [
+            ".github/"
+          ]
+        },
+        {
+          "role": "verification",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            ".github/workflows/",
+            "tests/"
+          ]
+        }
+      ]
+    },
+    "KDF-DEVICE-MATRIX": {
+      "requiredRoles": [
+        {
+          "role": "contract",
+          "minItems": 1,
+          "allowedExactPaths": [
+            "docs/ARCHITECTURE.md",
+            "docs/IMPLEMENTATION_PLAN.md"
+          ],
+          "allowedPrefixes": [
+            "docs/adr/"
+          ]
+        },
+        {
+          "role": "implementation",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "packages/crypto/",
+            "apps/"
+          ]
+        },
+        {
+          "role": "verification",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "packages/crypto/",
+            "apps/",
+            "tests/"
+          ]
+        }
+      ]
+    },
+    "PERFORMANCE-ABSOLUTE": {
+      "requiredRoles": [
+        {
+          "role": "contract",
+          "minItems": 1,
+          "allowedExactPaths": [
+            "docs/PRD.md",
+            "docs/ARCHITECTURE.md",
+            "docs/IMPLEMENTATION_PLAN.md"
+          ],
+          "allowedPrefixes": [
+            "docs/adr/"
+          ]
+        },
+        {
+          "role": "implementation",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "packages/import-engine/",
+            "packages/analysis-engine/",
+            "packages/metric-runtime/",
+            "apps/creator/"
+          ]
+        },
+        {
+          "role": "verification",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "packages/",
+            "apps/creator/",
+            "tests/"
+          ]
+        }
+      ]
+    },
+    "ALIYUN-IAC": {
+      "requiredRoles": [
+        {
+          "role": "contract",
+          "minItems": 1,
+          "allowedExactPaths": [
+            "docs/ARCHITECTURE.md",
+            "docs/IMPLEMENTATION_PLAN.md"
+          ],
+          "allowedPrefixes": [
+            "docs/adr/"
+          ]
+        },
+        {
+          "role": "implementation",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "infra/",
+            "services/",
+            "packages/api-contracts/"
+          ]
+        },
+        {
+          "role": "verification",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "infra/",
+            "services/",
+            "tests/"
+          ]
+        }
+      ]
+    },
+    "ALIYUN-TTL": {
+      "requiredRoles": [
+        {
+          "role": "contract",
+          "minItems": 1,
+          "allowedExactPaths": [
+            "docs/ARCHITECTURE.md",
+            "docs/IMPLEMENTATION_PLAN.md"
+          ],
+          "allowedPrefixes": [
+            "docs/adr/"
+          ]
+        },
+        {
+          "role": "implementation",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "infra/",
+            "services/"
+          ]
+        },
+        {
+          "role": "verification",
+          "minItems": 1,
+          "allowedExactPaths": [],
+          "allowedPrefixes": [
+            "infra/",
+            "services/",
+            "tests/"
+          ]
+        }
+      ]
+    }
+  }
+}

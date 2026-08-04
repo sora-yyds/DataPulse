@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sora-yyds/DataPulse/blob/main/docs/evidence/m0/manual-review-attestation.schema.v1.json",
+  "title": "DataPulse AI M0 Manual Review Attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "gateId",
+    "recordId",
+    "reviewedAt",
+    "reviewerRefs",
+    "repositoryState",
+    "subjectArtifacts",
+    "result",
+    "assertions",
+    "notes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./manual-review-attestation.schema.v1.json"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "const": "m0-manual-review-attestation"
+    },
+    "gateId": {
+      "enum": [
+        "WAVE0-EVIDENCE-CONTRACT",
+        "WAVE0-OWNERSHIP-REGISTRY",
+        "WAVE0-TOOLCHAIN-BASELINE"
+      ]
+    },
+    "recordId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "reviewedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewerRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "repositoryState": {
+      "const": "working_tree_hashes"
+    },
+    "subjectArtifacts": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\#:]+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "result": {
+      "const": "passed"
+    },
+    "assertions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewed",
+        "failed",
+        "unresolvedHighSeverity"
+      ],
+      "properties": {
+        "reviewed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "failed": {
+          "const": 0
+        },
+        "unresolvedHighSeverity": {
+          "const": 0
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}
