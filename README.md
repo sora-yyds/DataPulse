@@ -4,7 +4,7 @@ DataPulse AI 将 Excel 或 CSV 中的结构化业务数据转化为可验证、�
 
 ## 当前状态
 
-项目正在实施 **M0：工程与正确性底座**。Wave 0 已冻结实施口径、证据契约、外部阻塞和工具链决策，M0-004 已建立公开仓库治理基础。M0-005 的 Windows 固定工具链、workspace 与锁文件已经形成阶段证据；干净 Ubuntu 冻结安装仍未运行，M0-005 尚未完成。应用和产品构建命令将在 M0-006 及其后续任务中按依赖顺序落地。
+项目正在实施 **M0：工程与正确性底座**。Wave 0 已冻结实施口径、证据契约、外部阻塞和工具链决策，M0-004 已建立公开仓库治理基础。M0-005 的 Windows 固定工具链与锁文件已经形成阶段证据；M0-006 又建立了 6 个近期 M0 workspace、独立 TypeScript 构建和真实 workspace 契约检查。干净 Ubuntu 与统一人工验证仍延期，因此 M0-005、M0-006 和 `REPO-FOUNDATION` 均未宣告通过。
 
 M0 不是产品 Alpha，不包含完整导入向导、AI 调用、分享、四主题或 3D 成品。当前执行顺序以 [实施计划](docs/IMPLEMENTATION_PLAN.md) 和 [M0 证据索引](docs/evidence/m0/evidence-index.json) 为准。
 
@@ -29,8 +29,9 @@ M0 不是产品 Alpha，不包含完整导入向导、AI 调用、分享、四�
 - 工具链、基础设施候选和外部资源登记；
 - 开源许可证、贡献说明、安全策略和跨平台文本规范。
 - 固定 Node/pnpm/Corepack 版本、pnpm workspace、精确锁文件、Turbo 根自检和严格 TypeScript 基线；首批开发依赖影响见 [M0 workspace 工具依赖评估](docs/engineering/m0-workspace-tool-dependencies.md)。
+- Creator、Viewer、Custom Connector、Domain、API Contracts 与 Share API 的最小构建／exports seam；范围和延期项见 [M0-006 workspace 与构建边界](docs/engineering/m0-workspace-boundaries.md)。
 
-`apps/`、`packages/`、`services/`、`infra/` 和 `tests/` 是架构中的目标边界，只有出现 M0 真实消费者时才会创建，不预先生成业务空包。
+其余 `apps/`、`packages/`、`services/`、`infra/` 和 `tests/` 子目录仍只在出现真实 M0 interface、fixture 或部署入口时创建，不预先生成业务空包。
 
 ## 开始参与
 
@@ -44,10 +45,12 @@ M0 不是产品 Alpha，不包含完整导入向导、AI 调用、分享、四�
 ```powershell
 corepack pnpm install --frozen-lockfile
 corepack pnpm run check:toolchain
+corepack pnpm run build
+corepack pnpm run check:workspace
 node docs/evidence/m0/validate-evidence-index.mjs --self-test
 ```
 
-工具链自检会通过 Turbo 非缓存根任务回读精确版本、锁定元数据、pnpm 生效策略和严格 TypeScript 选项；证据索引命令只验证静态与语义完整性。两者都不是产品测试，当前也尚无 build、lint、单元测试或产品 typecheck 入口。不要使用不匹配的全局 Node/pnpm/Corepack 改写正式锁文件。
+工具链自检会回读精确版本、锁定元数据、pnpm 生效策略和严格 TypeScript 选项；`build` 独立编译当前 6 个 workspace，workspace 契约检查还验证显式 exports、project references、构建产物与消费侧解析。证据索引命令只验证静态与语义完整性。这些入口都不是产品测试，当前仍无 lint、单元测试或完整产品 typecheck。不要使用不匹配的全局 Node/pnpm/Corepack 改写正式锁文件。
 
 ## 安全
 

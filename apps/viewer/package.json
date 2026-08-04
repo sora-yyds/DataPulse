@@ -1,0 +1,13 @@
+{
+  "name": "@datapulse/viewer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "@datapulse/domain": "workspace:*"
+  }
+}

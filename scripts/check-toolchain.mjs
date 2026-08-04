@@ -178,7 +178,12 @@ for (const option of [
 
 equal("根 TypeScript 不产出文件", rootTsconfig.compilerOptions.noEmit, true);
 jsonEqual("根 TypeScript 输入为空", rootTsconfig.files, []);
-jsonEqual("根 TypeScript 引用显式为空", rootTsconfig.references, []);
+record(
+  "根 TypeScript 引用使用显式数组",
+  Array.isArray(rootTsconfig.references),
+  true,
+  Array.isArray(rootTsconfig.references),
+);
 const tsconfigLoadOutput = commandOutput("tsc", ["--showConfig", "--project", "tsconfig.json"]);
 const tsconfigLoaded = !tsconfigLoadOutput.startsWith("ERROR:") && !tsconfigLoadOutput.startsWith("EXIT ");
 record("TypeScript 根配置可加载", tsconfigLoaded, true, tsconfigLoaded);

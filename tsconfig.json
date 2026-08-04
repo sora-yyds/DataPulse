@@ -4,5 +4,12 @@
     "noEmit": true
   },
   "files": [],
-  "references": []
+  "references": [
+    { "path": "./packages/domain" },
+    { "path": "./packages/api-contracts" },
+    { "path": "./apps/creator" },
+    { "path": "./apps/viewer" },
+    { "path": "./apps/custom-connector" },
+    { "path": "./services/share-api" }
+  ]
 }

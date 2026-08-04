@@ -15,6 +15,38 @@ importers:
         specifier: 6.0.3
         version: 6.0.3
 
+  apps/creator:
+    dependencies:
+      '@datapulse/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+
+  apps/custom-connector:
+    dependencies:
+      '@datapulse/api-contracts':
+        specifier: workspace:*
+        version: link:../../packages/api-contracts
+
+  apps/viewer:
+    dependencies:
+      '@datapulse/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+
+  packages/api-contracts:
+    dependencies:
+      '@datapulse/domain':
+        specifier: workspace:*
+        version: link:../domain
+
+  packages/domain: {}
+
+  services/share-api:
+    dependencies:
+      '@datapulse/api-contracts':
+        specifier: workspace:*
+        version: link:../../packages/api-contracts
+
 packages:
 
   '@turbo/darwin-64@2.10.8':

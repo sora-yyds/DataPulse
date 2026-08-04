@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-006-windows-workspace-foundation-v1",
+  "milestone": "M0",
+  "taskId": "M0-006",
+  "gateId": "REPO-FOUNDATION",
+  "observedAt": "2026-08-05T00:49:37+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-clean",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "cleanProjectDirectory": true,
+      "pnpmStoreInitiallyEmpty": true,
+      "registry": "https://registry.npmjs.org/",
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile --store-dir <empty-store> --registry=https://registry.npmjs.org/ --reporter=append-only",
+          "exitCode": 0,
+          "durationMilliseconds": 4204
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "durationMilliseconds": 3998
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "durationMilliseconds": 5265
+        },
+        {
+          "command": "corepack pnpm --filter <workspace-name> exec tsc --build tsconfig.json --force",
+          "runs": [
+            {"workspace": "@datapulse/domain", "exitCode": 0, "durationMilliseconds": 944},
+            {"workspace": "@datapulse/api-contracts", "exitCode": 0, "durationMilliseconds": 1071},
+            {"workspace": "@datapulse/creator", "exitCode": 0, "durationMilliseconds": 1099},
+            {"workspace": "@datapulse/viewer", "exitCode": 0, "durationMilliseconds": 1015},
+            {"workspace": "@datapulse/custom-connector", "exitCode": 0, "durationMilliseconds": 1085},
+            {"workspace": "@datapulse/share-api", "exitCode": 0, "durationMilliseconds": 1098}
+          ]
+        }
+      ],
+      "workspaces": {
+        "required": 6,
+        "discovered": 6,
+        "paths": [
+          "apps/creator",
+          "apps/custom-connector",
+          "apps/viewer",
+          "packages/api-contracts",
+          "packages/domain",
+          "services/share-api"
+        ]
+      },
+      "assertions": {
+        "executed": 253,
+        "passed": 253,
+        "failed": 0,
+        "skipped": 0,
+        "breakdown": {
+          "frozenInstall": 5,
+          "toolchainCheck": 54,
+          "workspaceContract": 188,
+          "independentWorkspaceBuilds": 6
+        }
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "当前 Windows 执行面没有可用 WSL 发行版或容器运行时；按项目所有者确认的阶段口径延期，Windows 或 Git Bash 结果不替代 Ubuntu。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "unified-manual-workspace-review",
+      "status": "not_run",
+      "reason": "跨平台与需要人工确认的操作统一留到后续验证批次；当前自动复核不冒充人工签署。"
+    }
+  ],
+  "scope": {
+    "implemented": "6 个近期 M0 workspace 的独立 TypeScript 构建、显式 package exports、project references、消费侧解析与根契约检查",
+    "notImplemented": "React、Vite、Hono、产品 Schema、UI、HTTP 路由、IaC、fixture、产品测试与后续业务 module",
+    "thirdPartyDependenciesAdded": 0,
+    "runtimeBundleBytes": 0
+  },
+  "subjectArtifacts": [
+    {"path": ".node-version", "sha256": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc"},
+    {"path": ".corepack.env", "sha256": "1b636978a8851f8b977a1f37f01d5de782a8d5be19a52b2b94b1216104812cfa"},
+    {"path": "package.json", "sha256": "aaafc97d7cc7e346e524e479e33834704526b730c7ae1933764125952f341ddb"},
+    {"path": "pnpm-lock.yaml", "sha256": "21156e167defcaec1bbef32403a7fd72916363c958a298e828cf892cc5e7ce83"},
+    {"path": "pnpm-workspace.yaml", "sha256": "279eb7ef40144f788d467d4c0d5f8b43eb874127ceb5276bd1ed56d35dbc9bef"},
+    {"path": "turbo.json", "sha256": "0a0d1261b63da327b704443077360f1e9066d703102200b66ac21f50bfff4ba1"},
+    {"path": "tsconfig.base.json", "sha256": "1d55077b657ee9df30f6764c5efbcf6adb12eddb5455b163b818b6bb37ddd37b"},
+    {"path": "tsconfig.json", "sha256": "dbf826cae2426de912c23aa10dfbd90f0063b73f125b5d743223fdc3fef161a2"},
+    {"path": "scripts/check-toolchain.mjs", "sha256": "7371aa86b78fb24d0250706b7726bc5f0b87de893c50e8be1903662614cb130f"},
+    {"path": "tests/architecture/check-workspace.mjs", "sha256": "d435a21c731e517bbcf4b4d9e444e5da1d4211dc6f949ace1424889da802ecf1"},
+    {"path": "apps/creator/package.json", "sha256": "d7dd1beabc7b50999e4138cfff3bb8e4be63adf621dc38f43d52c824b9b2bee8"},
+    {"path": "apps/creator/tsconfig.json", "sha256": "eb8d1a47910afb44e9a25ec7324b71816a4b75df90341355db2080ed4b06c098"},
+    {"path": "apps/creator/src/main.ts", "sha256": "6af5ab3f9c9edb1cb519b6a510cb24b7896dca719e9016008c77ab5d7c11d62a"},
+    {"path": "apps/viewer/package.json", "sha256": "d5b49356e017af1ca3464baca0ba5dc8b2ad70f57fad5c530cc5a2e33ef2a26f"},
+    {"path": "apps/viewer/tsconfig.json", "sha256": "eb8d1a47910afb44e9a25ec7324b71816a4b75df90341355db2080ed4b06c098"},
+    {"path": "apps/viewer/src/main.ts", "sha256": "6a4d9cddeb7e37fa035664383cd0e0fcf98e6afa147473744ecc429581440d15"},
+    {"path": "apps/custom-connector/package.json", "sha256": "729a7c9c309dc77060f2258dbb706fffd60eb6d17550b87abcacddbfc8a0c3bc"},
+    {"path": "apps/custom-connector/tsconfig.json", "sha256": "b682a116a5b81a400047e27e7a193660f53e12ed9e15b0d6271f8b6be09f8388"},
+    {"path": "apps/custom-connector/src/main.ts", "sha256": "4ee4afbdd799c334120c22c22cad6994583b10966f4195950ba653d3fd988cfe"},
+    {"path": "packages/domain/package.json", "sha256": "e346175193dc72f65363b41bb4bbc4676959829a8b9d3cf50b8c34a88a00c45c"},
+    {"path": "packages/domain/tsconfig.json", "sha256": "d82e5106980fd4aa338b10495397a5919a46792ad63c59d90729f8272624c8f4"},
+    {"path": "packages/domain/src/index.ts", "sha256": "dc43947d292bd761b076c3934e5a144bd5fe7f2af2e7169ae15f36f622e1ee88"},
+    {"path": "packages/api-contracts/package.json", "sha256": "e730a858b227b1221aef5ed7d9b6efcdfcbcbba19bcfb81c53f6d78798f57932"},
+    {"path": "packages/api-contracts/tsconfig.json", "sha256": "4b4630613bd4ad304e383b9bfe2d33edd67f6aaee1c5954f3181a313bc42df28"},
+    {"path": "packages/api-contracts/src/connector-message.ts", "sha256": "803d752a57e836b78b7cffa3491fa8bd46ecde597e283fcffd84a6d53008528c"},
+    {"path": "packages/api-contracts/src/http.ts", "sha256": "c6022cae0bbd2596c8a2701bf44c2812dba823354c6ecf1e8a6e21a59ad9d181"},
+    {"path": "packages/api-contracts/src/origin-policy.ts", "sha256": "6d87e522fb70ab3df9fc1fc5eb1f1ff24c17b888964b37d25c165a3a5621f5f0"},
+    {"path": "services/share-api/package.json", "sha256": "e3fa50d39835d5ce8b183429b01f25dbed9127920eb93d06964ece5701ff3c0d"},
+    {"path": "services/share-api/tsconfig.json", "sha256": "b682a116a5b81a400047e27e7a193660f53e12ed9e15b0d6271f8b6be09f8388"},
+    {"path": "services/share-api/src/main.ts", "sha256": "52ebbf7a760a33a0e93d2f7152c79eb01f1ee2d95482b4f144d56b374d984ee0"},
+    {"path": "infra/README.md", "sha256": "bbd11d9dceb19b19761a02f3c78fe3a7bd12b2983874a5121a7b44e22b3147d3"},
+    {"path": "tests/README.md", "sha256": "f80be707469f749c158956af5c206beab8be3713d62ad3e982c7370741522790"},
+    {"path": "AGENTS.md", "sha256": "fe44794c71107dc911d970a6b3e96823a83a916aba3bb7fdeb733673ddc8f978"},
+    {"path": "README.md", "sha256": "a483f903c531ead20eac6c206da14ef9bc2ce13c13b1f368b73cd338aed0c661"},
+    {"path": "docs/engineering/m0-workspace-boundaries.md", "sha256": "4397c9fb1a47f230be136a94ee5319dd790cdb06a277566a563966fdd1d7251f"}
+  ],
+  "lockfile": {
+    "sha256Before": "21156e167defcaec1bbef32403a7fd72916363c958a298e828cf892cc5e7ce83",
+    "sha256After": "21156e167defcaec1bbef32403a7fd72916363c958a298e828cf892cc5e7ce83",
+    "unchanged": true
+  },
+  "verificationNotes": [
+    "只有 m0-006-windows-final-20260805004917 目录作为本报告证据。",
+    "两个更早的编排试运行分别因 PowerShell 将 Turbo stderr 分类为终止错误、以及统计探针未加入根 node_modules/.bin 而被丢弃；二者未计入断言或通过结果。",
+    "修正后第一次编排试运行因终端回落到 Node 20.20.2 而在安装前被拒绝；该运行未计入断言或通过结果，最终运行显式绑定冻结 Node 24.19.0。"
+  ],
+  "conclusion": "Windows 阶段的冻结安装、工具链、6 workspace 构建、188 项契约断言和逐 workspace 强制构建均通过；Ubuntu 与统一人工验证尚未运行，因此 M0-005、M0-006 与 REPO-FOUNDATION 保持进行中且不激活日常 gate。"
+}
