@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v1.json",
   "schemaVersion": "1.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-04T22:16:47+08:00",
+  "updatedAt": "2026-08-04T23:05:40+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -259,7 +259,7 @@
       "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": false, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v1",
+      "latestRecordId": "m0-wave0-evidence-contract-v2",
       "blockerRefs": []
     },
     {
@@ -313,7 +313,7 @@
       "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-repo-foundation-m0-004-v1",
+      "latestRecordId": "m0-repo-foundation-m0-005-windows-v1",
       "blockerRefs": []
     },
     {
@@ -1197,6 +1197,266 @@
       ],
       "blockerRefs": [],
       "notes": "M0-004 已建立完整 AGPL-3.0-only 许可证、仓库说明、贡献与安全政策、忽略规则和跨平台文本规范。M0-005 workspace 与 M0-006 真实消费者目录尚未完成，因此 REPO-FOUNDATION 保持进行中且未激活。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v2",
+      "title": "M0 证据索引契约与真实根命令复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-04T22:46:35+08:00",
+      "observedAt": "2026-08-04T22:46:35+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v1",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": true,
+          "sha256": "f56b3de06f4509f6ef38573b786bc86f11afa5fbf12104204fac82fd8ab0b80e"
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": true,
+          "sha256": "702c20d917a7c52f0612d727931f454d3929c388f074d8bbfed841a4e0dc3e82"
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": true,
+          "sha256": "7ae8d89577907af1bbaa0e8c27632d1e196d339369d65c14525908504584300e"
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": true,
+          "sha256": "bb15a3659b4d2d5306e0933fc8a07b71b6c8250936f95aa4819a52c7f120ed3f"
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": true,
+          "sha256": "8ced3f368804710bf089ec8de340ff41519b5c8d750fa926ff377f13c887fbb4"
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": true,
+          "sha256": "cdf959c523c97c59ff5b7ea7dc7e851394231d2f9d30c42d65da55ae10650c0e"
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": true,
+          "sha256": "14f771af8e2f64ac0e6a1f6bb80cd9d2477ef9d2c1bee36e04be9ced458dbbdc"
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v2.json",
+          "immutable": true,
+          "sha256": "a200455f628c8c306931f01df66909f5499146fc9ccc3ef8a2fd36d04365afb4"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-005 新增真实根命令后，已重新复核 Wave 0 证据契约与 AGENTS.md 命令口径；冻结 gate、状态语义和 fail-closed 边界未改变。"
+    },
+    {
+      "id": "m0-repo-foundation-m0-005-windows-v1",
+      "title": "M0-005 Windows 冻结工具链与 workspace 验证",
+      "gateIds": [
+        "REPO-FOUNDATION"
+      ],
+      "epicIds": [
+        "M0-E1"
+      ],
+      "taskIds": [
+        "M0-004",
+        "M0-005",
+        "M0-006"
+      ],
+      "requirementIds": [
+        "NFR-REL-001",
+        "NFR-REL-002",
+        "NFR-REL-003",
+        "NFR-REL-004"
+      ],
+      "adrIds": [
+        "ADR-0028",
+        "ADR-0029",
+        "ADR-0030"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-development",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-04T23:05:40+08:00",
+      "observedAt": "2026-08-04T23:04:06+08:00",
+      "supersedesRecordId": "m0-repo-foundation-m0-004-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "LICENSE",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".gitignore",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".gitattributes",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".editorconfig",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "CONTRIBUTING.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "SECURITY.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".node-version",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".corepack.env",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-workspace.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "turbo.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tsconfig.base.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "scripts/check-toolchain.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-tool-dependencies.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-005-windows-frozen-install.v1.json",
+          "immutable": true,
+          "sha256": "d3cd06518726a71b6a9008929cbf88c85006d89875ddfb167eaa4f6492dab29e"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Node 24.19.0、Corepack 0.35.0 与 pnpm 11.20.0 的 Windows 干净目录冻结安装及 54 项工具链断言已通过，并已记录首批开发依赖影响。干净 Ubuntu 尚未运行，M0-005 未闭合；M0-006 也尚未完成，因此 REPO-FOUNDATION 保持进行中且未激活。"
     }
   ]
 }

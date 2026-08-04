@@ -134,13 +134,15 @@
 
 ## 8. 命令
 
-当前仓库尚无 `package.json`、`pnpm-workspace.yaml`、`turbo.json` 或锁文件，因此这里不伪造安装、构建或产品测试命令。Wave 0 已建立一个无第三方运行时依赖的证据索引语义检查：
+当前已建立 M0-005 的固定工具链、pnpm workspace、精确锁文件和一个具有真实断言的 Turbo 根自检；应用、产品构建和测试入口仍未建立，不得推断为可用。所有 pnpm 命令必须使用 Node `24.19.0`、Corepack `0.35.0` 和 `packageManager` 固定的 pnpm `11.20.0`，不匹配环境必须拒绝。
 
 | 运行目录 | 精确命令 | 触发条件 | 通过标准 |
 |---|---|---|---|
+| 仓库根目录 | `corepack pnpm install --frozen-lockfile` | 修改根 `package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`.node-version`、`.corepack.env` 或依赖清单 | 在精确工具链下进程退出 0，锁文件无改写；Windows 本地已形成阶段证据，干净 Ubuntu 仍须单独执行后才能完成 M0-005 |
+| 仓库根目录 | `corepack pnpm run check:toolchain` | 修改固定版本、包管理器配置、锁文件、Turbo、TypeScript 基线或 `scripts/check-toolchain.mjs` | 进程退出 0，JSON 结果 `result=passed`、`executed>=1`、`failed=0`、`skipped=0`，并回读 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8`、TypeScript `6.0.3` |
 | 仓库根目录 | `node docs/evidence/m0/validate-evidence-index.mjs --self-test` | 修改 M0 证据 Schema、退出 manifest、索引、记录引用，或改变 `IMPLEMENTATION_PLAN.md` 的 M0 任务、PRD 需求 ID、ADR 状态／文件 | 进程退出 0，`integrityValid=true`、`selfTestValid=true`、35 个 gate 与 67 个任务完整覆盖；M0 未退出期间 `historicalGateRecordsPassed=false` 是预期状态，不得改写成通过 |
 
-该脚本只验证静态／语义完整性，不运行产品门槛，也不替代锁定版本的 Ajv Schema 校验或未来 `verify:m0` 的新鲜自动 attestation。正式 M0 工程检查必须在已冻结 Node `24.19.0` 环境运行；当前旧本机运行结果不能作为 M0-005 的工具链证据。
+工具链自检只验证 M0-005 的工程基线，不是产品 typecheck 或质量聚合，尚未激活 `REPO-FOUNDATION` 日常 gate。证据脚本只验证静态／语义完整性，不运行产品门槛，也不替代锁定版本的 Ajv Schema 校验或未来 `verify:m0` 的新鲜自动 attestation。干净 Ubuntu 未运行前不得把 M0-005、M0-006 或整个 `REPO-FOUNDATION` 写成通过。
 
 - Agent 必须先从根 `package.json`、锁文件、workspace、Turbo 配置和 GitHub Actions 中发现真实脚本，不得猜测。
 - M0 脚手架必须建立安装、格式/静态检查、类型检查、单元测试、组件/Storybook、端到端、视觉/无障碍、性能、语料、构建和发布矩阵的根级入口或明确占位，并在干净公开 Fork 中运行当前 M0 纵向切片适用的可复现检查。后续里程碑再逐步填充相应矩阵；M4 全量语料和完整发布矩阵不得提前冒充已通过，官方真实供应商/设备认证也不属于 Fork 构建门槛。

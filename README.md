@@ -4,7 +4,7 @@ DataPulse AI 将 Excel 或 CSV 中的结构化业务数据转化为可验证、�
 
 ## 当前状态
 
-项目正在实施 **M0：工程与正确性底座**。Wave 0 已冻结实施口径、证据契约、外部阻塞和工具链决策；仓库治理基础已经建立。应用、workspace、锁文件和产品构建命令将在后续 M0 任务中按依赖顺序落地，当前不得把规划目录或命令视为已经存在。
+项目正在实施 **M0：工程与正确性底座**。Wave 0 已冻结实施口径、证据契约、外部阻塞和工具链决策，M0-004 已建立公开仓库治理基础。M0-005 的 Windows 固定工具链、workspace 与锁文件已经形成阶段证据；干净 Ubuntu 冻结安装仍未运行，M0-005 尚未完成。应用和产品构建命令将在 M0-006 及其后续任务中按依赖顺序落地。
 
 M0 不是产品 Alpha，不包含完整导入向导、AI 调用、分享、四主题或 3D 成品。当前执行顺序以 [实施计划](docs/IMPLEMENTATION_PLAN.md) 和 [M0 证据索引](docs/evidence/m0/evidence-index.json) 为准。
 
@@ -28,6 +28,7 @@ M0 不是产品 Alpha，不包含完整导入向导、AI 调用、分享、四�
 - M0 原子 gate、证据 Schema、退出 manifest 与语义验证器；
 - 工具链、基础设施候选和外部资源登记；
 - 开源许可证、贡献说明、安全策略和跨平台文本规范。
+- 固定 Node/pnpm/Corepack 版本、pnpm workspace、精确锁文件、Turbo 根自检和严格 TypeScript 基线；首批开发依赖影响见 [M0 workspace 工具依赖评估](docs/engineering/m0-workspace-tool-dependencies.md)。
 
 `apps/`、`packages/`、`services/`、`infra/` 和 `tests/` 是架构中的目标边界，只有出现 M0 真实消费者时才会创建，不预先生成业务空包。
 
@@ -38,13 +39,15 @@ M0 不是产品 Alpha，不包含完整导入向导、AI 调用、分享、四�
 3. 遵循 [贡献指南](CONTRIBUTING.md) 创建短期分支并提交可验证的纵向改动。
 4. 当前可运行的仓库检查只以 [AGENTS.md 第 8 节](AGENTS.md#8-命令)列出的精确命令为准。
 
-在 M0-005 建立冻结 workspace 前，本仓库没有安装、构建或产品测试命令。当前唯一真实入口是：
+正式工程工具链固定为 Node `24.19.0`、pnpm `11.20.0` 和 Corepack `0.35.0`。在满足这些精确版本后，当前真实入口是：
 
 ```powershell
+corepack pnpm install --frozen-lockfile
+corepack pnpm run check:toolchain
 node docs/evidence/m0/validate-evidence-index.mjs --self-test
 ```
 
-它只验证 M0 证据索引的静态与语义完整性，不是产品测试。正式 M0 工程工具链固定为 Node `24.19.0`、pnpm `11.20.0` 和 Corepack `0.35.0`；不要使用本机旧 Node 环境生成正式锁文件。
+工具链自检会通过 Turbo 非缓存根任务回读精确版本、锁定元数据、pnpm 生效策略和严格 TypeScript 选项；证据索引命令只验证静态与语义完整性。两者都不是产品测试，当前也尚无 build、lint、单元测试或产品 typecheck 入口。不要使用不匹配的全局 Node/pnpm/Corepack 改写正式锁文件。
 
 ## 安全
 

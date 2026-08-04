@@ -1,0 +1,21 @@
+{
+  "name": "@datapulse/workspace",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "engines": {
+    "node": "24.19.0",
+    "pnpm": "11.20.0",
+    "corepack": "0.35.0"
+  },
+  "packageManager": "pnpm@11.20.0+sha512.9a6f330a95b66446ea088faf1521405a8a01f07fde7124cc9958dfed52d4bb436737e65b08f85f37b46fcba375092558ac51262b816844b22f63406ed166bfee",
+  "scripts": {
+    "check:toolchain": "turbo run check:toolchain:root",
+    "check:toolchain:root": "node ./scripts/check-toolchain.mjs"
+  },
+  "devDependencies": {
+    "turbo": "2.10.8",
+    "typescript": "6.0.3"
+  }
+}

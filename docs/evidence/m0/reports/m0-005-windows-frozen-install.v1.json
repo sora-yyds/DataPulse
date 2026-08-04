@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-005-windows-frozen-install-v1",
+  "milestone": "M0",
+  "taskId": "M0-005",
+  "gateId": "REPO-FOUNDATION",
+  "observedAt": "2026-08-04T23:04:06+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "cleanProjectDirectory": true,
+      "pnpmStoreInitiallyEmpty": true,
+      "registry": "https://registry.npmjs.org/",
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile --store-dir .pnpm-store --registry=https://registry.npmjs.org/ --reporter=append-only",
+          "exitCode": 0,
+          "durationMilliseconds": 15118
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0
+        },
+        {
+          "command": "corepack pnpm exec turbo --version",
+          "exitCode": 0,
+          "stdout": "2.10.8"
+        },
+        {
+          "command": "corepack pnpm exec tsc --version",
+          "exitCode": 0,
+          "stdout": "Version 6.0.3"
+        }
+      ],
+      "assertions": {
+        "executed": 59,
+        "passed": 59,
+        "failed": 0,
+        "skipped": 0,
+        "breakdown": {
+          "frozenInstall": 5,
+          "toolchainCheck": 54
+        }
+      },
+      "installationFootprint": {
+        "nodeModulesLogicalBytes": 74213367,
+        "pnpmStoreLogicalBytes": 74232182,
+        "runtimeBundleBytes": 0,
+        "note": "逻辑文件体积会随平台、路径和硬链接语义变化；两个依赖均为开发工具，M0-005 尚无产品运行时 bundle。"
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "当前执行面没有可用 Ubuntu、WSL 发行版或容器运行时；Windows、Git Bash 或模拟结果不能替代干净 Ubuntu 证据。"
+    }
+  ],
+  "developmentDependencies": [
+    {
+      "name": "turbo",
+      "version": "2.10.8",
+      "purpose": "编排 monorepo 根任务",
+      "runtimeImpact": "不进入浏览器、Worker 或服务运行时 bundle",
+      "license": "MIT",
+      "maintenance": "使用上游官方包并精确固定；升级必须单独审查锁文件、许可证和平台包"
+    },
+    {
+      "name": "typescript",
+      "version": "6.0.3",
+      "purpose": "解析严格 TypeScript 基线并为后续 workspace 提供编译器",
+      "runtimeImpact": "不进入浏览器、Worker 或服务运行时 bundle",
+      "license": "Apache-2.0",
+      "maintenance": "使用与后续 lint peer 范围兼容的稳定版本；升级必须重跑类型和锁文件矩阵"
+    }
+  ],
+  "installationSubjectArtifacts": [
+    {
+      "path": ".node-version",
+      "sha256": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc"
+    },
+    {
+      "path": ".corepack.env",
+      "sha256": "1b636978a8851f8b977a1f37f01d5de782a8d5be19a52b2b94b1216104812cfa"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6b9d653eaf86be345a355ae85dbdd154284ca1551f385aadeec1bd8202f58d95"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "51427ff85fce530886bcbaea67e83479205644dbd6e03e180e003edf4984d072"
+    },
+    {
+      "path": "pnpm-workspace.yaml",
+      "sha256": "279eb7ef40144f788d467d4c0d5f8b43eb874127ceb5276bd1ed56d35dbc9bef"
+    },
+    {
+      "path": "turbo.json",
+      "sha256": "f88ca4496e9f4498cf8d15c2ee0e0be725df2ef7355f219789ce16dadc7d68b6"
+    },
+    {
+      "path": "tsconfig.base.json",
+      "sha256": "1d55077b657ee9df30f6764c5efbcf6adb12eddb5455b163b818b6bb37ddd37b"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "173cc0a94f7c786d5f959bfae52006c8ccdb9ec83ea1a341cbd8f9159c90c99a"
+    },
+    {
+      "path": "scripts/check-toolchain.mjs",
+      "sha256": "2584aba1728c802f0da8bc103ea99e0ea7ffc09ea6e52b2657ce145b0fd7e91e"
+    }
+  ],
+  "documentationArtifacts": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "59be650d82c623b8c48d35ff6e1d8ebea29e1ba9c7e0a81878c8aabf4ae1e96f"
+    },
+    {
+      "path": "README.md",
+      "sha256": "78cf6eb2c08b569c72a3763610ba86e1f1c44198757346bc31dbeee3f320d9dc"
+    },
+    {
+      "path": "docs/engineering/m0-workspace-tool-dependencies.md",
+      "sha256": "cee7bc97126e7fbd3cc32da949731a3bc52b970167bf470f08f056a5d5022017"
+    }
+  ],
+  "lockfile": {
+    "sha256Before": "51427ff85fce530886bcbaea67e83479205644dbd6e03e180e003edf4984d072",
+    "sha256After": "51427ff85fce530886bcbaea67e83479205644dbd6e03e180e003edf4984d072",
+    "unchanged": true
+  },
+  "conclusion": "Windows 阶段验证通过，但干净 Ubuntu 未运行，且 M0-006 尚未完成；M0-005 与 REPO-FOUNDATION 保持进行中，日常 gate 不激活。"
+}
