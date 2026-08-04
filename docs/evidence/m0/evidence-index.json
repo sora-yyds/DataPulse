@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v1.json",
   "schemaVersion": "1.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-04T21:34:33+08:00",
+  "updatedAt": "2026-08-04T22:16:47+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -309,11 +309,11 @@
       "scopeStatement": "AGPL 仓库、冻结 workspace、严格 TypeScript 与真实消费者目录可在干净环境安装。",
       "environmentKind": "local-development",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-repo-foundation-m0-004-v1",
       "blockerRefs": []
     },
     {
@@ -1115,6 +1115,88 @@
       ],
       "blockerRefs": [],
       "notes": "The implementable baseline is frozen. Runtime, Worker, storage, cloud, and device candidates remain planned or externally blocked until their own gates pass."
+    },
+    {
+      "id": "m0-repo-foundation-m0-004-v1",
+      "title": "M0-004 公开仓库治理基础",
+      "gateIds": [
+        "REPO-FOUNDATION"
+      ],
+      "epicIds": [
+        "M0-E1"
+      ],
+      "taskIds": [
+        "M0-004",
+        "M0-005",
+        "M0-006"
+      ],
+      "requirementIds": [
+        "NFR-REL-001",
+        "NFR-REL-002",
+        "NFR-REL-003",
+        "NFR-REL-004"
+      ],
+      "adrIds": [
+        "ADR-0028",
+        "ADR-0029",
+        "ADR-0030"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-development",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-04T22:16:47+08:00",
+      "observedAt": "2026-08-04T22:16:47+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "LICENSE",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".gitignore",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".gitattributes",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".editorconfig",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "CONTRIBUTING.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "SECURITY.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-004 已建立完整 AGPL-3.0-only 许可证、仓库说明、贡献与安全政策、忽略规则和跨平台文本规范。M0-005 workspace 与 M0-006 真实消费者目录尚未完成，因此 REPO-FOUNDATION 保持进行中且未激活。"
     }
   ]
 }

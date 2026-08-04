@@ -1,0 +1,49 @@
+* text=auto eol=lf
+
+# Windows 原生命令文件保留 CRLF；其余脚本固定 LF。
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=lf
+*.sh text eol=lf
+
+# 版本化文本契约固定 LF，确保跨平台 hash 一致。
+*.json text eol=lf
+*.jsonc text eol=lf
+*.md text eol=lf
+*.mjs text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.csv text eol=lf
+*.svg text eol=lf
+*.tsv text eol=lf
+LICENSE text eol=lf
+
+# 二进制夹具与媒体不得进行换行转换。
+*.avif binary
+*.gif binary
+*.ico binary
+*.jpeg binary
+*.jpg binary
+*.pdf binary
+*.png binary
+*.webp binary
+*.otf binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.wasm binary
+*.xls binary
+*.xlsx binary
+*.xlsb binary
+*.xlsm binary
+*.arrow binary
+*.duckdb binary
+*.parquet binary
+*.sqlite binary
+*.sqlite3 binary
+*.7z binary
+*.gz binary
+*.tar binary
+*.zip binary

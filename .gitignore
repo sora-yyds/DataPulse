@@ -1,0 +1,83 @@
+# 依赖与包管理缓存
+node_modules/
+.pnpm-store/
+.pnp.*
+
+# 构建、缓存与类型检查产物
+.turbo/
+.vite/
+.cache/
+.eslintcache
+*.tsbuildinfo
+dist/
+build/
+storybook-static/
+
+# 测试与覆盖率产物
+coverage/
+*.lcov
+.nyc_output/
+playwright-report/
+blob-report/
+test-results/
+
+# 日志、进程与临时文件
+*.log
+*.pid
+*.seed
+*.tmp
+*.temp
+tmp/
+temp/
+
+# 本地环境变量与秘密
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+.certs/
+.secrets/
+
+# OpenTofu / Terraform 本地状态与计划
+**/.terraform/
+**/.tofu/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+!*.tfvars.json.example
+*.backend.hcl
+.terraformrc
+terraform.rc
+.tofurc
+tofu.rc
+
+# 本地部署工具状态
+.serverless/
+.vercel/
+.wrangler/
+
+# 编辑器与操作系统文件
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 打包产物
+*.tgz
