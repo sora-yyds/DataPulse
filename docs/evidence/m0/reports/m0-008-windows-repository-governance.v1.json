@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-008-windows-repository-governance-v1",
+  "milestone": "M0",
+  "taskId": "M0-008",
+  "gateId": "GITHUB-GOVERNANCE",
+  "observedAt": "2026-08-05T10:40:00+08:00",
+  "evidenceStatus": "external_blocked",
+  "result": "local_configuration_passed_external_gate_blocked",
+  "environmentResults": [
+    {
+      "environment": "windows-local-clean",
+      "status": "passed",
+      "command": "corepack pnpm run check:governance",
+      "assertions": {"executed": 81, "passed": 81, "failed": 0, "skipped": 0},
+      "selfTest": {"executed": 7, "passed": 7, "failed": 0, "skipped": 0}
+    },
+    {
+      "environment": "github-remote",
+      "status": "external_blocked",
+      "reason": "protected main、merge queue、squash-only、required check、失败 PR 与直接推送否定验证需要真实仓库 admin 权限和 M0-019／046。"
+    }
+  ],
+  "scope": {
+    "implemented": "Changesets、PR 模板、敏感 CODEOWNERS、固定 40 位 SHA 的 Conventional PR title workflow、最小权限策略和恶意静态自测",
+    "notImplemented": "真实 GitHub ruleset、merge queue、required check 回读和负向 PR 证明"
+  },
+  "conclusion": "本地治理配置与 7 个恶意变体通过，但 GITHUB-GOVERNANCE 仍是 external_blocked，不能由本报告改为 passed。"
+}

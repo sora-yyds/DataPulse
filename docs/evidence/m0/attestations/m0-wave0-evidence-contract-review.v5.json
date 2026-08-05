@@ -1,0 +1,73 @@
+{
+  "$schema": "./manual-review-attestation.schema.v1.json",
+  "schemaVersion": "1.0.0",
+  "kind": "m0-manual-review-attestation",
+  "gateId": "WAVE0-EVIDENCE-CONTRACT",
+  "recordId": "m0-wave0-evidence-contract-v5",
+  "reviewedAt": "2026-08-05T11:35:25+08:00",
+  "reviewerRefs": [
+    "codex-agent:/root"
+  ],
+  "repositoryState": "working_tree_hashes",
+  "subjectArtifacts": [
+    {
+      "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+      "sha256": "f56b3de06f4509f6ef38573b786bc86f11afa5fbf12104204fac82fd8ab0b80e"
+    },
+    {
+      "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+      "sha256": "9e2dc84b4c98022678a4da6af9f211b0ac8fe5dc706fb8d6430e835489d022ab"
+    },
+    {
+      "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+      "sha256": "702c20d917a7c52f0612d727931f454d3929c388f074d8bbfed841a4e0dc3e82"
+    },
+    {
+      "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+      "sha256": "7ae8d89577907af1bbaa0e8c27632d1e196d339369d65c14525908504584300e"
+    },
+    {
+      "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+      "sha256": "bb15a3659b4d2d5306e0933fc8a07b71b6c8250936f95aa4819a52c7f120ed3f"
+    },
+    {
+      "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+      "sha256": "8ced3f368804710bf089ec8de340ff41519b5c8d750fa926ff377f13c887fbb4"
+    },
+    {
+      "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+      "sha256": "cdf959c523c97c59ff5b7ea7dc7e851394231d2f9d30c42d65da55ae10650c0e"
+    },
+    {
+      "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+      "sha256": "14f771af8e2f64ac0e6a1f6bb80cd9d2477ef9d2c1bee36e04be9ced458dbbdc"
+    },
+    {
+      "path": "docs/evidence/m0/validate-evidence-index.mjs",
+      "sha256": "4ed880bddf0ae11b1925fe398658bafff0ba0b013032e5d0d8dc292119f66b78"
+    },
+    {
+      "path": "docs/evidence/m0/README.md",
+      "sha256": "5f0801312b4bee72784ef9545dabaf31c9baf387d7023ab635a9327944233028"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "adcb4af94fd2357d68b0008cbaf1f777e9426a94125d2d17b598004415c0ec00"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PLAN.md",
+      "sha256": "1f219c9dcbe160fbcae35850ae17be68335398cd2d060ec6c3ba6d85d1d280ae"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "sha256": "3f0232d6c3db5233310a1c8d51c2fc5b4641bdb3a0229b8341fec1b69816e97a"
+    }
+  ],
+  "result": "passed",
+  "assertions": {
+    "reviewed": 13,
+    "failed": 0,
+    "unresolvedHighSeverity": 0
+  },
+  "notes": "证据索引升级到 v2 后，已重新核对冻结的 35 个 M0 gate／67 个任务、append-only 历史、结构化子检查身份、唯一根脚本与命令 hash、nonce 新鲜度、独立 PR／M0 聚合语义及外部凭证 fail-closed 边界；未把 Windows 阶段结果冒充 Ubuntu、GitHub、设备或阿里云外部认证。"
+}

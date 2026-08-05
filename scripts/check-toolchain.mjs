@@ -190,7 +190,11 @@ record("TypeScript 根配置可加载", tsconfigLoaded, true, tsconfigLoaded);
 
 const failedAssertions = assertions.filter(({ passed }) => !passed);
 const summary = {
+  schemaVersion: "1.0.0",
+  kind: "datapulse-root-check-summary",
   check: "toolchain",
+  gateId: process.env.DATAPULSE_GATE_ID ?? null,
+  runNonce: process.env.DATAPULSE_RUN_NONCE ?? null,
   result: failedAssertions.length === 0 ? "passed" : "failed",
   platform: process.platform,
   architecture: process.arch,

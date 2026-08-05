@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-014-windows-design-system-v1",
+  "milestone": "M0",
+  "taskId": "M0-014",
+  "gateIds": ["CREATOR-VIEWER-CONTRACT", "DETERMINISTIC-UI-A11Y"],
+  "observedAt": "2026-08-05T10:40:00+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-clean",
+      "status": "passed",
+      "command": "corepack pnpm run check:design",
+      "durationMilliseconds": 2300,
+      "tool": {
+        "package": "@google/design.md",
+        "version": "0.4.0",
+        "command": "designmd --version",
+        "stdout": "0.4.0"
+      },
+      "lint": {"errors": 0, "warnings": 85, "infos": 1},
+      "themes": {"resolved": 4, "semanticRolesPerTheme": 35},
+      "generated": {"path": "packages/themes/src/index.ts", "matched": true},
+      "assertions": {"executed": 313, "passed": 313, "failed": 0, "skipped": 0},
+      "selfTest": {"executed": 5, "passed": 5, "failed": 0, "skipped": 0},
+      "workspaceBuild": {"package": "@datapulse/themes", "status": "passed"}
+    }
+  ],
+  "scope": {
+    "implemented": "DESIGN.md 四主题 4×35 语义角色、精确 warning 基线、designmd 版本验证、零依赖 themes workspace 与确定性类型化映射",
+    "notImplemented": "M0-015 Renderer／两端 fixture、M0-017 manifest、M0-018 浏览器视觉／键盘／焦点／缩放矩阵"
+  },
+  "dependency": {
+    "name": "@google/design.md",
+    "version": "0.4.0",
+    "runtimeBundleBytes": 0,
+    "licenseObservation": "上游 tag 为 Apache-2.0；npm 包缺少 license 元数据，缺口已显式记录。"
+  },
+  "conclusion": "固定 CLI、零 error、85 个逐项审查 warning、4×35 主题完整性、生成物和 5 个恶意样例均通过。后续 Renderer、fixture 与真实无障碍矩阵未完成，因此相关 gate 只能保持进行中／部分取证。"
+}

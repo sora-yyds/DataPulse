@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const REPOSITORY_ROOT = resolve(SCRIPT_DIR, "../../..");
 const INDEX_PATH = join(SCRIPT_DIR, "evidence-index.json");
-const SCHEMA_PATH = join(SCRIPT_DIR, "evidence-index.schema.v1.json");
+const SCHEMA_PATH = join(SCRIPT_DIR, "evidence-index.schema.v2.json");
 const EXIT_MANIFEST_PATH = join(SCRIPT_DIR, "m0-exit-manifest.v1.json");
 const EXTERNAL_SUBJECT_POLICY_PATH = join(
   SCRIPT_DIR,
@@ -595,8 +595,10 @@ function validateIndex(index, schema, manifest, subjectPolicies) {
         gate.dailyGate?.eligible !== true ||
         gate.dailyGate?.activated !== true ||
         !gate.dailyGate?.checkName ||
+        !gate.dailyGate?.summaryCheck ||
         !gate.dailyGate?.rootScript ||
-        gate.dailyGate.rootScript === "verify:m0"
+        !gate.dailyGate?.rootScriptCommandSha256 ||
+        ["verify:pr", "verify:m0"].includes(gate.dailyGate.rootScript)
       ) {
         errors.push(`${gate.id}: passed automated gate is not activated with a safe rootScript`);
       }
@@ -605,8 +607,10 @@ function validateIndex(index, schema, manifest, subjectPolicies) {
       if (
         gate.executionKind !== "automated" ||
         !gate.dailyGate.checkName ||
+        !gate.dailyGate.summaryCheck ||
         !gate.dailyGate.rootScript ||
-        gate.dailyGate.rootScript === "verify:m0"
+        !gate.dailyGate.rootScriptCommandSha256 ||
+        ["verify:pr", "verify:m0"].includes(gate.dailyGate.rootScript)
       ) {
         errors.push(`${gate.id}: activated gate lacks a safe automated rootScript contract`);
       }
@@ -691,8 +695,10 @@ function validateIndex(index, schema, manifest, subjectPolicies) {
         record.dailyGate?.eligible !== true ||
         record.dailyGate?.activated !== true ||
         !record.dailyGate?.checkName ||
+        !record.dailyGate?.summaryCheck ||
         !record.dailyGate?.rootScript ||
-        record.dailyGate.rootScript === "verify:m0"
+        !record.dailyGate?.rootScriptCommandSha256 ||
+        ["verify:pr", "verify:m0"].includes(record.dailyGate.rootScript)
       ) {
         errors.push(`${record.id}: passed automated record is not activated with a safe rootScript`);
       }
@@ -702,6 +708,9 @@ function validateIndex(index, schema, manifest, subjectPolicies) {
       if (gate) validateManualReviewAttestation(errors, record, gate);
     }
     if (record.executionKind === "external_environment" && record.evidenceStatus === "passed") {
+      errors.push(
+        `${record.id}: external trust verification is not implemented; keep the gate external_blocked`,
+      );
       if (!EXTERNAL_ENVIRONMENTS.has(record.environmentKind)) {
         errors.push(`${record.id}: external evidence uses a non-external environment`);
       }
@@ -842,7 +851,14 @@ function validateIndex(index, schema, manifest, subjectPolicies) {
     if (record.requirementStatus !== gate.currentRequirementStatus) {
       errors.push(`${gate.id}: latest record requirementStatus differs from the gate`);
     }
-    for (const field of ["eligible", "activated", "checkName", "rootScript"]) {
+    for (const field of [
+      "eligible",
+      "activated",
+      "checkName",
+      "summaryCheck",
+      "rootScript",
+      "rootScriptCommandSha256",
+    ]) {
       if ((record.dailyGate?.[field] ?? null) !== (gate.dailyGate?.[field] ?? null)) {
         errors.push(`${gate.id}: latest record dailyGate.${field} differs from the gate`);
       }
@@ -919,8 +935,12 @@ function runSelfTest(index, schema, manifest, subjectPolicies) {
       "unactivated passed automated gate",
       "passed automated gate is not activated with a safe rootScript",
       (candidate) => {
-        candidate.gateCatalog.find((gate) => gate.id === "REPO-FOUNDATION").currentEvidenceStatus =
-          "passed";
+        const gate = candidate.gateCatalog.find((item) => item.id === "REPO-FOUNDATION");
+        gate.currentEvidenceStatus = "passed";
+        gate.dailyGate = {
+          eligible: true,
+          activated: false,
+        };
       },
     ],
     [
@@ -965,7 +985,7 @@ function runSelfTest(index, schema, manifest, subjectPolicies) {
     ],
     [
       "external attestation with locally forged content",
-      "subject manifest has an unknown contract version",
+      "external trust verification is not implemented",
       (candidate) => {
         const gate = candidate.gateCatalog.find((item) => item.id === "GITHUB-GOVERNANCE");
         const fileHash = sha256(INDEX_PATH);

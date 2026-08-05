@@ -28,6 +28,14 @@ const requiredWorkspaces = [
     },
   },
   {
+    kind: "package",
+    path: "packages/themes",
+    name: "@datapulse/themes",
+    dependencies: {},
+    references: [],
+    entries: { ".": "index" },
+  },
+  {
     kind: "app",
     path: "apps/creator",
     name: "@datapulse/creator",
@@ -39,8 +47,8 @@ const requiredWorkspaces = [
     kind: "app",
     path: "apps/viewer",
     name: "@datapulse/viewer",
-    dependencies: { "@datapulse/domain": "workspace:*" },
-    references: ["../../packages/domain"],
+    dependencies: {},
+    references: [],
     entries: { main: "main" },
   },
   {
@@ -64,6 +72,7 @@ const requiredWorkspaces = [
 const rootReferences = [
   "./packages/domain",
   "./packages/api-contracts",
+  "./packages/themes",
   "./apps/creator",
   "./apps/viewer",
   "./apps/custom-connector",
@@ -282,7 +291,6 @@ for (const workspace of requiredWorkspaces) {
 
 await validateResolution("packages/api-contracts", "@datapulse/domain", "packages/domain");
 await validateResolution("apps/creator", "@datapulse/domain", "packages/domain");
-await validateResolution("apps/viewer", "@datapulse/domain", "packages/domain");
 await validateResolution(
   "apps/custom-connector",
   "@datapulse/api-contracts/connector-message",
@@ -298,7 +306,11 @@ await validateDeniedResolution("apps/custom-connector", "@datapulse/api-contract
 
 const failedAssertions = assertions.filter(({ passed }) => !passed);
 const summary = {
+  schemaVersion: "1.0.0",
+  kind: "datapulse-root-check-summary",
   check: "workspace-foundation",
+  gateId: process.env.DATAPULSE_GATE_ID ?? null,
+  runNonce: process.env.DATAPULSE_RUN_NONCE ?? null,
   result: failedAssertions.length === 0 ? "passed" : "failed",
   platform: process.platform,
   architecture: process.arch,

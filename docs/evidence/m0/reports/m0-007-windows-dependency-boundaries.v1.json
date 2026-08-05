@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-007-windows-dependency-boundaries-v1",
+  "milestone": "M0",
+  "taskId": "M0-007",
+  "gateId": "DEPENDENCY-BOUNDARIES",
+  "observedAt": "2026-08-05T10:40:00+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-clean",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "sourceState": "working-tree copy without Git metadata, ignored files, generated build output or package-lock.json",
+      "cleanProjectDirectory": true,
+      "pnpmStoreInitiallyEmpty": true,
+      "registry": "https://registry.npmjs.org/",
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile --store-dir <empty-store> --registry=https://registry.npmjs.org/ --reporter=append-only",
+          "exitCode": 0,
+          "durationMilliseconds": 5300
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0,
+          "durationMilliseconds": 8600
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "durationMilliseconds": 4200
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "durationMilliseconds": 5300
+        }
+      ],
+      "dependencyBoundaryResult": {
+        "policyWorkspaces": 23,
+        "instantiatedWorkspaces": 7,
+        "graphNodes": 7,
+        "graphEdges": 4,
+        "cycles": 0,
+        "sourceFiles": 9,
+        "moduleSpecifiers": 0,
+        "assertions": {"executed": 529, "passed": 529, "failed": 0, "skipped": 0},
+        "selfTest": {
+          "executed": 162,
+          "passed": 162,
+          "failed": 0,
+          "skipped": 0,
+          "realCliNegativeExitVerified": true
+        }
+      },
+      "supportingChecks": {
+        "toolchain": {"executed": 54, "passed": 54, "failed": 0, "skipped": 0},
+        "workspaceContract": {"executed": 213, "passed": 213, "failed": 0, "skipped": 0},
+        "workspaceBuilds": {"executed": 7, "passed": 7, "failed": 0, "skipped": 0}
+      },
+      "lockfile": {
+        "sha256Before": "e37f50f811b92e11b0165b9a7710fa9b2208cf9ed8092ae73eef2879063b4a18",
+        "sha256After": "e37f50f811b92e11b0165b9a7710fa9b2208cf9ed8092ae73eef2879063b4a18",
+        "unchanged": true
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 结果不替代 Ubuntu 的大小写、路径和 symlink 行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地聚合结果不冒充 CI。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "m0-010-domain-id-and-error-code-integration",
+      "status": "not_started",
+      "reason": "DEPENDENCY-BOUNDARIES 同时覆盖 M0-010，因此本 gate 不能标为 passed。"
+    }
+  ],
+  "scope": {
+    "implemented": "完整 23-workspace 方向策略、当前 7-workspace 图、manifest／references／源码／exports、pnpm 图改写、scope realpath 与动态代码旁路的 fail-closed 检查",
+    "notImplemented": "M0-010 领域 ID／错误码、GitHub Actions required check、Ubuntu 与完整人工签署",
+    "thirdPartyDependenciesAdded": 0,
+    "runtimeBundleBytes": 0
+  },
+  "conclusion": "Windows 干净目录冻结安装、529 项真实仓库断言、162 项恶意 fixture 自测、4 条实际依赖边与 0 个循环均通过。Ubuntu、GitHub Actions、人工验证和 M0-010 尚未完成，因此 gate 保持进行中、部分取证；日常激活只禁止当前断言退化。"
+}

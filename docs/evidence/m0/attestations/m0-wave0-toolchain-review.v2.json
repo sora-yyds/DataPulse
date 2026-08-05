@@ -1,0 +1,29 @@
+{
+  "$schema": "./manual-review-attestation.schema.v1.json",
+  "schemaVersion": "1.0.0",
+  "kind": "m0-manual-review-attestation",
+  "gateId": "WAVE0-TOOLCHAIN-BASELINE",
+  "recordId": "m0-wave0-toolchain-and-infrastructure-baseline-v2",
+  "reviewedAt": "2026-08-05T11:35:25+08:00",
+  "reviewerRefs": [
+    "codex-agent:/root"
+  ],
+  "repositoryState": "working_tree_hashes",
+  "subjectArtifacts": [
+    {
+      "path": "docs/engineering/m0-toolchain-baseline.md",
+      "sha256": "d3ba0f1b03cb1be02a61ab57f36c03ed2ae78672d280e02eb694952811d768de"
+    },
+    {
+      "path": "docs/research/m0-toolchain-and-infrastructure-baseline.md",
+      "sha256": "58e9a500bcda69bf389c60cb66e82e2afcd1497efb1d3a457bd3504749591d08"
+    }
+  ],
+  "result": "passed",
+  "assertions": {
+    "reviewed": 2,
+    "failed": 0,
+    "unresolvedHighSeverity": 0
+  },
+  "notes": "固定 Node、Corepack 与 pnpm 环境完成回读，证据索引 v2 的结构化摘要身份与根命令 hash 绑定同步进入工程基线后，已按最终工作树重新复核工具链、Schema、IaC 与社区对象存储候选决策；Ubuntu、官方阿里云运行时和真实外部环境仍保留各自阻塞。"
+}

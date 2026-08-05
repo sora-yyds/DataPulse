@@ -1,0 +1,28 @@
+# 当前只有一名候选维护者；这些规则标记敏感路径，但不能冒充非作者复核。
+* @sora-yyds
+
+# 产品、领域、架构与决策事实源
+/docs/adr/ @sora-yyds
+/docs/PRD.md @sora-yyds
+/docs/ARCHITECTURE.md @sora-yyds
+/CONTEXT.md @sora-yyds
+
+# Schema、迁移、密码学、本地数据与证据边界
+/packages/story-schema/ @sora-yyds
+/packages/story-migrations/ @sora-yyds
+/packages/crypto/ @sora-yyds
+/packages/package-codec/ @sora-yyds
+/packages/local-storage/ @sora-yyds
+/packages/evidence/ @sora-yyds
+
+# 分享、隐私、Origin、服务与部署边界
+/services/share-api/ @sora-yyds
+/services/telemetry-ingest/ @sora-yyds
+/apps/custom-connector/ @sora-yyds
+/infra/ @sora-yyds
+/services/ @sora-yyds
+
+# 仓库治理、Agent 与设计基线
+/.github/ @sora-yyds
+/AGENTS.md @sora-yyds
+/DESIGN.md @sora-yyds

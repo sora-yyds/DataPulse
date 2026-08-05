@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-009-windows-quality-aggregators-v1",
+  "milestone": "M0",
+  "taskId": "M0-009",
+  "gateId": "CI-ACTIVATION",
+  "observedAt": "2026-08-05T11:50:22+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0"
+      },
+      "commands": [
+        {
+          "command": "node docs/evidence/m0/validate-evidence-index.mjs --self-test",
+          "exitCode": 0,
+          "assertions": {
+            "epics": 6,
+            "gates": 35,
+            "records": 15,
+            "requiredTasks": 67,
+            "coveredTasks": 67,
+            "activeDailyGates": 4,
+            "integrityValid": true,
+            "selfTestValid": true
+          }
+        },
+        {
+          "command": "corepack pnpm run check:evidence",
+          "exitCode": 0,
+          "assertions": {"executed": 53, "passed": 53, "failed": 0, "skipped": 0}
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "assertions": {"executed": 21, "passed": 21, "failed": 0, "skipped": 0}
+        },
+        {
+          "command": "corepack pnpm run verify:pr",
+          "exitCode": 0,
+          "runNonce": "fe17271de778e1969e6192d2e37cdea16552d68872fe3c0bef7639df63856afd",
+          "startedAt": "2026-08-05T03:50:10.091Z",
+          "completedAt": "2026-08-05T03:50:22.608Z",
+          "assertions": {"executed": 5, "passed": 5, "failed": 0, "skipped": 0},
+          "activatedGateResults": [
+            {
+              "gateId": "REPO-FOUNDATION",
+              "summaryCheck": "repository-foundation",
+              "rootScript": "check:foundation",
+              "assertions": {"executed": 3, "passed": 3, "failed": 0, "skipped": 0}
+            },
+            {
+              "gateId": "DEPENDENCY-BOUNDARIES",
+              "summaryCheck": "dependency-boundaries",
+              "rootScript": "check:dependencies",
+              "assertions": {"executed": 531, "passed": 531, "failed": 0, "skipped": 0}
+            },
+            {
+              "gateId": "DETERMINISTIC-UI-A11Y",
+              "summaryCheck": "design-system",
+              "rootScript": "check:design",
+              "assertions": {"executed": 313, "passed": 313, "failed": 0, "skipped": 0}
+            },
+            {
+              "gateId": "CI-ACTIVATION",
+              "summaryCheck": "m0-quality-aggregators",
+              "rootScript": "check:aggregators",
+              "assertions": {"executed": 21, "passed": 21, "failed": 0, "skipped": 0}
+            }
+          ]
+        }
+      ],
+      "securityProperties": {
+        "uniqueActivatedRootScripts": true,
+        "uniqueActivatedSummaryChecks": true,
+        "evidenceBootstrapCommandHashVerified": true,
+        "rootCommandHashesVerified": true,
+        "childGateIdentityVerified": true,
+        "freshRunNonceVerified": true,
+        "repositoryLocalRunnerOwnershipVerified": true,
+        "shellExecutionDisabled": true,
+        "fullHeadShaMergeBaseRejected": true,
+        "externalPassedEvidenceRejectedUntilTrustVerificationExists": true
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "当前 Windows 结果不替代 Ubuntu 的路径、权限、大小写和 Git merge-base 行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 的 required checks、merge queue 与可信平台回读尚未完成；本地 verify:pr 不冒充远端 CI。"
+    }
+  ],
+  "scope": {
+    "implemented": "证据索引驱动的 4 个日常 gate 激活、独立 evidence bootstrap、根命令与摘要身份绑定、每次运行 nonce、新鲜临时 attestation、PR 聚合器和 fail-closed M0 退出聚合器",
+    "notImplemented": "GitHub Actions required checks／merge queue、可信外部 attestation 回读、Ubuntu 执行、剩余 M0 gate 与 M0-019／045"
+  },
+  "conclusion": "本地 Windows 工作树的证据合同、聚合器恶意自测与首次 verify:pr 全部通过。CI-ACTIVATION 仍保持进行中、部分取证；本报告只固化当前可重复的本地断言，不能替代 GitHub、Ubuntu 或完整 M0 退出证明。"
+}

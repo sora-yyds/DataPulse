@@ -1,8 +1,8 @@
 {
-  "$schema": "./evidence-index.schema.v1.json",
-  "schemaVersion": "1.0.0",
+  "$schema": "./evidence-index.schema.v2.json",
+  "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-05T00:53:46+08:00",
+  "updatedAt": "2026-08-05T11:50:22+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -259,7 +259,7 @@
       "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": false, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v3",
+      "latestRecordId": "m0-wave0-evidence-contract-v5",
       "blockerRefs": []
     },
     {
@@ -295,7 +295,7 @@
       "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": false, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-toolchain-and-infrastructure-baseline",
+      "latestRecordId": "m0-wave0-toolchain-and-infrastructure-baseline-v2",
       "blockerRefs": []
     },
     {
@@ -311,9 +311,9 @@
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / repository-foundation", "summaryCheck": "repository-foundation", "rootScript": "check:foundation", "rootScriptCommandSha256": "236deb3ec304da239ebe851de8cdf3ea07743e3f602eab80cfc9006c1b79fcec"},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-repo-foundation-m0-006-windows-v1",
+      "latestRecordId": "m0-repo-foundation-pr-c-windows-v2",
       "blockerRefs": []
     },
     {
@@ -327,11 +327,11 @@
       "scopeStatement": "目标包方向、循环和 Creator/Viewer/Connector/服务越界引用以稳定错误阻断。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
+      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / dependency-boundaries", "summaryCheck": "dependency-boundaries", "rootScript": "check:dependencies", "rootScriptCommandSha256": "bdfe99482628147f8923057a47850dbedb7d1810f74e43c82d9f1b1f25dd45c2"},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-dependency-boundaries-m0-007-windows-v1",
       "blockerRefs": []
     },
     {
@@ -435,11 +435,11 @@
       "scopeStatement": "两端只以正式 fixture/hash 对齐并共享纯求值/渲染契约，不跨 Origin 读取存储。",
       "environmentKind": "local-https",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-creator-viewer-contract-m0-014-windows-v1",
       "blockerRefs": []
     },
     {
@@ -705,11 +705,11 @@
       "scopeStatement": "固定语言、时区、字体、浏览器、视口、种子和弱动效的视觉/键盘/焦点/缩放冒烟。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
+      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / deterministic-ui-a11y", "summaryCheck": "design-system", "rootScript": "check:design", "rootScriptCommandSha256": "7e1ed57c9580f3f4af42984199e218deb843212ab8c316b035f407e56811a350"},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-deterministic-ui-a11y-m0-014-windows-v1",
       "blockerRefs": []
     },
     {
@@ -723,11 +723,11 @@
       "scopeStatement": "日常 active gate 与独立 verify:m0 分离，禁止降级、漏登和假绿色。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
+      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / quality-aggregators", "summaryCheck": "m0-quality-aggregators", "rootScript": "check:aggregators", "rootScriptCommandSha256": "a94b1bd0a39db3246230d218b9fa265c8c9b85ea9a0004d13214ec8036be1fcb"},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-ci-activation-m0-009-windows-v1",
       "blockerRefs": []
     },
     {
@@ -1775,6 +1775,577 @@
       ],
       "blockerRefs": [],
       "notes": "M0-006 新增真实 build 与 check:workspace 根命令后，已重新复核 Wave 0 证据契约、冻结 gate、延期验证和 AGENTS.md 命令口径；fail-closed 边界未改变。"
+    },
+    {
+      "id": "m0-repo-foundation-pr-c-windows-v2",
+      "title": "PR-C Windows 仓库基础与日常检查激活",
+      "gateIds": [
+        "REPO-FOUNDATION"
+      ],
+      "epicIds": [
+        "M0-E1"
+      ],
+      "taskIds": [
+        "M0-004",
+        "M0-005",
+        "M0-006"
+      ],
+      "requirementIds": [
+        "NFR-REL-001",
+        "NFR-REL-002",
+        "NFR-REL-003",
+        "NFR-REL-004"
+      ],
+      "adrIds": [
+        "ADR-0028",
+        "ADR-0029",
+        "ADR-0030"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-development",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T10:47:00+08:00",
+      "observedAt": "2026-08-05T10:40:00+08:00",
+      "supersedesRecordId": "m0-repo-foundation-m0-006-windows-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / repository-foundation",
+        "summaryCheck": "repository-foundation",
+        "rootScript": "check:foundation",
+        "rootScriptCommandSha256": "236deb3ec304da239ebe851de8cdf3ea07743e3f602eab80cfc9006c1b79fcec"
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/governance/check-repository-governance.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-006-windows-workspace-foundation.v2.json",
+          "immutable": true,
+          "sha256": "820c662e523aa20d271be9c9b07021e66d5e4a5427680ac46ba71015251646c6"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows 干净副本中的冻结安装、工具链、7 workspace 构建、workspace 契约、仓库治理与基础聚合检查已通过，因此激活只覆盖这些真实断言的日常 gate。Ubuntu、GitHub 远端、完整 M0 脚手架与人工签署仍未完成，REPO-FOUNDATION 保持进行中和部分取证。"
+    },
+    {
+      "id": "m0-dependency-boundaries-m0-007-windows-v1",
+      "title": "M0-007 Windows 依赖方向与循环边界验证",
+      "gateIds": [
+        "DEPENDENCY-BOUNDARIES"
+      ],
+      "epicIds": [
+        "M0-E1"
+      ],
+      "taskIds": [
+        "M0-007",
+        "M0-010"
+      ],
+      "requirementIds": [
+        "NFR-REL-001"
+      ],
+      "adrIds": [
+        "ADR-0029",
+        "ADR-0030",
+        "ADR-0035"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T10:47:00+08:00",
+      "observedAt": "2026-08-05T10:40:00+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / dependency-boundaries",
+        "summaryCheck": "dependency-boundaries",
+        "rootScript": "check:dependencies",
+        "rootScriptCommandSha256": "bdfe99482628147f8923057a47850dbedb7d1810f74e43c82d9f1b1f25dd45c2"
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "tests/architecture/dependency-boundaries.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-dependencies.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-dependency-boundaries.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-007-windows-dependency-boundaries.v1.json",
+          "immutable": true,
+          "sha256": "4295bab7f142d637642ae124a4ce9e0a3a31d0a38e47ef5e8724b88218067bc7"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows 干净副本已验证当前 7 workspace 图、完整阶段方向策略、循环、manifest、exports、realpath 与动态代码旁路的 fail-closed 断言，并据此激活日常退化检查。Ubuntu、GitHub Actions、人工签署及 M0-010 尚未完成，因此本 gate 不能标为 passed。"
+    },
+    {
+      "id": "m0-creator-viewer-contract-m0-014-windows-v1",
+      "title": "M0-014 Creator 与 Viewer 共享主题契约阶段证据",
+      "gateIds": [
+        "CREATOR-VIEWER-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E2",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-014",
+        "M0-015",
+        "M0-067"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-004",
+        "FR-MET-009",
+        "SEC-008"
+      ],
+      "adrIds": [
+        "ADR-0002",
+        "ADR-0030",
+        "ADR-0036"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-https",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T10:47:00+08:00",
+      "observedAt": "2026-08-05T10:40:00+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "DESIGN.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/themes/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/themes/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-014-windows-design-system.v1.json",
+          "immutable": true,
+          "sha256": "9479b678d81418323579e5c07918b69b76389a6b38083a4a2c19e0c7d1fabab7"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-014 已建立可由 Creator 与 Viewer 后续共同消费的确定性四主题 Token 契约，但 Renderer、正式 fixture/hash、纯 metric-runtime 和独立 Origin 验证尚未建立；因此只记录部分证据，不激活 CREATOR-VIEWER-CONTRACT 日常 gate。"
+    },
+    {
+      "id": "m0-deterministic-ui-a11y-m0-014-windows-v1",
+      "title": "M0-014 Design lint 与确定性主题基线",
+      "gateIds": [
+        "DETERMINISTIC-UI-A11Y"
+      ],
+      "epicIds": [
+        "M0-E2",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-014",
+        "M0-017",
+        "M0-018"
+      ],
+      "requirementIds": [
+        "NFR-QA-003",
+        "NFR-QA-004"
+      ],
+      "adrIds": [
+        "ADR-0013",
+        "ADR-0039"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T10:47:00+08:00",
+      "observedAt": "2026-08-05T10:40:00+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / deterministic-ui-a11y",
+        "summaryCheck": "design-system",
+        "rootScript": "check:design",
+        "rootScriptCommandSha256": "7e1ed57c9580f3f4af42984199e218deb843212ab8c316b035f407e56811a350"
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "DESIGN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-design.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tests/design/design-warning-baseline.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-design-system.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-014-windows-design-system.v1.json",
+          "immutable": true,
+          "sha256": "9479b678d81418323579e5c07918b69b76389a6b38083a4a2c19e0c7d1fabab7"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "已激活的日常检查只覆盖固定 designmd 版本、精确 warning 基线、4×35 Token 完整性、确定性生成物和恶意输入自测；它不代表 Storybook、真实浏览器视觉、键盘、焦点、缩放或 WCAG 矩阵已经通过。M0-017/M0-018 未完成，gate 保持进行中。"
+    },
+    {
+      "id": "m0-ci-activation-m0-009-windows-v1",
+      "title": "M0-009 日常 gate 与独立 M0 退出聚合器阶段证据",
+      "gateIds": [
+        "CI-ACTIVATION"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-009",
+        "M0-019",
+        "M0-045"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002",
+        "NFR-QA-005",
+        "NFR-REL-005",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T10:47:00+08:00",
+      "observedAt": "2026-08-05T10:47:00+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / quality-aggregators",
+        "summaryCheck": "m0-quality-aggregators",
+        "rootScript": "check:aggregators",
+        "rootScriptCommandSha256": "a94b1bd0a39db3246230d218b9fa265c8c9b85ea9a0004d13214ec8036be1fcb"
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "scripts/check-aggregators.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/m0-gates.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-m0-evidence.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-foundation.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/verify.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-quality-aggregators.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-009-windows-quality-aggregators.v1.json",
+          "immutable": true,
+          "sha256": "73d5fb0de5c2b6526ee1c0aa52aa29f29fb5506c31e85df68b9df0c5adfbd691"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "本地实现已将 evidence index 作为唯一日常激活注册表，以独立 check:evidence 启动检查和 check:aggregators 聚合器自测分离 verify:pr 与必须覆盖全部 35 gate 的 verify:m0。当前只激活有真实断言、固定摘要身份和命令 hash 的根脚本；GitHub Actions required check、merge queue、新鲜 CI attestation 与全部 M0 gate 仍未完成，因此 CI-ACTIVATION 保持进行中。"
+    },
+    {
+      "id": "m0-wave0-toolchain-and-infrastructure-baseline-v2",
+      "title": "M0 工具链、Schema 与基础设施基线复核 v2",
+      "gateIds": [
+        "WAVE0-TOOLCHAIN-BASELINE"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E3",
+        "M0-E4",
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-003"
+      ],
+      "requirementIds": [
+        "NFR-REL-001",
+        "NFR-SCHEMA-001",
+        "NFR-SCHEMA-002"
+      ],
+      "adrIds": [
+        "ADR-0028",
+        "ADR-0029",
+        "ADR-0034",
+        "ADR-0038"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T11:35:25+08:00",
+      "observedAt": "2026-08-05T11:35:25+08:00",
+      "supersedesRecordId": "m0-wave0-toolchain-and-infrastructure-baseline",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "decision",
+          "path": "docs/engineering/m0-toolchain-baseline.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/research/m0-toolchain-and-infrastructure-baseline.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-toolchain-review.v2.json",
+          "immutable": true,
+          "sha256": "7bf3eb4864fd73b49c8076084dd8803eb1159f64db4985378b9e6878965bf8cd"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "固定工具链环境完成回读、证据索引合同升级到 v2 后，已按最终工作树重新复核 Wave 0 工具链、Schema、IaC 与社区对象存储候选决策。Windows 本地环境匹配不替代 Ubuntu、官方阿里云运行时或其他外部 gate。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v5",
+      "title": "M0 证据索引 v2 与质量聚合契约复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T11:35:25+08:00",
+      "observedAt": "2026-08-05T11:35:25+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v3",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v5.json",
+          "immutable": true,
+          "sha256": "102a9353c9b243608d70ae75c1404f0db4f9cfd7c95397e5dba0f6fad30aa584"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "证据索引 v2、append-only 历史、已激活 gate 的根命令／摘要身份／nonce 绑定、独立 PR 与 M0 聚合语义以及外部凭证 fail-closed 边界已按最终工作树复核；未把阶段性 Windows 结果扩张为 Ubuntu、GitHub、设备或阿里云认证。"
     }
   ]
 }

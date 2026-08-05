@@ -7,6 +7,7 @@
   "references": [
     { "path": "./packages/domain" },
     { "path": "./packages/api-contracts" },
+    { "path": "./packages/themes" },
     { "path": "./apps/creator" },
     { "path": "./apps/viewer" },
     { "path": "./apps/custom-connector" },

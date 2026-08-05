@@ -153,7 +153,7 @@ components:
 
 - front matter 必须由单独一行、内容恰为 `---` 的起止分隔符包围。
 - 当前规范版本是 `alpha`；schema 把 `version` 与 `description` 明确标成 optional。
-- Color 使用带 `#` 的 sRGB 十六进制；Dimension 是带 `px`、`em` 或 `rem` 的数值。
+- Google CLI `0.4.0` 接受十六进制、命名色、`rgb()`／`hsl()`／`hwb()`、Lab／OKLab／LCH／OKLCH 和受限 `color-mix(in srgb, ...)` 等有效 CSS 色值，并转换到 sRGB 做对比度检查；DataPulse 当前仍以 `#RRGGBB` 作为最简单、最可审计的手写格式。Dimension 是带 `px`、`em` 或 `rem` 的数值。[D2][D6]
 - Typography 是复合对象，可含 `fontFamily`、`fontSize`、`fontWeight`、`lineHeight`、`letterSpacing`、`fontFeature`、`fontVariation`；无单位 `lineHeight` 是官方推荐。
 - token reference 使用 `{path.to.token}`；一般 token 组应引用 primitive，`components` 内允许引用 Typography 等复合值。
 - 组件 state/variant 作为独立 component entry，例如 `button-primary-hover`，不嵌套为 state object。
@@ -215,10 +215,10 @@ getdesign 官方文章还建议或展示：
 - 文末记录 Responsive Behavior 与 Known Gaps。
 - 文件随品牌演进而更新、版本化、经 PR 讨论，像代码一样维护。[G2]
 
-这些属于 getdesign 的方法论。尤其需要注意：getdesign 文章称 YAML/prose component coverage 可由 linter 检查，但 Google 当前公开的 8 条 lint rule 中没有“一一覆盖”规则；Google 对未知 component property 的当前文档也有“规范页接受并 warning”与“linter broken-ref 将未知属性列入 error”的表述差异。[D2][D5][G2] 因此：
+这些属于 getdesign 的方法论。尤其需要注意：getdesign 文章称 YAML/prose component coverage 可由 linter 检查，但 Google CLI `0.4.0` 的默认规则中没有“一一覆盖”规则；未知 component property 归入 `broken-ref`，但该分支会把严重度降为 warning。[D2][D5][D6][G2] 因此：
 
 - DataPulse 可以把 YAML/正文组件一一对应设为项目检查项，但不要称为 Google CLI 当前保证的规则。
-- 项目实现前应以实际安装版本运行合成样例，确认未知 component property 的真实严重级别；在此之前只使用 Google 已列出的标准 component property，额外元数据放入自定义正文或独立 token 组。
+- DataPulse 已以实际 `0.4.0` 验证 `borderColor` 等未知 component property 为 warning；这些 warning 必须进入逐项审查基线，不能因为退出码仍为 0 而静默忽略。额外机器元数据使用自定义顶层扩展时，还要由项目检查器验证，因为 Google export 会忽略未知 token map。
 
 ### 2.6 推荐用于 DataPulse 的完整章节
 
@@ -276,18 +276,18 @@ getdesign 官方文章还建议或展示：
 1. **唯一手写源**：根 `DESIGN.md` 是品牌视觉、界面语言和可视化设计的 canonical source；YAML token 是精确值，正文是语义与理由。
 2. **派生物只生成**：Tailwind theme、W3C `tokens.json`、CSS custom properties、图表主题和预览清单从 `DESIGN.md` 生成或同步，不作为可独立手改的第二事实源。Google CLI 官方支持 Tailwind 与 DTCG 导出。[D4]
 3. **同一变更同步**：新增/改变颜色、字体、间距、形状、公共组件或图表视觉编码时，在同一 PR 更新 YAML、相应正文、组件预览/视觉回归基线。
-4. **自动校验**：至少运行 `npx @google/design.md lint DESIGN.md`。官方 CLI 会解析 YAML、解析 token 引用、检查 8 条规则并在 error 时以退出码 1 结束。[D4][D5]
+4. **自动校验**：项目精确固定 `@google/design.md@0.4.0` 并通过 `designmd` bin 运行 lint；Windows 上不调用同名 `design.md` bin，因为它会与仓库根 `DESIGN.md` 文件路径冲突。官方 CLI 会解析 YAML、解析 token 引用、运行默认规则并在 error 时以退出码 1 结束；DataPulse 另以 warning 基线和主题完整性检查收紧退出语义。[D4][D5][D6]
 5. **评审差异**：重大品牌变更用 `npx @google/design.md diff DESIGN-before.md DESIGN.md` 查看 token 增删改与 warning/error regression。命令由 Google 官方提供；临时 before 文件如何取得由项目工作流决定。[D4]
 6. **项目级门槛**：Google CLI 的 contrast warning 只检查组件 `backgroundColor`/`textColor` 对且阈值为 4.5:1；它不覆盖整套图表可访问性。DataPulse 应另外测试图表 palette、focus、非文本对比度、键盘和 reduced motion。[D5]
 7. **alpha 复核**：front matter 明示 `version: alpha`，升级 Google spec 或 CLI 前复核 schema、规则和导出结果，不假定 alpha 永久稳定。[D2][D4]
 8. **所有权与变更记录**：为 `DESIGN.md` 指定评审所有者，并要求品牌/核心视觉更改说明 rationale 与迁移影响。这是项目治理建议，不是 Google 或 getdesign 的强制机制；getdesign 仅明确倡导版本化、PR 与持续演进。[G2]
 9. **定期去漂移**：版本发布前抽样核对 Creator、Viewer、分享页、KPI 卡和代表性图表是否仍符合 `DESIGN.md`，并把无法覆盖的事实写进 Known Gaps。
 
-### 2.8 Google CLI 当前公开的 8 条规则
+### 2.8 Google CLI 0.4.0 的 11 个默认规则描述符
 
 | 规则 | 严重度 | 检查内容 |
 |---|---|---|
-| `broken-ref` | error | token reference 无法解析；lint 页面还将未知 component sub-token 列入此规则 |
+| `broken-ref` | error / warning | token reference 无法解析为 error；未知 component sub-token 使用 warning 覆盖 |
 | `missing-primary` | warning | 已有 colors 但没有 `primary` |
 | `contrast-ratio` | warning | component 背景/文本低于 WCAG AA 4.5:1 |
 | `orphaned-tokens` | warning | 已定义但没有任何 component 引用的 color token |
@@ -295,8 +295,11 @@ getdesign 官方文章还建议或展示：
 | `section-order` | warning | 规范章节顺序错误 |
 | `missing-sections` | info | spacing 或 rounded 等可选 token section 缺失 |
 | `token-summary` | info | 各 token 组数量摘要 |
+| `unknown-key` | warning | 未知顶层 key 与标准 key 编辑距离很近时提示可能拼写错误；无关扩展 key 保留 |
+| `token-like-ignored` | warning | 未知顶层 key 看起来像 Token map、但会被 export 静默忽略时警告 |
+| `omitted-rules` | info / warning | 合法省略为 info；未知或与已定义 Token 冲突的省略为 warning |
 
-来源：[Google Stitch Linting rules][D5]。
+来源：[Google Stitch Linting rules][D5] 与固定版本 `0.4.0` 的默认规则注册表和实现 [D6]。公开说明页与实际固定包若再次分叉，以升级前的源码、合成样例和基线复核为准，不能静默改变门槛。
 
 ## 三、明确要求、官方建议与项目建议的边界
 
@@ -336,6 +339,7 @@ getdesign 官方文章还建议或展示：
 - **[D3]** [Google Stitch：View, edit, and export](https://stitch.withgoogle.com/docs/design-md/usage/) — token/正文同步编辑、可移植导出和外部工作流。
 - **[D4]** [Google Stitch：Validate with the CLI](https://stitch.withgoogle.com/docs/design-md/cli/) — `@google/design.md` 的 lint、diff、Tailwind/DTCG 导出、退出码和程序化 API。
 - **[D5]** [Google Stitch：Linting rules](https://stitch.withgoogle.com/docs/design-md/linting-rules/) — 8 条当前公开规则及严重度。
+- **[D6]** [Google design.md CLI `0.4.0` 固定源码](https://github.com/google-labs-code/design.md/tree/0.4.0/packages/cli/src/linter) — 实际 parser、model、默认 11 个规则描述符、未知扩展保留与严重度覆盖。
 - **[G1]** [getdesign.md 官方站点](https://getdesign.md/) — DESIGN.md 作为可复用设计参考、品牌分析免责声明和目录入口。
 - **[G2]** [getdesign.md：What is DESIGN.md? 原始 Markdown](https://getdesign.md/what-is-design-md.md) — token/rule/rationale、具体度、9 段编辑性讲解、维护和免责声明。
 - **[G3]** [VoltAgent/awesome-design-md README（getdesign 第一方仓库，固定提交）](https://github.com/VoltAgent/awesome-design-md/blob/8147538b4226ae41e2487a9179e3bcc1f68e8554/README.md) — Google 规范链接、extended sections、使用方法和版权边界。
@@ -355,6 +359,7 @@ getdesign 官方文章还建议或展示：
 [D3]: https://stitch.withgoogle.com/docs/design-md/usage/
 [D4]: https://stitch.withgoogle.com/docs/design-md/cli/
 [D5]: https://stitch.withgoogle.com/docs/design-md/linting-rules/
+[D6]: https://github.com/google-labs-code/design.md/tree/0.4.0/packages/cli/src/linter
 [G1]: https://getdesign.md/
 [G2]: https://getdesign.md/what-is-design-md.md
 [G3]: https://github.com/VoltAgent/awesome-design-md/blob/8147538b4226ae41e2487a9179e3bcc1f68e8554/README.md

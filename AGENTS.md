@@ -134,17 +134,26 @@
 
 ## 8. 命令
 
-当前已建立 M0-005 固定工具链，以及 M0-006 的 6 个最小 workspace、独立 TypeScript 构建和真实 workspace 契约检查；React/Vite/Hono、业务 Schema、产品 UI 与产品测试仍未建立，不得由工程构建通过推断为可用。所有 pnpm 命令必须使用 Node `24.19.0`、Corepack `0.35.0` 和 `packageManager` 固定的 pnpm `11.20.0`，不匹配环境必须拒绝。
+当前已建立 M0-005 固定工具链、M0-006 的最小 workspace／独立 TypeScript 构建／workspace 契约、M0-007 依赖边界、M0-008 本地治理配置、M0-009 两类聚合器，以及 M0-014 主题 Token／Design lint；当前共 7 个 workspace。React/Vite/Hono、业务 Schema、产品 UI 与产品测试仍未建立，不得由工程检查通过推断为可用。所有 pnpm 命令必须使用 Node `24.19.0`、Corepack `0.35.0` 和 `packageManager` 固定的 pnpm `11.20.0`，不匹配环境必须拒绝。
 
 | 运行目录 | 精确命令 | 触发条件 | 通过标准 |
 |---|---|---|---|
 | 仓库根目录 | `corepack pnpm install --frozen-lockfile` | 修改根 `package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`.node-version`、`.corepack.env` 或依赖清单 | 在精确工具链下进程退出 0，锁文件无改写；Windows 本地已形成阶段证据，干净 Ubuntu 仍须单独执行后才能完成 M0-005 |
 | 仓库根目录 | `corepack pnpm run check:toolchain` | 修改固定版本、包管理器配置、锁文件、Turbo、TypeScript 基线或 `scripts/check-toolchain.mjs` | 进程退出 0，JSON 结果 `result=passed`、`executed>=1`、`failed=0`、`skipped=0`，并回读 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8`、TypeScript `6.0.3` |
-| 仓库根目录 | `corepack pnpm run build` | 修改任一 workspace 的源码、`package.json`、TypeScript reference、根 `tsconfig.json` 或 Turbo build 任务 | 进程退出 0，当前 6 个 workspace 均执行各自 `tsc --build`，产出独立 `dist` JavaScript、声明文件和 source map；这不是产品 bundle |
+| 仓库根目录 | `corepack pnpm run build` | 修改任一 workspace 的源码、`package.json`、TypeScript reference、根 `tsconfig.json` 或 Turbo build 任务 | 进程退出 0，当前 7 个 workspace 均执行各自 `tsc --build`，产出独立 `dist` JavaScript、声明文件和 source map；这不是产品 bundle |
 | 仓库根目录 | `corepack pnpm run check:workspace` | 修改 workspace 目录、包名、依赖、exports、入口、构建配置、`tests/architecture/check-workspace.mjs` 或延期目录范围 | 先完成真实 Turbo build，再输出 `check=workspace-foundation`、`result=passed`、`executed>=1`、`failed=0`、`skipped=0`；验证必需 workspace、显式 exports、project references、产物与消费侧解析 |
+| 仓库根目录 | `corepack pnpm run check:dependencies` | 修改任一 workspace manifest、TypeScript reference、`src` import/re-export/dynamic import、package exports、完整方向策略或 `tests/architecture/check-dependencies.mjs` | 进程退出 0，输出 `check=dependency-boundaries`、`result=passed`、`executed>=1`、`failed=0`、`skipped=0`、`cycles=0`、`selfTest.result=passed`；反向引用、循环、未声明／深导入和 Viewer／Connector／service 越界必须非零 |
+| 仓库根目录 | `corepack pnpm run check:governance` | 修改 `.changeset/`、`.github/`、`CONTRIBUTING.md`、治理策略或治理 checker | 进程退出 0，输出 `check=repository-governance`、`result=passed`、真实断言和恶意 self-test 均 `failed=0`、`skipped=0`；这不替代真实 GitHub ruleset／失败 PR 证据 |
+| 仓库根目录 | `corepack pnpm run check:design` | 修改 `DESIGN.md`、主题包、Design warning 基线、固定 CLI 或设计 checker | 进程退出 0，实际 `designmd --version=0.4.0`，Design lint 为 `0 errors / 85 reviewed warnings / 1 info`，四主题各 35 个角色、生成物匹配，主断言和 self-test 均无失败／跳过 |
+| 仓库根目录 | `corepack pnpm run check:evidence` | 修改证据五类 Schema／实例、索引、根脚本 registry、聚合器、记录链或 merge-base 规则 | 进程退出 0；Ajv 合同／实例、既有语义自测、activation registry、相对 merge base 只追加规则和恶意 attestation 自测全部通过 |
+| 仓库根目录 | `corepack pnpm run check:aggregators` | 修改日常／退出聚合器、激活命令语法、结构化摘要身份、nonce／gate 绑定或 M0 fail-closed 语义 | 进程退出 0；拒绝零 gate、脚本别名／递归、重复 rootScript／summary check、内联伪摘要、旧 nonce、错误 gate/check 与字符串计数，并确认 M0 未完成时退出条件仍不满足 |
+| 仓库根目录 | `corepack pnpm run check:foundation` | 修改工具链、workspace、治理基础或 `REPO-FOUNDATION` 根脚本 | 固定运行工具链根断言、`check:workspace`、`check:governance`，并要求每项返回非空结构化断言；输出 `check=repository-foundation`、`result=passed`、`executed>=1`、`failed=0`、`skipped=0` |
+| 仓库根目录 | `corepack pnpm run verify:pr` | 提交前，以及修改 activation registry、任一已激活根脚本或日常 check 名 | 先以独立 `check:evidence` 完成可信启动，再只按索引中的已激活根脚本键无 shell 重跑；每个单一 `.mjs` runner 必须回显本次 gate、summary check 与 256 位 nonce，每项生成并回读 attestation，全部 `executed>=1`、`passed=executed`、`failed=0`、`skipped=0` 时退出 0 |
+| 仓库根目录 | `corepack pnpm run verify:m0` | M0 退出候选，或修改退出／freshness 语义 | 当前必须非零并列出未完成 gate；只有冻结 35 gate 全部 passed、唯一链尾一致、已激活自动 gate 本次新鲜重跑且外部 provenance 有效时才能退出 0 |
+| 仓库根目录 | `corepack pnpm changeset` | 面向用户的功能、修复、兼容性或可观察行为变化 | 交互式生成非空 `.changeset/*.md`，选择真实受影响 workspace 与 SemVer 级别；纯内部／治理变更在 PR 模板中说明不适用理由 |
 | 仓库根目录 | `node docs/evidence/m0/validate-evidence-index.mjs --self-test` | 修改 M0 证据 Schema、退出 manifest、索引、记录引用，或改变 `IMPLEMENTATION_PLAN.md` 的 M0 任务、PRD 需求 ID、ADR 状态／文件 | 进程退出 0，`integrityValid=true`、`selfTestValid=true`、35 个 gate 与 67 个任务完整覆盖；M0 未退出期间 `historicalGateRecordsPassed=false` 是预期状态，不得改写成通过 |
 
-工具链和 workspace 自检只验证 M0-005／006 的工程基线，不是产品 typecheck 或质量聚合，尚未激活 `REPO-FOUNDATION` 日常 gate。证据脚本只验证静态／语义完整性，不运行产品门槛，也不替代锁定版本的 Ajv Schema 校验或未来 `verify:m0` 的新鲜自动 attestation。干净 Ubuntu 与统一人工验证未运行前不得把 M0-005、M0-006 或整个 `REPO-FOUNDATION` 写成通过。
+`REPO-FOUNDATION`、`DEPENDENCY-BOUNDARIES`、`DETERMINISTIC-UI-A11Y` 与 `CI-ACTIVATION` 已以真实断言进入日常 activation registry，但都仍是 `in_progress / partially_evidenced`；激活不等于 gate 或任务完成。Windows 本地结果不能替代 Ubuntu、GitHub Actions、真实 ruleset、完整人工签署、视觉／无障碍浏览器矩阵或 M0-010。`GITHUB-GOVERNANCE` 继续保持外部阻塞，`verify:m0` 的当前失败是正确结果。不得把 M0-005～009、M0-014 或对应 gate 写成完成。
 
 - Agent 必须先从根 `package.json`、锁文件、workspace、Turbo 配置和 GitHub Actions 中发现真实脚本，不得猜测。
 - M0 脚手架必须建立安装、格式/静态检查、类型检查、单元测试、组件/Storybook、端到端、视觉/无障碍、性能、语料、构建和发布矩阵的根级入口或明确占位，并在干净公开 Fork 中运行当前 M0 纵向切片适用的可复现检查。后续里程碑再逐步填充相应矩阵；M4 全量语料和完整发布矩阵不得提前冒充已通过，官方真实供应商/设备认证也不属于 Fork 构建门槛。

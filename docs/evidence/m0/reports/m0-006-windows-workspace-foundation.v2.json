@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-006-windows-workspace-foundation-v2",
+  "milestone": "M0",
+  "taskIds": ["M0-005", "M0-006", "M0-008", "M0-014"],
+  "gateId": "REPO-FOUNDATION",
+  "observedAt": "2026-08-05T10:40:00+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-clean",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "sourceState": "working-tree copy without Git metadata, ignored files, generated build output or package-lock.json",
+      "cleanProjectDirectory": true,
+      "pnpmStoreInitiallyEmpty": true,
+      "registry": "https://registry.npmjs.org/",
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile --store-dir <empty-store> --registry=https://registry.npmjs.org/ --reporter=append-only",
+          "exitCode": 0,
+          "durationMilliseconds": 5300
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "durationMilliseconds": 4200,
+          "assertions": {"executed": 54, "passed": 54, "failed": 0, "skipped": 0}
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "durationMilliseconds": 5300,
+          "assertions": {"executed": 213, "passed": 213, "failed": 0, "skipped": 0}
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "durationMilliseconds": 1800,
+          "assertions": {"executed": 81, "passed": 81, "failed": 0, "skipped": 0},
+          "selfTest": {"executed": 7, "passed": 7, "failed": 0, "skipped": 0}
+        },
+        {
+          "command": "corepack pnpm run check:foundation",
+          "exitCode": 0,
+          "durationMilliseconds": 5600,
+          "assertions": {"executed": 3, "passed": 3, "failed": 0, "skipped": 0}
+        }
+      ],
+      "workspaces": {
+        "required": 7,
+        "discovered": 7,
+        "paths": [
+          "apps/creator",
+          "apps/custom-connector",
+          "apps/viewer",
+          "packages/api-contracts",
+          "packages/domain",
+          "packages/themes",
+          "services/share-api"
+        ]
+      },
+      "lockfile": {
+        "sha256Before": "e37f50f811b92e11b0165b9a7710fa9b2208cf9ed8092ae73eef2879063b4a18",
+        "sha256After": "e37f50f811b92e11b0165b9a7710fa9b2208cf9ed8092ae73eef2879063b4a18",
+        "unchanged": true
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "当前 Windows 执行面没有可用 WSL 发行版或容器运行时；Windows 结果不替代 Ubuntu。"
+    }
+  ],
+  "scope": {
+    "implemented": "7 个近期 workspace 的独立 TypeScript 构建、显式 exports、project references、消费侧解析和本地治理基础",
+    "notImplemented": "React、Vite、Hono、产品 Schema、UI、HTTP 路由、产品测试、GitHub ruleset 与 Ubuntu 证明"
+  },
+  "conclusion": "Windows 干净目录冻结安装、54 项工具链断言、7 workspace 构建、213 项 workspace 契约、81 项治理断言及 7 项治理恶意自测均通过。Ubuntu、GitHub 远端与统一人工验证尚未完成，因此 REPO-FOUNDATION 保持进行中、部分取证；日常激活只约束当前真实断言。"
+}

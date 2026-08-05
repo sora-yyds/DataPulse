@@ -24,7 +24,8 @@ feat(schema): 增加故事蓝图有界读取器
 补充合法、超限和恶意输入测试，失败时保留原始副本。
 ```
 
-- 面向用户的变更在 M0-008 建立 Changesets 后必须附 Changeset；工具尚未落地前不要伪造命令或占位文件。
+- 面向用户的变更必须附 Changeset；从仓库根运行 `corepack pnpm changeset`，选择真正受影响的 workspace 和 SemVer 级别，并提交生成的 `.changeset/*.md`。纯内部变更可以不添加，但必须在 PR 模板中说明理由；禁止用空 Changeset 绕过评审。
+- PR 标题使用同一 Conventional Commit 结构，例如 `feat(schema): 增加有界读取器`；GitHub 会在标题创建、编辑和更新时执行固定版本的语义检查。
 - 不重写他人的提交，不执行破坏性 Git 操作，不把真实秘密或用户数据写入历史。
 
 ## 修改原则
