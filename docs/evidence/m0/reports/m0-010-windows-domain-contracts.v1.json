@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-010-windows-domain-contracts-v1",
+  "milestone": "M0",
+  "taskId": "M0-010",
+  "gateId": "DEPENDENCY-BOUNDARIES",
+  "observedAt": "2026-08-05T13:44:36+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪文件排除在任务与证据范围外。",
+      "cleanProjectDirectory": false,
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm --filter @datapulse/domain run build",
+          "exitCode": 0
+        },
+        {
+          "command": "node packages/domain/tests/domain-contract.mjs",
+          "exitCode": 0
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0
+        }
+      ],
+      "buildResult": {
+        "package": "@datapulse/domain",
+        "executed": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "domainContractResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        },
+        "coverage": [
+          "公开领域 ID 前缀、长度、格式及 FieldId／JudgmentRuleId／NarrativeRuleId 独立身份",
+          "opaque brand 的类型合同与跨 kind 隔离",
+          "严格 core version 解析、注册、排序、重复、未知版本及 Proxy／iterator 恶意数组拒绝",
+          "稳定错误码键、封闭 details 与不回显输入",
+          "Result 成功／失败形态的类型互斥与协议 kind 隔离",
+          "错误码、ID／版本限制、成功值、错误值与注册表的冻结状态"
+        ]
+      },
+      "dependencyBoundaryResult": {
+        "result": "passed",
+        "cycles": 0,
+        "assertions": {
+          "executed": 693,
+          "passed": 693,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "result": "passed",
+          "executed": 164,
+          "passed": 164,
+          "failed": 0,
+          "skipped": 0
+        },
+        "domainContract": {
+          "result": "passed",
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代 Ubuntu 的大小写、路径、symlink 与冻结安装行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地聚合结果不冒充 CI。"
+    },
+    {
+      "environment": "manual-boundary-review",
+      "status": "not_run",
+      "reason": "完整依赖 allowlist 与 M0-010 公共合同仍需后续统一人工复核。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "ubuntu-domain-and-dependency-contract",
+      "status": "not_run",
+      "reason": "需在固定工具链与冻结 pnpm 锁文件下重跑相同构建、domain 合同和依赖检查。"
+    },
+    {
+      "validation": "github-actions-required-check",
+      "status": "not_run",
+      "reason": "需由后续 M0-019／046 的真实 workflow、ruleset 与否定 PR 证据闭合。"
+    },
+    {
+      "validation": "manual-domain-and-dependency-signoff",
+      "status": "not_run",
+      "reason": "需统一人工复核当前公开领域 seam、依赖 allowlist 与架构映射。"
+    }
+  ],
+  "scope": {
+    "implemented": "前缀化 opaque 领域 ID（含 Field／Judgment／Narrative 独立身份）、严格版本注册、稳定安全错误、类型互斥且隔离协议 kind 的 Result DTO，以及 check:dependencies 对固定 Node／TypeScript 构建产物和 domain 合同的 fail-closed 集成",
+    "notImplemented": "干净 Ubuntu、真实 GitHub Actions required check 与完整人工签署",
+    "thirdPartyDependenciesAdded": 0,
+    "productBundleProduced": false
+  },
+  "conclusion": "Windows 本地工作树中的 @datapulse/domain 定向构建、60/60 domain 合同断言和 693/693 依赖边界断言均通过，循环为 0，恶意 fixture 自测为 164/164。合同覆盖新增 FieldId／JudgmentRuleId、Result 类型互斥、协议 kind 隔离、brand 类型边界及 Proxy／iterator 恶意数组。Ubuntu、GitHub Actions 与完整人工复核未运行，因此 DEPENDENCY-BOUNDARIES 保持 in_progress / partially_evidenced，本报告总体为 partial。"
+}

@@ -12,12 +12,30 @@ import {
 import { tmpdir } from "node:os";
 import { dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { analyzeDependencyBoundaries } from "./dependency-boundaries.mjs";
 
 const defaultRepositoryRoot = fileURLToPath(new URL("../../", import.meta.url));
 const checkScriptPath = fileURLToPath(import.meta.url);
+const pinnedNodeVersion = "v24.19.0";
+const pinnedTypeScriptVersion = "6.0.3";
+const domainTypeScriptCliPath = resolve(
+  defaultRepositoryRoot,
+  "node_modules/typescript/bin/tsc",
+);
+const domainTypeScriptManifestPath = resolve(
+  defaultRepositoryRoot,
+  "node_modules/typescript/package.json",
+);
+const domainTypeScriptProjectPath = resolve(
+  defaultRepositoryRoot,
+  "packages/domain/tsconfig.json",
+);
+const domainContractPath = resolve(
+  defaultRepositoryRoot,
+  "packages/domain/tests/domain-contract.mjs",
+);
 const canonicalPnpmWorkspaceConfiguration = [
   "packages:",
   '  - "apps/*"',
@@ -32,6 +50,202 @@ const canonicalPnpmWorkspaceConfiguration = [
   "sharedWorkspaceLockfile: true",
   "",
 ].join("\n");
+
+function domainContractFailure(code, message, expected, actual) {
+  return {
+    result: "failed",
+    assertions: { executed: 1, passed: 0, failed: 1, skipped: 0 },
+    failures: [
+      {
+        code,
+        subject: "packages/domain",
+        message,
+        expected,
+        actual,
+      },
+    ],
+  };
+}
+
+function isPlainObject(value) {
+  if (value === null || typeof value !== "object") {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
+}
+
+function hasExactKeys(value, expectedKeys) {
+  const actualKeys = Object.keys(value).sort();
+  return (
+    actualKeys.length === expectedKeys.length &&
+    actualKeys.every((key, index) => key === expectedKeys[index])
+  );
+}
+
+function normalizeDomainContractReport(rawReport) {
+  try {
+    if (!isPlainObject(rawReport)) {
+      throw new TypeError("invalid report object");
+    }
+
+    const assertions = rawReport.assertions;
+    const failures = rawReport.failures;
+    const assertionKeys = ["executed", "failed", "passed", "skipped"];
+    const counts = isPlainObject(assertions)
+      ? [assertions.executed, assertions.passed, assertions.failed, assertions.skipped]
+      : [];
+    const countsAreValid =
+      counts.length === 4 && counts.every((value) => Number.isInteger(value) && value >= 0);
+    const shapeIsValid =
+      (rawReport.result === "passed" || rawReport.result === "failed") &&
+      isPlainObject(assertions) &&
+      hasExactKeys(assertions, assertionKeys) &&
+      countsAreValid &&
+      assertions.executed >= 1 &&
+      assertions.executed === assertions.passed + assertions.failed + assertions.skipped &&
+      assertions.skipped === 0 &&
+      Array.isArray(failures) &&
+      failures.every((failure) => typeof failure === "string") &&
+      failures.length === assertions.failed &&
+      (rawReport.result === "passed") === (assertions.failed === 0);
+
+    if (!shapeIsValid) {
+      throw new TypeError("invalid report shape");
+    }
+
+    return {
+      result: rawReport.result,
+      assertions: {
+        executed: assertions.executed,
+        passed: assertions.passed,
+        failed: assertions.failed,
+        skipped: assertions.skipped,
+      },
+      failures: failures.map((_, index) => ({
+        code: "DOMAIN_CONTRACT_ASSERTION_FAILED",
+        subject: `packages/domain contract assertion ${index + 1}`,
+        message: "领域合同断言未满足",
+        expected: "passed",
+        actual: "failed",
+      })),
+    };
+  } catch {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_REPORT_INVALID",
+      "领域合同返回了无效或不一致的结构化摘要",
+      "精确且一致的 passed/failed 断言计数、executed>=1 且 skipped=0",
+      "invalid-report",
+    );
+  }
+}
+
+async function runRepositoryDomainContract() {
+  if (process.version !== pinnedNodeVersion) {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_NODE_VERSION_MISMATCH",
+      "领域合同必须使用仓库固定的 Node 版本运行",
+      pinnedNodeVersion,
+      process.version,
+    );
+  }
+
+  if (!existsSync(domainTypeScriptCliPath) || !existsSync(domainTypeScriptManifestPath)) {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_TYPESCRIPT_CLI_MISSING",
+      "领域合同构建所需的仓库本地 TypeScript CLI 不可用",
+      `typescript@${pinnedTypeScriptVersion}`,
+      "unavailable",
+    );
+  }
+
+  let installedTypeScriptVersion;
+  try {
+    installedTypeScriptVersion = JSON.parse(
+      readFileSync(domainTypeScriptManifestPath, "utf8"),
+    ).version;
+  } catch {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_TYPESCRIPT_CLI_INVALID",
+      "无法验证领域合同构建所使用的本地 TypeScript CLI",
+      `typescript@${pinnedTypeScriptVersion}`,
+      "invalid-manifest",
+    );
+  }
+
+  if (installedTypeScriptVersion !== pinnedTypeScriptVersion) {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_TYPESCRIPT_VERSION_MISMATCH",
+      "领域合同必须使用仓库固定的 TypeScript 版本构建",
+      pinnedTypeScriptVersion,
+      "version-mismatch",
+    );
+  }
+
+  const buildResult = spawnSync(
+    process.execPath,
+    [domainTypeScriptCliPath, "--build", domainTypeScriptProjectPath],
+    {
+      cwd: defaultRepositoryRoot,
+      encoding: "utf8",
+      windowsHide: true,
+    },
+  );
+  if (buildResult.error) {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_BUILD_START_FAILED",
+      "领域合同的 TypeScript 构建进程无法启动",
+      "build-started",
+      "build-not-started",
+    );
+  }
+  if (buildResult.status !== 0) {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_BUILD_FAILED",
+      "领域合同的 TypeScript 构建失败",
+      { exitCode: 0, signal: null },
+      {
+        exitCode: buildResult.status,
+        signal: typeof buildResult.signal === "string" ? buildResult.signal : null,
+      },
+    );
+  }
+
+  let contractModule;
+  try {
+    contractModule = await import(pathToFileURL(domainContractPath).href);
+  } catch {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_IMPORT_FAILED",
+      "已构建的领域合同无法加载",
+      "module-loaded",
+      "module-load-failed",
+    );
+  }
+
+  if (typeof contractModule.runDomainContract !== "function") {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_EXPORT_INVALID",
+      "领域合同未公开预期的运行入口",
+      "runDomainContract function",
+      "missing-or-invalid-export",
+    );
+  }
+
+  let rawReport;
+  try {
+    rawReport = await contractModule.runDomainContract();
+  } catch {
+    return domainContractFailure(
+      "DOMAIN_CONTRACT_EXECUTION_FAILED",
+      "领域合同执行失败",
+      "structured-report",
+      "execution-failed",
+    );
+  }
+
+  return normalizeDomainContractReport(rawReport);
+}
 
 function normalizePath(path) {
   return path.split(sep).join("/");
@@ -259,6 +473,45 @@ function runSelfTests() {
       }
     });
   };
+
+  const malformedDomainContractReports = [
+    {
+      result: "passed",
+      assertions: { executed: 0, passed: 0, failed: 0, skipped: 0 },
+      failures: [],
+    },
+    {
+      result: "passed",
+      assertions: {
+        executed: 1,
+        passed: 1,
+        failed: 0,
+        skipped: 0,
+        debugPayload: "must-not-propagate",
+      },
+      failures: [],
+    },
+    new Proxy(
+      {},
+      {
+        getPrototypeOf() {
+          throw new Error("must-not-escape");
+        },
+      },
+    ),
+  ].map((report) => normalizeDomainContractReport(report));
+  record(
+    "空或畸形 domain 合同摘要 fail-closed",
+    malformedDomainContractReports.every(
+      (report) =>
+        report.result === "failed" &&
+        report.failures[0]?.code === "DOMAIN_CONTRACT_REPORT_INVALID",
+    ),
+    "DOMAIN_CONTRACT_REPORT_INVALID",
+    malformedDomainContractReports.map(
+      (report) => report.failures[0]?.code ?? report.result,
+    ),
+  );
 
   withFixture((root) => {
     const report = analyzeDependencyBoundaries({ repositoryRoot: root });
@@ -1089,6 +1342,12 @@ function runSelfTests() {
       "failed",
       childReport?.result ?? processResult.stdout,
     );
+    record(
+      "--root fixture 不依赖真实 domain 合同",
+      childReport !== null && !("domainContract" in childReport),
+      "domainContract absent",
+      childReport && "domainContract" in childReport ? "domainContract present" : "absent",
+    );
   });
 
   const invalidCliResult = spawnSync(
@@ -1130,7 +1389,11 @@ function runSelfTests() {
 }
 
 function parseArguments(argumentsList) {
-  const options = { repositoryRoot: defaultRepositoryRoot, selfTest: false };
+  const options = {
+    repositoryRoot: defaultRepositoryRoot,
+    selfTest: false,
+    runDomainContract: true,
+  };
 
   for (let index = 0; index < argumentsList.length; index += 1) {
     const argument = argumentsList[index];
@@ -1142,6 +1405,7 @@ function parseArguments(argumentsList) {
         throw new Error("--root requires a path");
       }
       options.repositoryRoot = resolve(repositoryRoot);
+      options.runDomainContract = false;
       index += 1;
     } else {
       throw new Error(`Unknown argument: ${argument}`);
@@ -1187,8 +1451,16 @@ if (options) {
     repositoryRoot: options.repositoryRoot,
   });
   const selfTestReport = options.selfTest ? runSelfTests() : null;
+  const domainContractReport = options.runDomainContract
+    ? await runRepositoryDomainContract()
+    : null;
   const selfTestFailures = selfTestReport?.failures ?? [];
-  const failures = [...repositoryReport.failures, ...selfTestFailures];
+  const domainContractFailures = domainContractReport?.failures ?? [];
+  const failures = [
+    ...repositoryReport.failures,
+    ...selfTestFailures,
+    ...domainContractFailures,
+  ];
   const report = {
     ...repositoryReport,
     schemaVersion: "1.0.0",
@@ -1198,13 +1470,25 @@ if (options) {
     result: failures.length === 0 ? "passed" : "failed",
     assertions: {
       executed:
-        repositoryReport.assertions.executed + (selfTestReport?.assertions.executed ?? 0),
-      passed: repositoryReport.assertions.passed + (selfTestReport?.assertions.passed ?? 0),
-      failed: repositoryReport.assertions.failed + (selfTestReport?.assertions.failed ?? 0),
-      skipped: repositoryReport.assertions.skipped + (selfTestReport?.assertions.skipped ?? 0),
+        repositoryReport.assertions.executed +
+        (selfTestReport?.assertions.executed ?? 0) +
+        (domainContractReport?.assertions.executed ?? 0),
+      passed:
+        repositoryReport.assertions.passed +
+        (selfTestReport?.assertions.passed ?? 0) +
+        (domainContractReport?.assertions.passed ?? 0),
+      failed:
+        repositoryReport.assertions.failed +
+        (selfTestReport?.assertions.failed ?? 0) +
+        (domainContractReport?.assertions.failed ?? 0),
+      skipped:
+        repositoryReport.assertions.skipped +
+        (selfTestReport?.assertions.skipped ?? 0) +
+        (domainContractReport?.assertions.skipped ?? 0),
     },
     failures,
     ...(selfTestReport ? { selfTest: selfTestReport } : {}),
+    ...(domainContractReport ? { domainContract: domainContractReport } : {}),
   };
 
   console.log(JSON.stringify(report, null, 2));

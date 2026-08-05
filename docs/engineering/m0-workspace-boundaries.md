@@ -1,18 +1,18 @@
-# M0-006／014 workspace 与构建边界
+# M0-006／010／014 workspace 与构建边界
 
-> 任务：M0-006、M0-014
+> 任务：M0-006、M0-010、M0-014
 >
-> 状态：Windows 工程链已验证；Ubuntu 与统一人工验证延期
+> 状态：Windows 工程链与 domain 合同已验证；Ubuntu、GitHub Actions 与统一人工验证延期
 >
 > 适用决定：ADR-0028、ADR-0029、ADR-0030
 
-本任务只建立后续 M0 近期任务会真实消费的 module、独立构建入口与显式 export seam。它不提前实现业务 interface，不把空 UI、空 HTTP 路由、假 IaC 或零断言测试冒充产品能力。
+本说明记录后续 M0 近期任务会真实消费的 module、独立构建入口与显式 export seam；其中 `@datapulse/domain` 已按 M0-010 落地最小公共合同。它不提前实现其他业务 interface，不把空 UI、空 HTTP 路由、假 IaC 或零断言测试冒充产品能力。
 
 ## 1. 当前 workspace
 
 | 路径 | 包名 | M0 消费者 | 本任务冻结的 interface |
 |---|---|---|---|
-| `packages/domain` | `@datapulse/domain` | M0-010，以及 Creator／API contract | 仅根 `.` export；领域 ID、稳定错误与 Result DTO 尚未实现 |
+| `packages/domain` | `@datapulse/domain` | M0-010，以及 Creator／API contract | 仅根 `.` export；已实现前缀化 opaque ID、协议 kind 隔离版本注册、稳定安全错误与 `ok` 判别 Result DTO |
 | `packages/api-contracts` | `@datapulse/api-contracts` | M0-036～039、M0-058～062 | 只开放 `./connector-message`、`./http`、`./origin-policy`；禁止根 export 和通配符 export |
 | `packages/themes` | `@datapulse/themes` | M0-014、M0-015、M0-018 | 零依赖根 `.` export；只公开由 `DESIGN.md` 生成的四主题语义 Token 类型与值 |
 | `apps/creator` | `@datapulse/creator` | M0-015、M0-043 | 独立 TypeScript 构建入口；尚无 React、Vite 或产品 composition |
@@ -35,7 +35,7 @@
 @datapulse/themes
 ```
 
-依赖同时使用 `workspace:*` 与 TypeScript project reference 表达。Viewer 当前不直接依赖 `domain`；后续只在正式 Schema、迁移、codec、metric runtime、narrative、renderer、themes 与 crypto 消费落地时按完整目标集合原子加入。当前跨 workspace 消费只验证包链接、构建产物和 exports map 可解析；业务源码 import 必须在对应 interface 真正落地的任务中原子加入，禁止发明 package marker、健康 DTO、成功空响应或 side-effect import。
+依赖同时使用 `workspace:*` 与 TypeScript project reference 表达。`@datapulse/domain` 的公共 seam 已真实存在，并由可执行合同从构建产物验证；现有消费者仍只在其正式业务任务落地时导入所需值。Viewer 当前不直接依赖 `domain`；后续只在正式 Schema、迁移、codec、metric runtime、narrative、renderer、themes 与 crypto 消费落地时按完整目标集合原子加入。其他跨 workspace 消费当前只验证包链接、构建产物和 exports map 可解析；业务源码 import 必须在对应 interface 真正落地的任务中原子加入，禁止发明 package marker、健康 DTO、成功空响应或 side-effect import。
 
 Custom Connector 当前构建链验证 `@datapulse/api-contracts/connector-message` 可解析，并拒绝未公开的 contracts 根；M0-007 源码策略另行强制 Connector 只能导入该受限 subpath。Share API 当前验证 `./http` 与 `./origin-policy` 可解析。
 
@@ -49,6 +49,8 @@ Custom Connector 当前构建链验证 `@datapulse/api-contracts/connector-messa
 - JavaScript、类型声明及其 source map。
 
 根 `build` 由 Turbo 按 `^build` 排序。`check:workspace` 先运行真实构建，再执行 `tests/architecture/check-workspace.mjs`，验证必需 workspace、package metadata、显式 exports、project references、构建产物、消费侧解析和禁止的 API Contracts 根 export。失败返回非零，不是占位聚合器。
+
+`check:dependencies` 的正常根路径另外使用固定 Node `24.19.0` 与仓库本地 TypeScript `6.0.3` 先构建 `packages/domain`，再运行 `packages/domain/tests/domain-contract.mjs`。该合同覆盖公开 seam 的合法／恶意输入，不允许跳过；临时 `--root` fixture 分支不依赖真实仓库合同。
 
 `@datapulse/themes` 自身为零依赖；M0-014 的 Design CLI 只作为根开发工具，产品运行时 bundle 增量为 0。第三方工具评估见 `m0-workspace-tool-dependencies.md`。
 
@@ -68,6 +70,6 @@ Custom Connector 当前构建链验证 `@datapulse/api-contracts/connector-messa
 
 ## 5. 延期验证
 
-Windows x64 使用固定 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8` 与 TypeScript `6.0.3` 验证冻结安装、7 个 workspace 构建和 workspace 契约。
+Windows x64 使用固定 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8` 与 TypeScript `6.0.3` 验证冻结安装、7 个 workspace 构建、workspace 契约及 M0-010 domain 合同。
 
-当前执行面没有 WSL 发行版或容器运行时，因此干净 Ubuntu 未运行；统一人工边界复核也延期。两项不会被记为 Windows 的 skipped，也不会被表述为通过。`M0-005`、`M0-006` 与 `REPO-FOUNDATION` 继续保持进行中；日常 gate 的激活只表示当前真实根断言必须持续通过，不代表完整 gate 已完成。
+当前执行面没有 WSL 发行版或容器运行时，因此干净 Ubuntu 未运行；真实 GitHub Actions 与统一人工边界复核也延期。这些项不会被记为 Windows 的 skipped，也不会被表述为通过。`M0-005`、`M0-006` 与 `REPO-FOUNDATION` 继续保持进行中；`DEPENDENCY-BOUNDARIES` 即使已有 M0-010 Windows 合同证据，仍保持 `in_progress / partially_evidenced`。日常 gate 的激活只表示当前真实根断言必须持续通过，不代表完整 gate 已完成。

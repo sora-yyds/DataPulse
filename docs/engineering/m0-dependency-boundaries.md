@@ -2,11 +2,11 @@
 
 ## 1. 阶段口径
 
-本检查对应 `M0-007`、`NFR-REL-001`、`DEPENDENCY-BOUNDARIES`，实施依据为 ADR-0029、ADR-0030 与 ADR-0035。它在当前 Windows 执行面形成阶段实现与自动证据，但不改变以下状态：
+本检查对应 `M0-007`、`M0-010`、`NFR-REL-001`、`DEPENDENCY-BOUNDARIES`，实施依据为 ADR-0029、ADR-0030 与 ADR-0035。它在当前 Windows 执行面形成依赖边界与 domain 合同的阶段实现及自动证据，但不改变以下状态：
 
 - M0-006 的正式前置尚未闭合；
 - 干净 Ubuntu 与 GitHub Actions 尚未运行；
-- `DEPENDENCY-BOUNDARIES` 还同时覆盖 M0-010；
+- M0-010 的 Windows 合同已经接入，干净 Ubuntu、GitHub Actions 与统一人工复核仍未运行；
 - 因此 gate 保持 `in_progress / partially_evidenced`；M0-009 只将当前真实根断言激活到日常聚合，不得据此宣告 M0-007、M0-010 或 `REPO-FOUNDATION` 完成。
 
 ## 2. Module 与 interface
@@ -24,9 +24,10 @@ analyzeDependencyBoundaries({ repositoryRoot })
 | 文件 | 职责 |
 |---|---|
 | `tests/architecture/dependency-boundaries.mjs` | 深 module；分析仓库并返回稳定结果 |
-| `tests/architecture/check-dependencies.mjs` | CLI；运行当前仓库与临时恶意 fixture，失败时返回非零 |
+| `tests/architecture/check-dependencies.mjs` | CLI；运行当前仓库、domain 合同与临时恶意 fixture，失败时返回非零 |
+| `packages/domain/tests/domain-contract.mjs` | M0-010 合同；验证公开领域 ID、协议隔离版本注册、稳定错误码与可区分 Result DTO |
 
-该 implementation 复用已固定的 TypeScript Compiler API，不增加第三方依赖、workspace 或运行时 bundle。
+正常根运行先用固定 Node 与仓库本地 TypeScript CLI 构建 `packages/domain`，再动态加载其 `runDomainContract()`；显式 `--root` 只用于临时 fixture，不要求复制真实 domain 合同。构建、加载、导出、执行或摘要结构异常都归一为稳定 `DOMAIN_CONTRACT_*` 诊断，且不回显编译输出、异常正文或恶意输入。该 implementation 复用已固定的 TypeScript Compiler API，不增加第三方依赖、workspace 或运行时 bundle。
 
 ## 3. 完整方向策略
 
@@ -71,6 +72,7 @@ Package `exports` 仍是生产者的公开解析 seam，不是按消费者访问
 - workspace、源码、配置和相对 import 的 symlink／junction 与 realpath 边界；
 - `pnpm-workspace.yaml` 的精确 scope／设置，以及 root `pnpm`／`overrides`／`resolutions`／`workspaces` 和 `.pnpmfile.*` 依赖图改写旁路；
 - workspace manifest 有向图与完整策略有向图。
+- `@datapulse/domain` 的前缀化 opaque ID（含字段、判定规则与叙事规则的独立身份）、协议 kind 隔离版本注册、稳定安全错误与 `ok` 判别 Result DTO 合同。
 
 以下情况均返回稳定 `ARCH_*` 诊断并使进程非零：
 
@@ -84,7 +86,7 @@ Package `exports` 仍是生产者的公开解析 seam，不是按消费者访问
 - Vite 对象／数组／计算／赋值 alias、`mergeConfig`、plugin、本地静态／动态配置片段、程序化 API 和 `--config/-c` 自定义入口；在解析后 realpath module graph 落地前，只接受单一静态 `export default` 对象或 `defineConfig(静态对象)`；
 - 空 workspace 集合、不可解析 manifest／tsconfig／源码。
 
-`--self-test` 使用系统临时目录生成合法与恶意仓库，验证合法最小 workspace、已声明外部 package 子路径、Connector 消息协议、Share HTTP 子路径、局部 resolver 同名绑定、内部 `..hidden` 路径和静态 Vite 配置可通过，并验证两／三节点循环、package → app、Viewer／Connector／service 越界、相对深导入、未知／未声明／未导出 import、JSDoc／triple-slash、各类 alias、scope／workspace symlink／junction 与 realpath 逃逸、pnpm 图改写、浏览器全局动态代码、ESM 路径规范化、TypeScript 输入／reference 漂移、Vite 动态配置和间接 resolver 旁路被拒绝。恶意 fixture 会启动真实 CLI 并断言退出码为 `1`，参数缺失另断言退出码为 `2`，防止只检查内部结果却遗漏 CI 退出语义。
+`--self-test` 使用系统临时目录生成合法与恶意仓库，验证合法最小 workspace、已声明外部 package 子路径、Connector 消息协议、Share HTTP 子路径、局部 resolver 同名绑定、内部 `..hidden` 路径和静态 Vite 配置可通过，并验证两／三节点循环、package → app、Viewer／Connector／service 越界、相对深导入、未知／未声明／未导出 import、JSDoc／triple-slash、各类 alias、scope／workspace symlink／junction 与 realpath 逃逸、pnpm 图改写、浏览器全局动态代码、ESM 路径规范化、TypeScript 输入／reference 漂移、Vite 动态配置和间接 resolver 旁路被拒绝。恶意 fixture 会启动真实 CLI 并断言退出码为 `1`、不加载真实 domain 合同；参数缺失另断言退出码为 `2`，防止只检查内部结果却遗漏 CI 退出语义。
 
 ## 5. 精确命令与退出语义
 
@@ -94,16 +96,16 @@ Package `exports` 仍是生产者的公开解析 seam，不是按消费者访问
 corepack pnpm run check:dependencies
 ```
 
-通过标准：输出 `check=dependency-boundaries`、`result=passed`，`executed>=1`、`failed=0`、`skipped=0`，当前仓库 `cycles=0`，并且 `selfTest.result=passed`。仓库违规或自测失败返回 `1`；CLI 参数错误返回 `2`。
+通过标准：输出 `check=dependency-boundaries`、`result=passed`，`executed>=1`、`failed=0`、`skipped=0`，当前仓库 `cycles=0`，并且 `selfTest.result=passed`、`domainContract.result=passed`。仓库违规、domain 构建／合同失败或自测失败返回 `1`；CLI 参数错误返回 `2`。
 
 ## 6. 延期验证
 
 | 验证 | 当前状态 | 闭合条件 |
 |---|---|---|
-| Windows 固定工具链、本地真实仓库与恶意 fixture | 阶段已运行 | 最终 subject hash 与干净目录报告一致 |
+| Windows 固定工具链、本地真实仓库、M0-010 domain 合同与恶意 fixture | 阶段已运行并取证 | 最终 subject hash 与干净目录报告一致 |
 | 干净 Ubuntu 的大小写、路径与 symlink 行为 | `not_run` | 在固定工具链和冻结锁文件下重跑同一根命令 |
 | GitHub Actions required check | `not_run` | M0-009 已接入本地日常聚合器；M0-019／046 仍须运行真实 workflow、ruleset 与否定 PR，不以本地结果替代 |
 | 完整 allowlist 人工签署 | `not_run` | 后续统一人工验证批次核对架构与策略；不替代自动断言 |
-| M0-010 稳定领域 ID／错误码衔接 | `not_started` | 同一 gate 的后继记录覆盖 M0-010 后才可能变为 `passed` |
+| M0-010 稳定领域 ID／协议隔离版本／错误码／Result 合同 | Windows 本地阶段已取证 | 在干净 Ubuntu、真实 GitHub Actions 与统一人工复核中重跑并核对后继记录；gate 此前仍为 `in_progress / partially_evidenced` |
 
 Ubuntu、CI 和人工验证是正式闭合条件。当前 Windows 结果允许继续其他经项目所有者授权的阶段预实现，但不能被解释为这些条件已经通过。
