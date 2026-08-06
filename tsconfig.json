@@ -17,6 +17,7 @@
     { "path": "./apps/custom-connector" },
     { "path": "./apps/device-probe" },
     { "path": "./services/share-api" },
-    { "path": "./packages/crypto" }
+    { "path": "./packages/crypto" },
+    { "path": "./packages/local-storage" }
   ]
 }
