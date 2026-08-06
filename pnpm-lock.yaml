@@ -196,6 +196,16 @@ importers:
         specifier: 24.13.3
         version: 24.13.3
 
+  packages/local-analysis:
+    dependencies:
+      '@datapulse/domain':
+        specifier: workspace:*
+        version: link:../domain
+    devDependencies:
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
+
   packages/local-storage:
     dependencies:
       '@datapulse/crypto':

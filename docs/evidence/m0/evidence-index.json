@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v31",
+      "latestRecordId": "m0-wave0-evidence-contract-v32",
       "blockerRefs": []
     },
     {
@@ -869,14 +869,14 @@
       "scopeStatement": "唯一 Worker 消息契约、两个 adapter 与 ImportResult 到 AnalysisResult 组合。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {
         "eligible": true,
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-local-analysis-contract-v1",
       "blockerRefs": []
     },
     {
@@ -9903,6 +9903,235 @@
       ],
       "blockerRefs": [],
       "notes": "M0-029 导入准入资源估算阶段：import-engine 新增 memory/csv-shape/zip-archive/admission 四个源文件，冻结 CSV 与 XLSX 工作内存静态估算系数、CSV 表头排除口径（首行表头不计入数据行与非空单元格，列数含表头）、XLSX ZIP 中央目录只读检查（解压大小/压缩比累计）与 IMPORT_ARCHIVE_INVALID 封闭错误（missing-eocd/truncated-central-directory/encrypted-entry），admitImport 按 invalid-request→file-size→decompressed-size→compression-ratio→维度→memory-estimate 优先级完整拒绝并支持进度/取消；tests/unit/import-engine-admission.test.ts 26 项、test:unit 15 files/325 tests、check:fixtures 521/521、self-test 30/30、check:workspace 510/510、check:dependencies 2960/2960、15 workspace；证据记录 m0-import-admission-estimates-v1 为 IMPORT-ADMISSION 第二个部分取证记录。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v30。"
+    },
+    {
+      "id": "m0-local-analysis-contract-v1",
+      "title": "M0-030 Creator LocalAnalysis 契约（唯一版本化消息 Schema/状态机/InProcessTestAdapter）",
+      "gateIds": [
+        "LOCAL-ANALYSIS-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-030",
+        "M0-033",
+        "M0-056"
+      ],
+      "requirementIds": [
+        "FR-ANA-011",
+        "FR-MET-009"
+      ],
+      "adrIds": [
+        "ADR-0020",
+        "ADR-0031"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-07T08:10:00+08:00",
+      "observedAt": "2026-08-07T08:10:00+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/limits.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/message.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/schema/local-analysis-message-v1.schema.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/errors.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/state.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/in-process-adapter.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-analysis/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "tests/unit/local-analysis-contract.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/dependency-boundaries.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-release-dry-run.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-030 阶段实现：新增 packages/local-analysis（@datapulse/local-analysis，第 16 个 workspace）——limits.ts 冻结 task ID（8-128 位 ASCII）、每请求 nonce（16-128 位）、控制面消息 JSON 64 KiB、transferable 类型（array-buffer/uint8-array）数量 64、单项 1 GiB、总字节 2 GiB（由 ADR-0050 1.5 GiB 工作内存加 Arrow 余量推导）；schema/local-analysis-message-v1.schema.json 为唯一版本化消息 Schema（request/progress/result/error/cancel），由受限 export 子路径 @datapulse/local-analysis/message 唯一拥有，包根不重新导出；message.ts 提供确定性手写运行时校验（type/shape/schema-version/kind/task-id/nonce/message-size/transferable/transferable-count/transferable-bytes/phase/result/error 封闭原因）；state.ts 冻结 not-started→preparing→evaluating→finalizing→completed/rejected/cancelled 显式状态机；errors.ts 定义 LOCAL_ANALYSIS_INVALID_REQUEST/TRANSFER_LIMIT_EXCEEDED/STATE_TRANSITION_INVALID/CANCELLED 封闭错误；contract.ts 冻结 Creator LocalAnalysis seam run(request, options)->Promise<Result<AnalysisResultPayload, LocalAnalysisError>>；in-process-adapter.ts 通过同一 contract suite 校验请求、按序上报进度、AbortSignal 任意时刻取消返回稳定错误。tests/unit/local-analysis-contract.test.ts 17 项全部通过；test:unit 全量 16 files/342 tests、check:workspace 545/545、check:dependencies 3184/3184、build 16 tasks 全部成功。LOCAL-ANALYSIS-CONTRACT gate 保持 in_progress/partially_evidenced、不激活日常且 m0 退出不满足；BrowserWorkerAdapter 与真实分析计算待 M0-031/033/056。环境合同继承冻结 gate 的 environmentKind=ci，实际执行仅发生在 Windows x64 本地含空格工作树。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v32",
+      "title": "M0-030 LocalAnalysis 契约阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-07T08:10:00+08:00",
+      "observedAt": "2026-08-07T08:10:00+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v31",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v32.json",
+          "immutable": true,
+          "sha256": "c6c3242225dc35cc0487c8f275a1bfcc45819236216b02f78756e93db5a0939a"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-030 LocalAnalysis 契约阶段：packages/local-analysis 新增唯一版本化消息 Schema（受限 ./message 子路径）、task ID/每请求 nonce/transferable 类型/长度/总字节上限与显式状态机，InProcessTestAdapter 通过同一 contract suite；tests/unit/local-analysis-contract.test.ts 17 项、test:unit 16 files/342 tests、check:workspace 545/545、check:dependencies 3184/3184、16 workspace；证据记录 m0-local-analysis-contract-v1 为 LOCAL-ANALYSIS-CONTRACT 首个部分取证记录。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v31。"
     }
   ]
 }

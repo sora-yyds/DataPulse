@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://datapulse.local/local-analysis/message/v1",
+  "title": "LocalAnalysis Message v1.0.0",
+  "description": "唯一版本化 LocalAnalysis 消息 Schema。控制面消息携带 task ID、每请求 nonce 与 transferable 元数据；数据负载以 transferable 描述，不进消息体。运行时校验由 @datapulse/local-analysis/message 的确定性校验器执行。",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "enum": ["request", "progress", "result", "error", "cancel"]
+    },
+    "taskId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "phase": {
+      "enum": ["preparing", "evaluating", "finalizing"]
+    },
+    "transferables": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": ["array-buffer", "uint8-array"]
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1073741824
+          }
+        },
+        "required": ["kind", "byteLength"],
+        "additionalProperties": false
+      }
+    },
+    "payload": {
+      "type": ["object", "array", "string", "number", "boolean", "null"],
+      "maxProperties": 1024
+    },
+    "observed": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "kind": {
+          "const": "transport-summary"
+        },
+        "transferableCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "transferableBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "payloadBytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["schemaVersion", "kind", "transferableCount", "transferableBytes", "payloadBytes"],
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": ["code", "details"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["schemaVersion", "kind", "taskId", "nonce"],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": { "const": "request" }
+        },
+        "required": ["kind"]
+      },
+      "then": {
+        "required": ["transferables"],
+        "properties": {
+          "transferables": {
+            "type": "array",
+            "maxItems": 64
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": { "const": "progress" }
+        },
+        "required": ["kind"]
+      },
+      "then": {
+        "required": ["phase"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": { "const": "result" }
+        },
+        "required": ["kind"]
+      },
+      "then": {
+        "required": ["result"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": { "const": "error" }
+        },
+        "required": ["kind"]
+      },
+      "then": {
+        "required": ["error"]
+      }
+    }
+  ]
+}

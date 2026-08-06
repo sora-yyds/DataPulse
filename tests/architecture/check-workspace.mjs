@@ -90,6 +90,18 @@ const requiredWorkspaces = [
   },
   {
     kind: "package",
+    path: "packages/local-analysis",
+    name: "@datapulse/local-analysis",
+    dependencies: { "@datapulse/domain": "workspace:*" },
+    devDependencies: { "@types/node": "24.13.3" },
+    references: ["../domain"],
+    entries: {
+      ".": "index",
+      "./message": "message",
+    },
+  },
+  {
+    kind: "package",
     path: "packages/api-contracts",
     name: "@datapulse/api-contracts",
     dependencies: { "@datapulse/domain": "workspace:*" },
@@ -228,6 +240,7 @@ const rootReferences = [
   "./packages/crypto",
   "./packages/local-storage",
   "./packages/import-engine",
+  "./packages/local-analysis",
 ];
 
 const deferredWorkspacePaths = [
