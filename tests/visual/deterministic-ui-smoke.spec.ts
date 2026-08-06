@@ -189,6 +189,10 @@ test("四主题视觉基线", async ({ page }, testInfo) => {
     !DESKTOP_PROJECTS.has(testInfo.project.name),
     "视觉基线只在桌面视口建立",
   );
+  test.skip(
+    process.platform !== "win32" || process.env.CI === "true",
+    "像素基线只在维护者固定 Windows 环境建立；CI/Linux 平台基线需单独生成并人工审查",
+  );
   await openStory(page);
 
   for (const themeId of THEME_IDS) {
