@@ -166,15 +166,15 @@ function failureCodes(result: { failures: readonly { code: string }[] }): string
 }
 
 describe("M0-017 public fixture manifest verifier", () => {
-  it("verifies the four-set synthetic catalog from a repository path", () => {
+  it("verifies the registered synthetic catalog from a repository path", () => {
     const result = verifyFixtureManifest(repositoryRoot);
     expect(result).toMatchObject({
       check: "fixture-manifest",
       result: "passed",
       catalog: {
-        logicalFixtureSets: 4,
-        artifacts: 12,
-        generatedFixtureSets: 0,
+        logicalFixtureSets: 7,
+        artifacts: 20,
+        generatedFixtureSets: 2,
       },
       failures: [],
     });

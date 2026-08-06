@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T22:38:05+08:00",
+  "updatedAt": "2026-08-06T23:55:00+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v29",
+      "latestRecordId": "m0-wave0-evidence-contract-v30",
       "blockerRefs": []
     },
     {
@@ -836,14 +836,14 @@
       "scopeStatement": "资源先验拒绝、CSV/XLSX 到 Arrow、公式/宏/链接不执行和稳定错误。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {
         "eligible": true,
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-import-admission-contract-v1",
       "blockerRefs": []
     },
     {
@@ -9336,6 +9336,277 @@
       ],
       "blockerRefs": [],
       "notes": "M0-027 Project Repository 阶段：packages/local-storage 新增 project-repository.ts 编排（open/commit/recover 状态机、Story 经 Artifact Reader 预校验、迁移/解密/提交失败保留最后可读副本、Creator 保存与刷新恢复集成），errors.ts 新增 STORAGE_STORY_INVALID 与共享 isLocalStorageError，openProjectObject 解密认证失败映射稳定 integrity-mismatch；tests/unit 13 files/281 tests、test:storage 3 files/13 tests、check:dependencies 2667/2667、check:workspace 481/481、14 workspace；证据记录 m0-local-storage-project-repository-v1 按 append-only 链取代 m0-local-storage-project-object-transaction-v1。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v28。"
+    },
+    {
+      "id": "m0-import-admission-contract-v1",
+      "title": "M0-028 导入探针契约（DTO/进度/取消/稳定拒绝错误）与合成夹具",
+      "gateIds": [
+        "IMPORT-ADMISSION"
+      ],
+      "epicIds": [
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-028",
+        "M0-029",
+        "M0-054",
+        "M0-055"
+      ],
+      "requirementIds": [
+        "FR-IMP-001",
+        "FR-IMP-002",
+        "FR-IMP-003",
+        "FR-IMP-004",
+        "FR-IMP-006",
+        "FR-IMP-007",
+        "FR-IMP-008",
+        "FR-IMP-009",
+        "FR-IMP-010"
+      ],
+      "adrIds": [
+        "ADR-0020",
+        "ADR-0050"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T23:45:00+08:00",
+      "observedAt": "2026-08-06T23:45:00+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [
+        {
+          "id": "import-admission-small",
+          "path": "tests/fixtures/import-admission/small.csv",
+          "manifestPath": "tests/fixtures/import-admission/manifest.v1.json",
+          "manifestSha256": "6beb4be87e864097e4115268e4e7d768857ecf69adae4a326e6e9b650aa6d355",
+          "sha256": "9e229620eec3b08ca080e65feecb4dd64d07808cf5be6f3ad2effdb51afa5e30",
+          "generatorVersion": "hand-authored-m0-028-v1"
+        },
+        {
+          "id": "import-admission-common",
+          "path": "tests/fixtures/import-admission/common.csv",
+          "manifestPath": "tests/fixtures/import-admission/manifest.v1.json",
+          "manifestSha256": "6beb4be87e864097e4115268e4e7d768857ecf69adae4a326e6e9b650aa6d355",
+          "sha256": "a0bdb666fc12c4c25367eb258a8c091c150a28c4fafd1ffdc96d2fb94ac39164",
+          "generatorVersion": "hand-authored-m0-028-v1"
+        },
+        {
+          "id": "import-admission-unsupported-xls",
+          "path": "tests/fixtures/import-admission/attack.unsupported-format.xls",
+          "manifestPath": "tests/fixtures/import-admission/manifest.v1.json",
+          "manifestSha256": "6beb4be87e864097e4115268e4e7d768857ecf69adae4a326e6e9b650aa6d355",
+          "sha256": "36d79dab6ab163401b902171ca37b7d887b6e97f26ef7ab757e0ebb22f9d50f2",
+          "generatorVersion": "hand-authored-m0-028-v1"
+        },
+        {
+          "id": "import-admission-unsupported-ods",
+          "path": "tests/fixtures/import-admission/attack.unsupported-format.ods",
+          "manifestPath": "tests/fixtures/import-admission/manifest.v1.json",
+          "manifestSha256": "6beb4be87e864097e4115268e4e7d768857ecf69adae4a326e6e9b650aa6d355",
+          "sha256": "d913460106e9cc06ca408e204b5343a369c96dcfd5cdffa1302a0fdc073f4e07",
+          "generatorVersion": "hand-authored-m0-028-v1"
+        },
+        {
+          "id": "import-admission-invalid-utf8",
+          "path": "tests/fixtures/import-admission/attack.invalid-utf8.csv",
+          "manifestPath": "tests/fixtures/import-admission/manifest.v1.json",
+          "manifestSha256": "6beb4be87e864097e4115268e4e7d768857ecf69adae4a326e6e9b650aa6d355",
+          "sha256": "d8cc45a53c604a51d6dacaefa268b6134369dab0d5a805f7887f1ad1b5f0dd1f",
+          "generatorVersion": "hand-authored-m0-028-v1"
+        },
+        {
+          "id": "import-admission-oversized-columns",
+          "path": "tests/fixtures/import-admission/attack.oversized-columns.csv",
+          "manifestPath": "tests/fixtures/import-admission/manifest.v1.json",
+          "manifestSha256": "6beb4be87e864097e4115268e4e7d768857ecf69adae4a326e6e9b650aa6d355",
+          "sha256": "3fec53853374ccee7e3f0bc0f31b86a5f8bab4199056d9beaad569c5be66f1ff",
+          "generatorVersion": "hand-authored-m0-028-v1"
+        }
+      ],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "packages/import-engine/src/limits.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/import-engine/src/errors.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/import-engine/src/contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/import-engine/src/progress.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/import-engine/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "tests/unit/import-engine-contract.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/fixtures/manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/fixtures/import-admission/manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/fixture-manifest.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-028 阶段实现：packages/import-engine 冻结导入探针契约——limits.ts 以 ADR-0050 定义 50 MiB 文件、200,000 行、100 列、5,000,000 非空单元格、500 MiB 解压、100:1 压缩比与 1.5 GiB 内存估算边界；errors.ts 定义 11 个封闭枚举稳定拒绝错误（INVALID_REQUEST/UNSUPPORTED_FORMAT/FILE_SIZE/ROW_LIMIT/COLUMN_LIMIT/CELL_COUNT/DECOMPRESSED_SIZE/COMPRESSION_RATIO/MEMORY_ESTIMATE/CSV_DECODE_FAILED/CANCELLED），数值类错误携带具体观测值与限额且不携带自由文本；contract.ts 定义 ImportRequest（requestId/fileName/byteLength/format/csvEncoding）运行时校验、ImportResult 判别联合与 runImport seam；progress.ts 冻结 not-started→admission→parsing→finalizing→completed/rejected/cancelled 显式状态机与 ImportProgress 进度 DTO。tests/unit/import-engine-contract.test.ts 18 项全部通过；test:unit 全量 14 files/299 tests。新增 import-admission 夹具集：小型/常见/攻击（.xls/.ods 不支持格式、非法 UTF-8、101 列超限）提交入库，200k 行窄表与 50 MB/100 列宽表以固定 generator/seed 声明、输出不提交，check:fixtures 主断言 521/521、self-test 30/30（7 个逻辑集/20 artifact/2 generated）。check:workspace 510/510、check:dependencies 2808/2808、15 个 workspace。IMPORT-ADMISSION gate 保持 in_progress／partially_evidenced、不激活日常且 m0 退出不满足；解析实现待 M0-029/054/055。环境合同继承冻结 gate 的 environmentKind=ci，实际执行仅发生在 Windows x64 本地含空格工作树；合成窄表/宽表按生成器声明、输出不提交，fixtureRefs 仅引用已提交夹具。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v30",
+      "title": "M0-028 导入探针契约阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T23:55:00+08:00",
+      "observedAt": "2026-08-06T23:55:00+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v29",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v30.json",
+          "immutable": true,
+          "sha256": "5f7360040a386856f668506c336f5ca38ff0233f4535fec15432de41d49ca954"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-028 导入探针契约阶段：packages/import-engine 新增 limits/errors/contract/progress/index 五个源文件，冻结 ADR-0050 的 50 MiB 文件/200,000 行/100 列/5,000,000 单元格/500 MiB 解压/100:1 压缩比/1.5 GiB 内存估算限额，11 个封闭枚举稳定拒绝错误（数值错误携带观测值与限额），ImportRequest 运行时校验、ImportResult 判别联合与 runImport seam，not-started→admission→parsing→finalizing→completed/rejected/cancelled 显式进度状态机；tests/unit/import-engine-contract.test.ts 18 项、test:unit 14 files/299 tests、check:fixtures 521/521、self-test 30/30（7 个逻辑集/20 artifact/2 generated）、check:workspace 510/510、check:dependencies 2808/2808、15 workspace；证据记录 m0-import-admission-contract-v1 按 append-only 链为 IMPORT-ADMISSION 首个部分取证记录。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v29。"
     }
   ]
 }

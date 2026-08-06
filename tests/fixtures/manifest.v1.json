@@ -3,9 +3,9 @@
   "kind": "datapulse-fixture-manifest",
   "hashAlgorithm": "SHA-256",
   "catalog": {
-    "logicalFixtureSets": 4,
-    "artifacts": 12,
-    "generatedFixtureSets": 0
+    "logicalFixtureSets": 7,
+    "artifacts": 20,
+    "generatedFixtureSets": 2
   },
   "fixtureSets": [
     {
@@ -247,6 +247,157 @@
           "path": "apps/viewer/src/fixtures/metric-runtime.json",
           "bytes": 1033,
           "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+        }
+      ]
+    },
+    {
+      "id": "import-admission",
+      "purpose": "导入准入探针：小型/常见合成表格与早期攻击夹具；oracle 供 M0-029/054/055 解析器兑现。",
+      "dataOrigin": "synthetic",
+      "generation": {
+        "mode": "hand-authored",
+        "generator": {
+          "id": "import-admission-fixture-authoring",
+          "version": "m0-028-v1"
+        },
+        "seed": {
+          "kind": "not-applicable"
+        }
+      },
+      "expectedAssertions": [
+        { "id": "small-rows", "outcome": "equals", "value": 5 },
+        { "id": "small-columns", "outcome": "equals", "value": 3 },
+        { "id": "small-cells", "outcome": "equals", "value": 15 },
+        { "id": "common-rows", "outcome": "equals", "value": 50 },
+        { "id": "common-columns", "outcome": "equals", "value": 6 },
+        { "id": "common-cells", "outcome": "equals", "value": 300 },
+        { "id": "xls-rejected", "outcome": "rejected", "errorCode": "IMPORT_UNSUPPORTED_FORMAT" },
+        { "id": "ods-rejected", "outcome": "rejected", "errorCode": "IMPORT_UNSUPPORTED_FORMAT" },
+        { "id": "invalid-utf8-rejected", "outcome": "rejected", "errorCode": "IMPORT_CSV_DECODE_FAILED" },
+        { "id": "oversized-columns-rejected", "outcome": "rejected", "errorCode": "IMPORT_COLUMN_LIMIT_EXCEEDED" }
+      ],
+      "subManifestKind": "datapulse-import-admission-fixture-manifest",
+      "subManifest": {
+        "path": "tests/fixtures/import-admission/manifest.v1.json",
+        "bytes": 934,
+        "sha256": "6beb4be87e864097e4115268e4e7d768857ecf69adae4a326e6e9b650aa6d355"
+      },
+      "artifacts": [
+        {
+          "id": "import-admission-small",
+          "path": "tests/fixtures/import-admission/small.csv",
+          "bytes": 81,
+          "sha256": "9e229620eec3b08ca080e65feecb4dd64d07808cf5be6f3ad2effdb51afa5e30"
+        },
+        {
+          "id": "import-admission-common",
+          "path": "tests/fixtures/import-admission/common.csv",
+          "bytes": 2227,
+          "sha256": "a0bdb666fc12c4c25367eb258a8c091c150a28c4fafd1ffdc96d2fb94ac39164"
+        },
+        {
+          "id": "import-admission-unsupported-xls",
+          "path": "tests/fixtures/import-admission/attack.unsupported-format.xls",
+          "bytes": 35,
+          "sha256": "36d79dab6ab163401b902171ca37b7d887b6e97f26ef7ab757e0ebb22f9d50f2"
+        },
+        {
+          "id": "import-admission-unsupported-ods",
+          "path": "tests/fixtures/import-admission/attack.unsupported-format.ods",
+          "bytes": 27,
+          "sha256": "d913460106e9cc06ca408e204b5343a369c96dcfd5cdffa1302a0fdc073f4e07"
+        },
+        {
+          "id": "import-admission-invalid-utf8",
+          "path": "tests/fixtures/import-admission/attack.invalid-utf8.csv",
+          "bytes": 27,
+          "sha256": "d8cc45a53c604a51d6dacaefa268b6134369dab0d5a805f7887f1ad1b5f0dd1f"
+        },
+        {
+          "id": "import-admission-oversized-columns",
+          "path": "tests/fixtures/import-admission/attack.oversized-columns.csv",
+          "bytes": 812,
+          "sha256": "3fec53853374ccee7e3f0bc0f31b86a5f8bab4199056d9beaad569c5be66f1ff"
+        }
+      ]
+    },
+    {
+      "id": "import-admission-narrow",
+      "purpose": "确定性生成的 200,000 行 x 3 列窄表，行数恰在上限；输出不提交，只固定 generator/seed 与预期身份。",
+      "dataOrigin": "synthetic",
+      "generation": {
+        "mode": "generated",
+        "generator": {
+          "id": "import-admission-narrow-generator",
+          "version": "m0-028-v1"
+        },
+        "seed": {
+          "kind": "fixed",
+          "value": "000000009e3779b9"
+        },
+        "generatorFile": {
+          "path": "tests/fixtures/import-admission/generate-narrow.mjs",
+          "bytes": 1119,
+          "sha256": "5ca6e1647752dab46b30208a50cc64d6136d7a0e5b9ed2584cddf6306ff35801"
+        }
+      },
+      "expectedAssertions": [
+        { "id": "narrow-rows", "outcome": "equals", "value": 200000 },
+        { "id": "narrow-columns", "outcome": "equals", "value": 3 },
+        { "id": "narrow-cells", "outcome": "equals", "value": 600000 }
+      ],
+      "subManifestKind": "datapulse-import-admission-narrow-fixture-manifest",
+      "subManifest": {
+        "path": "tests/fixtures/import-admission/narrow-200k.manifest.v1.json",
+        "bytes": 275,
+        "sha256": "b19a66e13f2a7f8f519e1dd57cce8d8b037d1b36bb3956ca9fe122d0a6432c0d"
+      },
+      "artifacts": [
+        {
+          "id": "import-admission-narrow-200k",
+          "path": "tests/fixtures/import-admission/narrow-200k.csv",
+          "bytes": 4778063,
+          "sha256": "35a1ce7b3d1c8796de212c5b3a1c192b6b98f3f99b64b0b4abe57384799a8f9f"
+        }
+      ]
+    },
+    {
+      "id": "import-admission-wide",
+      "purpose": "确定性生成的 50 MB/100 列宽表，非空单元格恰在上限；输出不提交，只固定 generator/seed 与预期身份。",
+      "dataOrigin": "synthetic",
+      "generation": {
+        "mode": "generated",
+        "generator": {
+          "id": "import-admission-wide-generator",
+          "version": "m0-028-v1"
+        },
+        "seed": {
+          "kind": "fixed",
+          "value": "0000000085ebca6b"
+        },
+        "generatorFile": {
+          "path": "tests/fixtures/import-admission/generate-wide.mjs",
+          "bytes": 1378,
+          "sha256": "7734382274f3e444146906030b1ef504df10ddc2c63ecb231ad1ace6537fae0e"
+        }
+      },
+      "expectedAssertions": [
+        { "id": "wide-rows", "outcome": "equals", "value": 50000 },
+        { "id": "wide-columns", "outcome": "equals", "value": 100 },
+        { "id": "wide-cells", "outcome": "equals", "value": 5000000 }
+      ],
+      "subManifestKind": "datapulse-import-admission-wide-fixture-manifest",
+      "subManifest": {
+        "path": "tests/fixtures/import-admission/wide-100col.manifest.v1.json",
+        "bytes": 274,
+        "sha256": "068d32207f61f6668d06b945755a19a703e8a569d6274fdac0f8743b5ea684e0"
+      },
+      "artifacts": [
+        {
+          "id": "import-admission-wide-100col",
+          "path": "tests/fixtures/import-admission/wide-100col.csv",
+          "bytes": 50000601,
+          "sha256": "585ca92ef0badd058f3f43e1b72883b1e0e373f38ffc5ca1917d16627f7e772f"
         }
       ]
     }

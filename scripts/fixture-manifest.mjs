@@ -127,6 +127,74 @@ const requiredFixtureSets = new Map([
       manifestKind: "datapulse-creator-viewer-composition-fixture-manifest",
     },
   ],
+  [
+    "import-admission",
+    {
+      expectedAssertions: [
+        { id: "small-rows", outcome: "equals", value: 5 },
+        { id: "small-columns", outcome: "equals", value: 3 },
+        { id: "small-cells", outcome: "equals", value: 15 },
+        { id: "common-rows", outcome: "equals", value: 50 },
+        { id: "common-columns", outcome: "equals", value: 6 },
+        { id: "common-cells", outcome: "equals", value: 300 },
+        { id: "xls-rejected", outcome: "rejected", errorCode: "IMPORT_UNSUPPORTED_FORMAT" },
+        { id: "ods-rejected", outcome: "rejected", errorCode: "IMPORT_UNSUPPORTED_FORMAT" },
+        { id: "invalid-utf8-rejected", outcome: "rejected", errorCode: "IMPORT_CSV_DECODE_FAILED" },
+        { id: "oversized-columns-rejected", outcome: "rejected", errorCode: "IMPORT_COLUMN_LIMIT_EXCEEDED" },
+      ],
+      generation: {
+        mode: "hand-authored",
+        generator: { id: "import-admission-fixture-authoring", version: "m0-028-v1" },
+        seed: { kind: "not-applicable" },
+      },
+      subManifestPath: "tests/fixtures/import-admission/manifest.v1.json",
+      manifestKind: "datapulse-import-admission-fixture-manifest",
+    },
+  ],
+  [
+    "import-admission-narrow",
+    {
+      expectedAssertions: [
+        { id: "narrow-rows", outcome: "equals", value: 200000 },
+        { id: "narrow-columns", outcome: "equals", value: 3 },
+        { id: "narrow-cells", outcome: "equals", value: 600000 },
+      ],
+      generation: {
+        mode: "generated",
+        generator: { id: "import-admission-narrow-generator", version: "m0-028-v1" },
+        seed: { kind: "fixed", value: "000000009e3779b9" },
+        generatorFile: {
+          path: "tests/fixtures/import-admission/generate-narrow.mjs",
+          bytes: 1119,
+          sha256: "5ca6e1647752dab46b30208a50cc64d6136d7a0e5b9ed2584cddf6306ff35801",
+        },
+      },
+      subManifestPath: "tests/fixtures/import-admission/narrow-200k.manifest.v1.json",
+      manifestKind: "datapulse-import-admission-narrow-fixture-manifest",
+    },
+  ],
+  [
+    "import-admission-wide",
+    {
+      expectedAssertions: [
+        { id: "wide-rows", outcome: "equals", value: 50000 },
+        { id: "wide-columns", outcome: "equals", value: 100 },
+        { id: "wide-cells", outcome: "equals", value: 5000000 },
+      ],
+      generation: {
+        mode: "generated",
+        generator: { id: "import-admission-wide-generator", version: "m0-028-v1" },
+        seed: { kind: "fixed", value: "0000000085ebca6b" },
+        generatorFile: {
+          path: "tests/fixtures/import-admission/generate-wide.mjs",
+          bytes: 1378,
+          sha256: "7734382274f3e444146906030b1ef504df10ddc2c63ecb231ad1ace6537fae0e",
+        },
+      },
+      subManifestPath: "tests/fixtures/import-admission/wide-100col.manifest.v1.json",
+      manifestKind: "datapulse-import-admission-wide-fixture-manifest",
+    },
+  ],
 ]);
 const windowsReservedName =
   /^(?:con|prn|aux|nul|clock\$|conin\$|conout\$|(?:com|lpt)[1-9¹²³])(?:\.|$)/iu;
@@ -537,7 +605,10 @@ function extractSubManifestArtifacts(fixtureSet, subManifest) {
   if (
     fixtureSet.id === "story-development" ||
     fixtureSet.id === "story-formal" ||
-    fixtureSet.id === "metric-runtime-formal"
+    fixtureSet.id === "metric-runtime-formal" ||
+    fixtureSet.id === "import-admission" ||
+    fixtureSet.id === "import-admission-narrow" ||
+    fixtureSet.id === "import-admission-wide"
   ) {
     if (!Array.isArray(subManifest.fixtures)) {
       return null;

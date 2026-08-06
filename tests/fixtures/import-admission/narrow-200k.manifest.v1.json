@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-import-admission-narrow-fixture-manifest",
+  "hashAlgorithm": "SHA-256",
+  "fixtures": [
+    { "path": "narrow-200k.csv", "bytes": 4778063, "sha256": "35a1ce7b3d1c8796de212c5b3a1c192b6b98f3f99b64b0b4abe57384799a8f9f" }
+  ]
+}
