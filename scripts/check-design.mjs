@@ -53,6 +53,40 @@ const expectedSemanticRoles = [
   "diverging-positive",
 ];
 
+const expectedSpacingTokens = [
+  "none",
+  "xxs",
+  "xs",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+  "4xl",
+  "5xl",
+];
+
+const expectedRoundedTokens = ["none", "control", "card", "panel", "hero", "pill"];
+
+const expectedTypographyTokens = [
+  "display-xl",
+  "display-lg",
+  "display-md",
+  "heading-lg",
+  "heading-md",
+  "heading-sm",
+  "body-lg",
+  "body-md",
+  "body-sm",
+  "label",
+  "caption",
+  "metric-xl",
+  "metric-lg",
+  "axis",
+  "data-mono",
+];
+
 function normalizeNewlines(value) {
   return value.replaceAll("\r\n", "\n");
 }
@@ -150,7 +184,15 @@ function renderStringArray(lines, declaration, values) {
   lines.push("] as const;", "");
 }
 
-function renderGeneratedThemes(resolvedThemes) {
+function renderStringRecord(lines, declaration, entries) {
+  lines.push(`export const ${declaration} = {`);
+  for (const [name, value] of entries) {
+    lines.push(`  ${JSON.stringify(name)}: ${JSON.stringify(value)},`);
+  }
+  lines.push("} as const;", "");
+}
+
+function renderGeneratedThemes(resolvedThemes, designSystemVariables) {
   const lines = [
     "/**",
     " * Generated from the machine-readable `themes` extension in DESIGN.md.",
@@ -188,7 +230,133 @@ function renderGeneratedThemes(resolvedThemes) {
   }
 
   lines.push("} as const satisfies Readonly<Record<ThemeId, ThemeDefinition>>;", "");
+  renderStringRecord(lines, "DESIGN_SYSTEM_VARIABLES", designSystemVariables);
+  lines.push(
+    "export type DesignSystemVariable = keyof typeof DESIGN_SYSTEM_VARIABLES;",
+    "",
+  );
   return lines.join("\n");
+}
+
+function resolveDesignSystemVariables(report, collector) {
+  const groups = [
+    {
+      collection: report.designSystem.spacing,
+      expected: expectedSpacingTokens,
+      label: "spacing",
+      variablePrefix: "--dp-space-",
+    },
+    {
+      collection: report.designSystem.rounded,
+      expected: expectedRoundedTokens,
+      label: "rounded",
+      variablePrefix: "--dp-radius-",
+    },
+  ];
+  const variables = [];
+
+  for (const group of groups) {
+    const actualIds = sorted(group.collection.keys());
+    const expectedIds = sorted(group.expected);
+    collector.assert(
+      jsonEqual(actualIds, expectedIds),
+      "DESIGN_TOKEN_ID_SET",
+      `DESIGN.md#${group.label}`,
+      `${group.label} Token 集合必须稳定并完整生成`,
+      expectedIds,
+      actualIds,
+    );
+    for (const id of group.expected) {
+      const token = group.collection.get(id);
+      const valid =
+        isRecord(token) &&
+        token.type === "dimension" &&
+        typeof token.value === "number" &&
+        Number.isFinite(token.value) &&
+        typeof token.unit === "string" &&
+        token.unit.length > 0;
+      collector.assert(
+        valid,
+        "DESIGN_DIMENSION_TOKEN_INVALID",
+        `DESIGN.md#${group.label}.${id}`,
+        "尺寸 Token 必须解析为有限数值和显式单位",
+        "finite dimension",
+        token,
+      );
+      if (valid) {
+        variables.push([`${group.variablePrefix}${id}`, `${token.value}${token.unit}`]);
+      }
+    }
+  }
+
+  const actualTypographyIds = sorted(report.designSystem.typography.keys());
+  const expectedTypographyIds = sorted(expectedTypographyTokens);
+  collector.assert(
+    jsonEqual(actualTypographyIds, expectedTypographyIds),
+    "DESIGN_TYPOGRAPHY_ID_SET",
+    "DESIGN.md#typography",
+    "Typography Token 集合必须稳定并完整生成",
+    expectedTypographyIds,
+    actualTypographyIds,
+  );
+  for (const id of expectedTypographyTokens) {
+    const token = report.designSystem.typography.get(id);
+    const fontSize = isRecord(token) ? token.fontSize : null;
+    const valid =
+      isRecord(token) &&
+      token.type === "typography" &&
+      typeof token.fontFamily === "string" &&
+      token.fontFamily.length > 0 &&
+      typeof token.fontWeight === "number" &&
+      Number.isFinite(token.fontWeight) &&
+      isRecord(fontSize) &&
+      fontSize.type === "dimension" &&
+      typeof fontSize.value === "number" &&
+      Number.isFinite(fontSize.value) &&
+      typeof fontSize.unit === "string" &&
+      fontSize.unit.length > 0;
+    collector.assert(
+      valid,
+      "DESIGN_TYPOGRAPHY_TOKEN_INVALID",
+      `DESIGN.md#typography.${id}`,
+      "Typography Token 必须解析为字体族、字重与显式字号",
+      "resolved typography",
+      token,
+    );
+    if (!valid) {
+      continue;
+    }
+    variables.push([`--dp-font-family-${id}`, token.fontFamily]);
+    variables.push([`--dp-font-size-${id}`, `${fontSize.value}${fontSize.unit}`]);
+    variables.push([`--dp-font-weight-${id}`, String(token.fontWeight)]);
+
+    const letterSpacing = token.letterSpacing;
+    if (letterSpacing !== undefined) {
+      const validLetterSpacing =
+        isRecord(letterSpacing) &&
+        letterSpacing.type === "dimension" &&
+        typeof letterSpacing.value === "number" &&
+        Number.isFinite(letterSpacing.value) &&
+        typeof letterSpacing.unit === "string" &&
+        letterSpacing.unit.length > 0;
+      collector.assert(
+        validLetterSpacing,
+        "DESIGN_LETTER_SPACING_TOKEN_INVALID",
+        `DESIGN.md#typography.${id}.letterSpacing`,
+        "字距 Token 必须解析为有限数值和显式单位",
+        "finite dimension",
+        letterSpacing,
+      );
+      if (validLetterSpacing) {
+        variables.push([
+          `--dp-letter-spacing-${id}`,
+          `${letterSpacing.value}${letterSpacing.unit}`,
+        ]);
+      }
+    }
+  }
+
+  return variables;
 }
 
 function resolveThemes(report, collector) {
@@ -398,6 +566,7 @@ function evaluateDesign({
       result: "failed",
       lintSummary: null,
       resolvedThemes: new Map(),
+      designSystemVariables: [],
       expectedGeneratedSource: null,
       generatedMatched: false,
     };
@@ -446,8 +615,12 @@ function evaluateDesign({
     resolvedThemes.size,
   );
 
+  const designSystemVariables = resolveDesignSystemVariables(report, collector);
+
   const expectedGeneratedSource =
-    resolvedThemes.size === expectedThemes.length ? renderGeneratedThemes(resolvedThemes) : null;
+    resolvedThemes.size === expectedThemes.length
+      ? renderGeneratedThemes(resolvedThemes, designSystemVariables)
+      : null;
   const generatedMatched =
     expectedGeneratedSource !== null && normalizeNewlines(generatedSource) === expectedGeneratedSource;
   if (!skipGeneratedCheck) {
@@ -467,6 +640,7 @@ function evaluateDesign({
     result: collected.failures.length === 0 ? "passed" : "failed",
     lintSummary: report.summary,
     resolvedThemes,
+    designSystemVariables,
     expectedGeneratedSource,
     generatedMatched,
   };
@@ -652,6 +826,12 @@ async function main() {
       expected: expectedThemes.length,
       resolved: evaluation.resolvedThemes.size,
       semanticRolesPerTheme: expectedSemanticRoles.length,
+    },
+    designTokens: {
+      spacing: expectedSpacingTokens.length,
+      rounded: expectedRoundedTokens.length,
+      typography: expectedTypographyTokens.length,
+      cssVariables: evaluation.designSystemVariables.length,
     },
     generated: {
       path: "packages/themes/src/index.ts",

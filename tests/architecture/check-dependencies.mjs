@@ -42,6 +42,9 @@ const canonicalPnpmWorkspaceConfiguration = [
   '  - "packages/*"',
   '  - "services/*"',
   "",
+  "allowBuilds:",
+  "  esbuild: true",
+  "",
   "engineStrict: true",
   "saveExact: true",
   "strictPeerDependencies: true",
@@ -308,6 +311,9 @@ function writeWorkspace(root, definition) {
     license: "AGPL-3.0-only",
     ...(definition.exports ? { exports: definition.exports } : {}),
     dependencies: definition.dependencies ?? {},
+    ...(definition.devDependencies
+      ? { devDependencies: definition.devDependencies }
+      : {}),
   };
   writeJson(resolve(workspaceRoot, "package.json"), manifest);
   writeJson(resolve(workspaceRoot, "tsconfig.json"), {
@@ -423,6 +429,35 @@ function addAnalysisEngine(root) {
   });
 }
 
+function addMetricRuntime(root, source = 'import "@datapulse/domain";\nexport const value = 1;') {
+  writeWorkspace(root, {
+    path: "packages/metric-runtime",
+    name: "@datapulse/metric-runtime",
+    exports: { ".": "./src/index.ts" },
+    dependencies: { "@datapulse/domain": "workspace:*" },
+    devDependencies: {
+      ajv: "8.17.1",
+      "json-schema-to-typescript": "15.0.4",
+    },
+    references: [{ path: "../domain" }],
+    sources: { "index.ts": source },
+  });
+  writeSource(
+    resolve(root, "packages/metric-runtime/scripts/generate-artifacts.mjs"),
+    'import { readFileSync } from "node:fs";\nimport Ajv from "ajv";\nimport { compile } from "json-schema-to-typescript";\nvoid readFileSync;\nvoid Ajv;\nvoid compile;\nexport {};',
+  );
+}
+
+function addWorkspaceDependency(root, workspacePath, dependencyName, referencePath) {
+  mutateWorkspaceManifest(root, workspacePath, (manifest) => {
+    manifest.dependencies[dependencyName] = "workspace:*";
+  });
+  const tsconfigPath = resolve(root, workspacePath, "tsconfig.json");
+  const tsconfig = JSON.parse(readFileSync(tsconfigPath, "utf8"));
+  tsconfig.references.push({ path: referencePath });
+  writeJson(tsconfigPath, tsconfig);
+}
+
 function addLocalStorage(root) {
   writeWorkspace(root, {
     path: "packages/local-storage",
@@ -531,6 +566,90 @@ function runSelfTests() {
   });
 
   withFixture((root) => {
+    addMetricRuntime(
+      root,
+      [
+        'import "@datapulse/domain";',
+        "const fetch = () => 1;",
+        "const localStorage = { value: 1 };",
+        "class Date {}",
+        "const Math = { random: () => 0.5 };",
+        "const Intl = { NumberFormat: () => ({ format: String }) };",
+        "const sample = { toLocaleString: () => \"local\" };",
+        "const globalThis = { fetch };",
+        "void fetch();",
+        "void localStorage.value;",
+        "void new Date();",
+        "void Math.random();",
+        "void Intl.NumberFormat();",
+        "void sample.toLocaleString();",
+        "void globalThis.fetch();",
+        "export {};",
+      ].join("\n"),
+    );
+    addWorkspaceDependency(
+      root,
+      "apps/creator",
+      "@datapulse/metric-runtime",
+      "../../packages/metric-runtime",
+    );
+    writeSource(
+      resolve(root, "apps/creator/src/main.ts"),
+      'import "@datapulse/domain";\nimport "@datapulse/metric-runtime";\nimport "react/jsx-runtime";\nexport {};',
+    );
+    addWorkspaceDependency(
+      root,
+      "apps/viewer",
+      "@datapulse/metric-runtime",
+      "../../packages/metric-runtime",
+    );
+    writeSource(
+      resolve(root, "apps/viewer/src/main.ts"),
+      'import "@datapulse/metric-runtime";\nexport {};',
+    );
+    const report = analyzeDependencyBoundaries({ repositoryRoot: root });
+    record(
+      "合法 Metric Runtime、Creator／Viewer 消费与局部同名绑定通过",
+      report.result === "passed",
+      "passed",
+      report,
+    );
+  });
+
+  withFixture((root) => {
+    addMetricRuntime(
+      root,
+      [
+        'import "@datapulse/domain";',
+        'void (1).toLocaleString("zh-CN");',
+        'void "a".localeCompare("b", "zh-CN");',
+        "export {};",
+      ].join("\n"),
+    );
+    const report = analyzeDependencyBoundaries({ repositoryRoot: root });
+    record(
+      "Metric Runtime 显式字面量 locale 与构建脚本工具依赖通过",
+      report.result === "passed",
+      "passed",
+      report,
+    );
+  });
+
+  withFixture((root) => {
+    writeSource(
+      resolve(root, "services/share-api/src/main.ts"),
+      'import "@datapulse/api-contracts/http";\nprocess.exitCode = 0;\nexport {};',
+    );
+    const report = analyzeDependencyBoundaries({ repositoryRoot: root });
+    record(
+      "非浏览器 workspace 可直接设置 CLI exitCode",
+      report.result === "passed",
+      "passed",
+      report,
+    );
+  });
+
+  withFixture((root) => {
     writeSource(
       resolve(root, "apps/creator/src/local-bindings.ts"),
       'function require(value: string) { return value; }\nconst module = { value: 1 };\nrequire("not-a-package");\nconsole.log(module.value);\nexport {};',
@@ -557,6 +676,165 @@ function runSelfTests() {
     const report = analyzeDependencyBoundaries({ repositoryRoot: root });
     record("单一静态 Vite 默认配置可通过", report.result === "passed", "passed", report);
   });
+
+  expectFailureCodes(
+    "Metric Runtime 运行时外部依赖旁路",
+    (root) => {
+      addMetricRuntime(
+        root,
+        'import "@datapulse/domain";\nimport "react";\nexport {};',
+      );
+      mutateWorkspaceManifest(root, "packages/metric-runtime", (manifest) => {
+        manifest.dependencies.react = "19.0.0";
+      });
+    },
+    [
+      "ARCH_PURE_RUNTIME_MANIFEST_DEPENDENCY_BOUNDARY",
+      "ARCH_PURE_RUNTIME_EXTERNAL_IMPORT_BOUNDARY",
+    ],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime 产品源码导入构建期工具旁路",
+    (root) => {
+      addMetricRuntime(
+        root,
+        'import "@datapulse/domain";\nimport Ajv from "ajv";\nvoid Ajv;\nexport {};',
+      );
+    },
+    ["ARCH_PURE_RUNTIME_EXTERNAL_IMPORT_BOUNDARY"],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime 未批准构建期依赖旁路",
+    (root) => {
+      addMetricRuntime(root);
+      mutateWorkspaceManifest(root, "packages/metric-runtime", (manifest) => {
+        manifest.devDependencies.vite = "8.2.0";
+      });
+    },
+    ["ARCH_PURE_RUNTIME_MANIFEST_DEPENDENCY_BOUNDARY"],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime Node builtin 旁路",
+    (root) => {
+      addMetricRuntime(
+        root,
+        'import "@datapulse/domain";\nimport "node:fs";\nexport {};',
+      );
+    },
+    ["ARCH_PURE_RUNTIME_BUILTIN_BOUNDARY"],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime 网络与存储全局旁路",
+    (root) => {
+      addMetricRuntime(
+        root,
+        [
+          'import "@datapulse/domain";',
+          'void fetch("https://invalid.example");',
+          "void globalThis.localStorage;",
+          "void indexedDB;",
+          "void navigator.sendBeacon;",
+          "void process.env;",
+          "void Buffer;",
+          "export {};",
+        ].join("\n"),
+      );
+    },
+    ["ARCH_PURE_RUNTIME_CAPABILITY_BOUNDARY"],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime 设备时间与随机数旁路",
+    (root) => {
+      addMetricRuntime(
+        root,
+        [
+          'import "@datapulse/domain";',
+          "void Date.now();",
+          "void new Date();",
+          "void Math.random();",
+          "const random = Math.random;",
+          "void random;",
+          "void crypto.getRandomValues;",
+          "void performance.now();",
+          "export {};",
+        ].join("\n"),
+      );
+    },
+    ["ARCH_PURE_RUNTIME_NONDETERMINISTIC_BOUNDARY"],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime 隐式 locale 旁路",
+    (root) => {
+      addMetricRuntime(
+        root,
+        [
+          'import "@datapulse/domain";',
+          "void (1).toLocaleString();",
+          'void "a".localeCompare("b");',
+          "void new Intl.NumberFormat();",
+          "export {};",
+        ].join("\n"),
+      );
+    },
+    ["ARCH_PURE_RUNTIME_IMPLICIT_LOCALE"],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime ambient 声明伪装全局能力",
+    (root) => {
+      addMetricRuntime(
+        root,
+        [
+          'import "@datapulse/domain";',
+          'void fetch("https://invalid.example");',
+          "void Date.now();",
+          "void (1).toLocaleString();",
+          "export {};",
+        ].join("\n"),
+      );
+      writeSource(
+        resolve(root, "packages/metric-runtime/src/ambient.d.ts"),
+        [
+          "declare function fetch(input: string): unknown;",
+          "declare const Date: { now(): number };",
+          "interface Number { toLocaleString(): string; }",
+        ].join("\n"),
+      );
+    },
+    [
+      "ARCH_PURE_RUNTIME_CAPABILITY_BOUNDARY",
+      "ARCH_PURE_RUNTIME_NONDETERMINISTIC_BOUNDARY",
+      "ARCH_PURE_RUNTIME_IMPLICIT_LOCALE",
+    ],
+  );
+
+  expectFailureCodes(
+    "Metric Runtime 越界依赖",
+    (root) => {
+      addMetricRuntime(root);
+      mutateWorkspaceManifest(root, "packages/metric-runtime", (manifest) => {
+        manifest.dependencies["@datapulse/api-contracts"] = "workspace:*";
+      });
+      const tsconfigPath = resolve(root, "packages/metric-runtime/tsconfig.json");
+      const tsconfig = JSON.parse(readFileSync(tsconfigPath, "utf8"));
+      tsconfig.references.push({ path: "../api-contracts" });
+      writeJson(tsconfigPath, tsconfig);
+      writeSource(
+        resolve(root, "packages/metric-runtime/src/index.ts"),
+        'import "@datapulse/domain";\nimport "@datapulse/api-contracts/http";\nexport {};',
+      );
+    },
+    [
+      "ARCH_DEPENDENCY_DIRECTION",
+      "ARCH_PURE_RUNTIME_MANIFEST_DEPENDENCY_BOUNDARY",
+    ],
+  );
 
   expectFailureCodes(
     "两节点循环",
@@ -627,6 +905,40 @@ function runSelfTests() {
     },
     ["ARCH_VIEWER_BOUNDARY"],
   );
+
+  for (const restrictedSubpath of [
+    "development-migration-support",
+    "formal-migration-support",
+  ]) {
+    expectFailureCodes(
+      `Viewer 绕过 Reader 导入 Story Schema 受限子路径 ${restrictedSubpath}`,
+      (root) => {
+        writeWorkspace(root, {
+          path: "packages/story-schema",
+          name: "@datapulse/story-schema",
+          exports: {
+            ".": "./src/index.ts",
+            "./development-migration-support":
+              "./src/development-migration-support.ts",
+            "./formal-migration-support": "./src/formal-migration-support.ts",
+          },
+          sources: {
+            "index.ts": "export {};",
+            "development-migration-support.ts": "export {};",
+            "formal-migration-support.ts": "export {};",
+          },
+        });
+        updateWorkspaceDependencies(root, "apps/viewer", {
+          "@datapulse/story-schema": "workspace:*",
+        });
+        writeSource(
+          resolve(root, "apps/viewer/src/main.ts"),
+          `import "@datapulse/story-schema/${restrictedSubpath}";\nexport {};`,
+        );
+      },
+      ["ARCH_CONSUMER_SUBPATH_BOUNDARY"],
+    );
+  }
 
   expectFailureCodes(
     "Connector 越界依赖",

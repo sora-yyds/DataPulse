@@ -39,6 +39,9 @@ const expectedPnpmWorkspaceConfiguration = [
   '  - "packages/*"',
   '  - "services/*"',
   "",
+  "allowBuilds:",
+  "  esbuild: true",
+  "",
   "engineStrict: true",
   "saveExact: true",
   "strictPeerDependencies: true",
@@ -91,7 +94,7 @@ const workspacePolicies = new Map([
     "packages/story-migrations",
     policy(names.storyMigrations, [names.domain, names.storySchema]),
   ],
-  ["packages/metric-runtime", policy(names.metricRuntime, [names.domain, names.storySchema])],
+  ["packages/metric-runtime", policy(names.metricRuntime, [names.domain])],
   ["packages/crypto", policy(names.crypto, [names.domain])],
   ["packages/import-engine", policy(names.importEngine, [names.domain])],
   ["packages/api-contracts", policy(names.apiContracts, [names.domain])],
@@ -116,7 +119,15 @@ const workspacePolicies = new Map([
   ["packages/package-codec", policy(names.packageCodec, [names.domain, names.storySchema])],
   ["packages/provider-adapters", policy(names.providerAdapters, [names.apiContracts])],
   ["packages/static-export", policy(names.staticExport, [names.renderer, names.themes])],
-  ["apps/creator", policy("@datapulse/creator", [names.domain])],
+  [
+    "apps/creator",
+    policy("@datapulse/creator", [
+      names.domain,
+      names.metricRuntime,
+      names.renderer,
+      names.storyMigrations,
+    ]),
+  ],
   [
     "apps/viewer",
     policy("@datapulse/viewer", [
@@ -141,13 +152,64 @@ const workspacePolicies = new Map([
 
 const consumerSubpathPolicies = new Map([
   [
+    names.storyMigrations,
+    new Map([
+      [names.domain, new Set(["."])],
+      [
+        names.storySchema,
+        new Set([
+          ".",
+          "./development-migration-support",
+          "./formal-migration-support",
+        ]),
+      ],
+    ]),
+  ],
+  [
     "@datapulse/custom-connector",
     new Map([[names.apiContracts, new Set(["./connector-message"])]]),
   ],
 ]);
 
+// Package exports describe what can resolve, not which consumer may use a
+// security-sensitive implementation seam. These producer-owned subpaths are
+// denied to every consumer unless consumerSubpathPolicies explicitly grants
+// the exact target/subpath pair.
+const restrictedProducerSubpaths = new Map([
+  [
+    names.storySchema,
+    new Set([
+      "./development-migration-support",
+      "./formal-migration-support",
+    ]),
+  ],
+]);
+
 const consumerManifestDependencyPolicies = new Map([
   ["@datapulse/custom-connector", new Set([names.apiContracts])],
+  [
+    names.renderer,
+    new Set([
+      names.storySchema,
+      names.themes,
+      "@types/react",
+      "react",
+    ]),
+  ],
+  [
+    "@datapulse/creator",
+    new Set([
+      names.domain,
+      names.metricRuntime,
+      names.renderer,
+      names.storyMigrations,
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom",
+      "vite",
+    ]),
+  ],
   [
     "@datapulse/viewer",
     new Set([
@@ -164,12 +226,59 @@ const consumerManifestDependencyPolicies = new Map([
 
 const consumerExternalImportPolicies = new Map([
   ["@datapulse/custom-connector", new Set()],
+  [names.renderer, new Set(["react"])],
+  ["@datapulse/creator", new Set(["react", "react-dom", "vite"])],
   ["@datapulse/viewer", new Set(["react", "react-dom", "vite"])],
 ]);
 
 const consumerBuiltinImportPolicies = new Map([
   ["@datapulse/custom-connector", new Set()],
+  [names.renderer, new Set()],
+  ["@datapulse/creator", new Set()],
   ["@datapulse/viewer", new Set()],
+]);
+
+const pureDeterministicWorkspaceNames = new Set([names.metricRuntime]);
+const pureDeterministicManifestDependencyPolicies = new Map([
+  [
+    names.metricRuntime,
+    new Map([
+      ["dependencies", new Set([names.domain])],
+      ["optionalDependencies", new Set()],
+      ["peerDependencies", new Set()],
+      ["devDependencies", new Set(["ajv", "json-schema-to-typescript"])],
+    ]),
+  ],
+]);
+const pureDeterministicCapabilityGlobalNames = new Set([
+  "Buffer",
+  "BroadcastChannel",
+  "EventSource",
+  "FileSystemHandle",
+  "IDBFactory",
+  "Storage",
+  "WebSocket",
+  "XMLHttpRequest",
+  "caches",
+  "document",
+  "fetch",
+  "indexedDB",
+  "localStorage",
+  "navigator",
+  "process",
+  "sessionStorage",
+]);
+const pureDeterministicNondeterministicGlobalNames = new Set([
+  "Date",
+  "Temporal",
+  "crypto",
+  "performance",
+]);
+const implicitLocaleMethodArgumentIndexes = new Map([
+  ["localeCompare", 1],
+  ["toLocaleDateString", 0],
+  ["toLocaleString", 0],
+  ["toLocaleTimeString", 0],
 ]);
 
 function normalizePath(path) {
@@ -837,18 +946,34 @@ function findCycles(graph) {
   return sorted(cycles);
 }
 
-function collectModuleSpecifiers(sourceFile, checker, { workspaceName }) {
+function collectModuleSpecifiers(
+  sourceFile,
+  checker,
+  { enforcePureDeterministicRuntime, workspaceName },
+) {
   const specifiers = [];
   const forbiddenLocations = new Set();
   const isViteConfig = viteConfigPattern.test(basename(sourceFile.fileName));
   const isUnboundIdentifier = (node) =>
     ts.isIdentifier(node) && checker.getSymbolAtLocation(node) === undefined;
+  const hasLocalRuntimeDeclaration = (node) => {
+    const symbol = checker.getSymbolAtLocation(node);
+    return (
+      symbol?.declarations?.some(
+        (declaration) =>
+          declaration.getSourceFile() === sourceFile &&
+          !declaration.getSourceFile().isDeclarationFile &&
+          (ts.getCombinedModifierFlags(declaration) & ts.ModifierFlags.Ambient) === 0,
+      ) === true
+    );
+  };
   const browserConsumer = consumerBuiltinImportPolicies.has(workspaceName);
   const safeProcessProperties = new Set([
     "arch",
     "argv",
     "cwd",
     "env",
+    "exitCode",
     "platform",
     "version",
     "versions",
@@ -1108,7 +1233,7 @@ function collectModuleSpecifiers(sourceFile, checker, { workspaceName }) {
           node,
           "runtime-process-alias",
           "ARCH_RUNTIME_MODULE_RESOLVER_FORBIDDEN",
-          "process 只能在非浏览器 workspace 直接读取批准属性，禁止解构或传播运行时模块解析能力",
+          "process 只能在非浏览器 workspace 直接访问批准属性，禁止解构或传播运行时模块解析能力",
         );
       }
     }
@@ -1133,6 +1258,104 @@ function collectModuleSpecifiers(sourceFile, checker, { workspaceName }) {
           "ARCH_RUNTIME_MODULE_RESOLVER_FORBIDDEN",
           "运行时全局对象禁止取得 importScripts/process/module/require 模块解析能力",
         );
+      }
+    }
+    if (
+      enforcePureDeterministicRuntime &&
+      ts.isIdentifier(node) &&
+      pureDeterministicCapabilityGlobalNames.has(node.text) &&
+      !hasLocalRuntimeDeclaration(node) &&
+      !isDeclarationOrPropertyName(node)
+    ) {
+      recordForbidden(
+        node,
+        "pure-runtime-capability-global",
+        "ARCH_PURE_RUNTIME_CAPABILITY_BOUNDARY",
+        "纯确定性运行时禁止访问网络、浏览器存储或环境能力全局对象",
+      );
+    }
+    if (
+      enforcePureDeterministicRuntime &&
+      ts.isIdentifier(node) &&
+      runtimeGlobalNames.has(node.text) &&
+      !hasLocalRuntimeDeclaration(node) &&
+      !isDeclarationOrPropertyName(node)
+    ) {
+      recordForbidden(
+        node,
+        "pure-runtime-capability-global-member",
+        "ARCH_PURE_RUNTIME_CAPABILITY_BOUNDARY",
+        "纯确定性运行时禁止访问或传播 window、self、globalThis 等运行时环境对象",
+      );
+    }
+    if (
+      enforcePureDeterministicRuntime &&
+      ts.isIdentifier(node) &&
+      pureDeterministicNondeterministicGlobalNames.has(node.text) &&
+      !hasLocalRuntimeDeclaration(node) &&
+      !isDeclarationOrPropertyName(node)
+    ) {
+      recordForbidden(
+        node,
+        "pure-runtime-nondeterministic-global",
+        "ARCH_PURE_RUNTIME_NONDETERMINISTIC_BOUNDARY",
+        "纯确定性运行时禁止读取设备时间、计时器或随机环境能力",
+      );
+    }
+    if (
+      enforcePureDeterministicRuntime &&
+      isNamedIdentifier(node, "Math") &&
+      !hasLocalRuntimeDeclaration(node) &&
+      !isDeclarationOrPropertyName(node)
+    ) {
+      const propertyName = directPropertyUse(node);
+      if (propertyName === null || propertyName === "random") {
+        recordForbidden(
+          node,
+          "pure-runtime-random",
+          "ARCH_PURE_RUNTIME_NONDETERMINISTIC_BOUNDARY",
+          "纯确定性运行时禁止 Math.random 或传播 Math 以间接取得随机能力",
+        );
+      }
+    }
+    if (
+      enforcePureDeterministicRuntime &&
+      isNamedIdentifier(node, "Intl") &&
+      !hasLocalRuntimeDeclaration(node) &&
+      !isDeclarationOrPropertyName(node)
+    ) {
+      recordForbidden(
+        node,
+        "pure-runtime-intl",
+        "ARCH_PURE_RUNTIME_IMPLICIT_LOCALE",
+        "纯确定性运行时禁止读取默认 Intl locale、时区或实现环境",
+      );
+    }
+    if (
+      enforcePureDeterministicRuntime &&
+      (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node))
+    ) {
+      const propertyName = propertyNameText(node);
+      const localeArgumentIndex = implicitLocaleMethodArgumentIndexes.get(propertyName ?? "");
+      if (localeArgumentIndex !== undefined) {
+        const hasLocalPropertyDeclaration =
+          ts.isPropertyAccessExpression(node) && hasLocalRuntimeDeclaration(node.name);
+        const call = ts.isCallExpression(node.parent) && node.parent.expression === node
+          ? node.parent
+          : null;
+        const localeArgument = call?.arguments[localeArgumentIndex];
+        const hasExplicitLiteralLocale =
+          localeArgument !== undefined &&
+          ts.isStringLiteralLike(localeArgument) &&
+          localeArgument.text.length > 0;
+        if (!hasLocalPropertyDeclaration && !hasExplicitLiteralLocale) {
+          recordForbidden(
+            node,
+            "pure-runtime-implicit-locale",
+            "ARCH_PURE_RUNTIME_IMPLICIT_LOCALE",
+            "纯确定性运行时的 locale-sensitive 操作必须直接传入非空字面量 locale",
+          );
+        }
       }
     }
 
@@ -1244,6 +1467,71 @@ function validatePolicyCatalog(collector) {
     }
   }
 
+  for (const workspaceName of pureDeterministicWorkspaceNames) {
+    collector.assert(
+      knownNames.has(workspaceName),
+      "ARCH_PURE_RUNTIME_POLICY_TARGET_UNKNOWN",
+      workspaceName,
+      "纯确定性运行时策略必须指向已登记 workspace",
+      "known policy package",
+      workspaceName,
+    );
+    const manifestSectionPolicies =
+      pureDeterministicManifestDependencyPolicies.get(workspaceName);
+    collector.assert(
+      manifestSectionPolicies instanceof Map &&
+        dependencySections.every((section) => manifestSectionPolicies.has(section)),
+      "ARCH_PURE_RUNTIME_POLICY_INVALID",
+      workspaceName,
+      "纯确定性运行时必须为每个 manifest 依赖区声明精确集合",
+      dependencySections,
+      manifestSectionPolicies === undefined ? null : sorted(manifestSectionPolicies.keys()),
+    );
+    for (const [section, allowedDependencies] of manifestSectionPolicies ?? []) {
+      collector.assert(
+        allowedDependencies instanceof Set,
+        "ARCH_PURE_RUNTIME_POLICY_INVALID",
+        `${workspaceName}#${section}`,
+        "纯确定性运行时 manifest 依赖区策略必须是集合",
+        "dependency set",
+        typeof allowedDependencies,
+      );
+      for (const dependency of allowedDependencies ?? []) {
+        if (!dependency.startsWith(workspaceNamespace)) {
+          continue;
+        }
+        collector.assert(
+          knownNames.has(dependency),
+          "ARCH_PURE_RUNTIME_POLICY_TARGET_UNKNOWN",
+          `${workspaceName}#${section}`,
+          "纯确定性运行时批准的内部依赖必须指向已登记 workspace",
+          "known policy package",
+          dependency,
+        );
+      }
+    }
+  }
+
+  for (const [producerName, restrictedSubpaths] of restrictedProducerSubpaths) {
+    collector.assert(
+      knownNames.has(producerName),
+      "ARCH_RESTRICTED_SUBPATH_PRODUCER_UNKNOWN",
+      producerName,
+      "受限 export 子路径的生产者必须登记在完整策略目录",
+      "known policy package",
+      producerName,
+    );
+    collector.assert(
+      restrictedSubpaths.size > 0 &&
+        [...restrictedSubpaths].every((subpath) => subpath.startsWith("./")),
+      "ARCH_RESTRICTED_SUBPATH_INVALID",
+      producerName,
+      "生产者受限 export 必须是非空显式子路径集合",
+      "non-empty explicit subpaths",
+      sorted(restrictedSubpaths),
+    );
+  }
+
   const policyCycles = findCycles(policyGraph);
   collector.assert(
     policyCycles.length === 0,
@@ -1280,6 +1568,10 @@ function validateSourceImports({ collector, repositoryRoot, workspace, workspace
 
   for (const sourcePath of sourceFiles) {
     const relativeSourcePath = normalizePath(relative(repositoryRoot, sourcePath));
+    const relativeWorkspaceSourcePath = normalizePath(relative(workspace.absolutePath, sourcePath));
+    const enforcePureDeterministicRuntime =
+      pureDeterministicWorkspaceNames.has(workspace.name) &&
+      relativeWorkspaceSourcePath.startsWith("src/");
     let sourceText;
     try {
       sourceText = readFileSync(sourcePath, "utf8");
@@ -1321,6 +1613,7 @@ function validateSourceImports({ collector, repositoryRoot, workspace, workspace
     );
 
     for (const imported of collectModuleSpecifiers(sourceFile, checker, {
+      enforcePureDeterministicRuntime,
       workspaceName: workspace.name,
     })) {
       importCount += 1;
@@ -1358,6 +1651,16 @@ function validateSourceImports({ collector, repositoryRoot, workspace, workspace
         specifier,
       );
       if (builtinModuleNames.has(specifier)) {
+        if (enforcePureDeterministicRuntime) {
+          collector.assert(
+            false,
+            "ARCH_PURE_RUNTIME_BUILTIN_BOUNDARY",
+            subject,
+            "纯确定性运行时不得导入 Node 内建模块",
+            [],
+            specifier,
+          );
+        }
         const allowedBuiltins = consumerBuiltinImportPolicies.get(workspace.name);
         if (allowedBuiltins) {
           const canonicalBuiltin = specifier.startsWith("node:")
@@ -1455,6 +1758,16 @@ function validateSourceImports({ collector, repositoryRoot, workspace, workspace
             dependencyCandidates,
           );
         }
+        if (enforcePureDeterministicRuntime) {
+          collector.assert(
+            false,
+            "ARCH_PURE_RUNTIME_EXTERNAL_IMPORT_BOUNDARY",
+            subject,
+            "纯确定性运行时源码不得导入外部 package",
+            [],
+            dependencyCandidates,
+          );
+        }
         continue;
       }
 
@@ -1510,6 +1823,19 @@ function validateSourceImports({ collector, repositoryRoot, workspace, workspace
 
       const consumerPolicy = consumerSubpathPolicies.get(workspace.name);
       const allowedSubpaths = consumerPolicy?.get(targetWorkspace.name);
+      const producerRestrictedSubpaths = restrictedProducerSubpaths.get(
+        targetWorkspace.name,
+      );
+      if (producerRestrictedSubpaths?.has(parsedSpecifier.subpath)) {
+        collector.assert(
+          allowedSubpaths?.has(parsedSpecifier.subpath) === true,
+          "ARCH_CONSUMER_SUBPATH_BOUNDARY",
+          subject,
+          "生产者受限 export 子路径只对白名单消费者开放",
+          sorted(allowedSubpaths ?? new Set()),
+          parsedSpecifier.subpath,
+        );
+      }
       if (allowedSubpaths) {
         collector.assert(
           allowedSubpaths.has(parsedSpecifier.subpath),
@@ -1621,6 +1947,8 @@ function analyzeDependencyBoundariesInternal({ repositoryRoot }) {
     const allowedManifestDependencies = consumerManifestDependencyPolicies.get(
       workspacePolicy?.name,
     );
+    const pureDeterministicManifestSectionPolicies =
+      pureDeterministicManifestDependencyPolicies.get(workspacePolicy?.name);
     for (const section of dependencySections) {
       const dependencies = manifest[section] ?? {};
       for (const [dependencyName, version] of Object.entries(dependencies)) {
@@ -1640,6 +1968,18 @@ function analyzeDependencyBoundariesInternal({ repositoryRoot }) {
             `${workspacePath}/package.json#${section}`,
             "高风险浏览器消费者 manifest 只能声明显式批准的依赖",
             sorted(allowedManifestDependencies),
+            dependencyName,
+          );
+        }
+        if (pureDeterministicManifestSectionPolicies) {
+          const allowedDependencies =
+            pureDeterministicManifestSectionPolicies.get(section) ?? new Set();
+          collector.assert(
+            allowedDependencies.has(dependencyName),
+            "ARCH_PURE_RUNTIME_MANIFEST_DEPENDENCY_BOUNDARY",
+            `${workspacePath}/package.json#${section}`,
+            "纯确定性运行时每个 manifest 依赖区只能声明精确批准的运行时或构建期依赖",
+            sorted(allowedDependencies),
             dependencyName,
           );
         }

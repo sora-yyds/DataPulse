@@ -5,6 +5,18 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "@datapulse/story-schema#build": {
+      "cache": false,
+      "dependsOn": ["^build"],
+      "env": ["DATAPULSE_MERGE_BASE"],
+      "outputs": ["dist/**"]
+    },
+    "@datapulse/metric-runtime#build": {
+      "cache": false,
+      "dependsOn": ["^build"],
+      "env": ["DATAPULSE_MERGE_BASE"],
+      "outputs": ["dist/**"]
+    },
     "//#check:toolchain:root": {
       "cache": false,
       "outputs": []

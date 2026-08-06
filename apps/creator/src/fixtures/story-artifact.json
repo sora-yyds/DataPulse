@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0.0",
+  "storyId": "story_m0-015-renderer",
+  "datasetVersionId": "dataset_version_m0-015-renderer",
+  "reportGoal": "验证正式故事与确定性指标的最小二维渲染链",
+  "storyTimezone": "Asia/Shanghai",
+  "references": {
+    "fieldIds": [],
+    "metricIds": [
+      "metric_order-count"
+    ],
+    "evidenceIds": [
+      "evidence_order-count"
+    ],
+    "judgmentRuleIds": [],
+    "narrativeRuleIds": []
+  },
+  "conditions": [],
+  "globalConditionIds": [],
+  "theme": {
+    "themeId": "enterprise-minimal"
+  },
+  "visual": {
+    "renderMode": "2d",
+    "scenePreset": "none",
+    "motionPreset": "none"
+  },
+  "blocks": [
+    {
+      "blockId": "story_block_order-overview",
+      "blockType": "title-summary",
+      "layout": {
+        "variant": "full-width"
+      },
+      "additionalConditionIds": [],
+      "evidenceIds": [],
+      "judgmentRuleIds": [],
+      "narrativeRuleIds": [],
+      "content": {
+        "title": "订单概览",
+        "summary": "该合成故事验证 Creator 与 Viewer 共享正式故事契约和确定性指标结果。"
+      },
+      "visualVariant": "hero"
+    },
+    {
+      "blockId": "story_block_order-count",
+      "blockType": "kpi",
+      "layout": {
+        "variant": "emphasis"
+      },
+      "additionalConditionIds": [],
+      "metricId": "metric_order-count",
+      "evidenceIds": [
+        "evidence_order-count"
+      ],
+      "judgmentRuleIds": [],
+      "narrativeRuleIds": [],
+      "label": "订单总数",
+      "visualVariant": "metric-feature"
+    }
+  ]
+}

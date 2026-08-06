@@ -3,6 +3,9 @@ packages:
   - "packages/*"
   - "services/*"
 
+allowBuilds:
+  esbuild: true
+
 engineStrict: true
 saveExact: true
 strictPeerDependencies: true

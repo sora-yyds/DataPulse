@@ -6,8 +6,12 @@
   "files": [],
   "references": [
     { "path": "./packages/domain" },
+    { "path": "./packages/story-schema" },
+    { "path": "./packages/story-migrations" },
+    { "path": "./packages/metric-runtime" },
     { "path": "./packages/api-contracts" },
     { "path": "./packages/themes" },
+    { "path": "./packages/renderer" },
     { "path": "./apps/creator" },
     { "path": "./apps/viewer" },
     { "path": "./apps/custom-connector" },

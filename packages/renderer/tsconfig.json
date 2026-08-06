@@ -7,15 +7,13 @@
     "sourceMap": true,
     "jsx": "react-jsx",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/.tsbuildinfo"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [
-    { "path": "../../packages/metric-runtime" },
-    { "path": "../../packages/renderer" },
-    { "path": "../../packages/story-migrations" }
+    { "path": "../story-schema" },
+    { "path": "../themes" }
   ]
 }

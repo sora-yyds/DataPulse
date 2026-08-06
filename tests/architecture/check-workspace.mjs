@@ -17,6 +17,46 @@ const requiredWorkspaces = [
   },
   {
     kind: "package",
+    path: "packages/story-schema",
+    name: "@datapulse/story-schema",
+    dependencies: { ajv: "8.17.1" },
+    devDependencies: { "json-schema-to-typescript": "15.0.4" },
+    references: [],
+    entries: {
+      ".": "index",
+      "./development-migration-support": "development-migration-support",
+      "./formal-migration-support": "formal-migration-support",
+    },
+    inputs: ["src/**/*.ts", "src/**/*.json"],
+    buildScript: "node ./scripts/generate-artifacts.mjs --check && tsc --build tsconfig.json",
+  },
+  {
+    kind: "package",
+    path: "packages/story-migrations",
+    name: "@datapulse/story-migrations",
+    dependencies: {
+      "@datapulse/domain": "workspace:*",
+      "@datapulse/story-schema": "workspace:*",
+    },
+    references: ["../domain", "../story-schema"],
+    entries: { ".": "index" },
+  },
+  {
+    kind: "package",
+    path: "packages/metric-runtime",
+    name: "@datapulse/metric-runtime",
+    dependencies: { "@datapulse/domain": "workspace:*" },
+    devDependencies: {
+      ajv: "8.17.1",
+      "json-schema-to-typescript": "15.0.4",
+    },
+    references: ["../domain"],
+    entries: { ".": "index" },
+    inputs: ["src/**/*.ts", "src/**/*.json"],
+    buildScript: "node ./scripts/generate-artifacts.mjs --check && tsc --build tsconfig.json",
+  },
+  {
+    kind: "package",
     path: "packages/api-contracts",
     name: "@datapulse/api-contracts",
     dependencies: { "@datapulse/domain": "workspace:*" },
@@ -36,20 +76,74 @@ const requiredWorkspaces = [
     entries: { ".": "index" },
   },
   {
+    kind: "package",
+    path: "packages/renderer",
+    name: "@datapulse/renderer",
+    dependencies: {
+      "@datapulse/story-schema": "workspace:*",
+      "@datapulse/themes": "workspace:*",
+    },
+    peerDependencies: { react: "19.2.8" },
+    devDependencies: {
+      "@types/react": "19.2.18",
+    },
+    references: ["../story-schema", "../themes"],
+    entries: { ".": "index" },
+    inputs: ["src/**/*.ts", "src/**/*.tsx"],
+  },
+  {
     kind: "app",
     path: "apps/creator",
     name: "@datapulse/creator",
-    dependencies: { "@datapulse/domain": "workspace:*" },
-    references: ["../../packages/domain"],
+    dependencies: {
+      "@datapulse/domain": "workspace:*",
+      "@datapulse/metric-runtime": "workspace:*",
+      "@datapulse/renderer": "workspace:*",
+      "@datapulse/story-migrations": "workspace:*",
+      react: "19.2.8",
+      "react-dom": "19.2.8",
+    },
+    devDependencies: {
+      "@types/react": "19.2.18",
+      "@types/react-dom": "19.2.4",
+      vite: "8.2.0",
+    },
+    references: [
+      "../../packages/domain",
+      "../../packages/metric-runtime",
+      "../../packages/renderer",
+      "../../packages/story-migrations",
+    ],
     entries: { main: "main" },
+    inputs: ["src/**/*.ts", "src/**/*.tsx"],
+    buildScript: "tsc --build tsconfig.json && vite build",
+    siteBundle: true,
   },
   {
     kind: "app",
     path: "apps/viewer",
     name: "@datapulse/viewer",
-    dependencies: {},
-    references: [],
+    dependencies: {
+      "@datapulse/metric-runtime": "workspace:*",
+      "@datapulse/renderer": "workspace:*",
+      "@datapulse/story-migrations": "workspace:*",
+      react: "19.2.8",
+      "react-dom": "19.2.8",
+    },
+    devDependencies: {
+      "@types/react": "19.2.18",
+      "@types/react-dom": "19.2.4",
+      vite: "8.2.0",
+    },
+    references: [
+      "../../packages/metric-runtime",
+      "../../packages/renderer",
+      "../../packages/story-migrations",
+    ],
     entries: { main: "main" },
+    inputs: ["src/**/*.ts", "src/**/*.tsx"],
+    buildScript: "tsc --build tsconfig.json && vite build",
+    siteBundle: true,
   },
   {
     kind: "app",
@@ -71,8 +165,12 @@ const requiredWorkspaces = [
 
 const rootReferences = [
   "./packages/domain",
+  "./packages/story-schema",
+  "./packages/story-migrations",
+  "./packages/metric-runtime",
   "./packages/api-contracts",
   "./packages/themes",
+  "./packages/renderer",
   "./apps/creator",
   "./apps/viewer",
   "./apps/custom-connector",
@@ -150,8 +248,14 @@ function validateRequiredWorkspace(workspace) {
   equal(`${label} 保持私有`, packageJson.private, true);
   equal(`${label} ESM`, packageJson.type, "module");
   equal(`${label} 许可证`, packageJson.license, "AGPL-3.0-only");
-  equal(`${label} 独立构建入口`, packageJson.scripts?.build, "tsc --build tsconfig.json");
+  equal(
+    `${label} 独立构建入口`,
+    packageJson.scripts?.build,
+    workspace.buildScript ?? "tsc --build tsconfig.json",
+  );
   jsonEqual(`${label} workspace 依赖`, packageJson.dependencies ?? {}, workspace.dependencies);
+  jsonEqual(`${label} workspace peer 依赖`, packageJson.peerDependencies ?? {}, workspace.peerDependencies ?? {});
+  jsonEqual(`${label} workspace 开发依赖`, packageJson.devDependencies ?? {}, workspace.devDependencies ?? {});
 
   equal(`${label} 继承严格基线`, tsconfig.extends, "../../tsconfig.base.json");
   equal(`${label} composite`, tsconfig.compilerOptions?.composite, true);
@@ -161,7 +265,7 @@ function validateRequiredWorkspace(workspace) {
   equal(`${label} rootDir`, tsconfig.compilerOptions?.rootDir, "src");
   equal(`${label} outDir`, tsconfig.compilerOptions?.outDir, "dist");
   equal(`${label} 独立 build info`, tsconfig.compilerOptions?.tsBuildInfoFile, "dist/.tsbuildinfo");
-  jsonEqual(`${label} 输入边界`, tsconfig.include, ["src/**/*.ts"]);
+  jsonEqual(`${label} 输入边界`, tsconfig.include, workspace.inputs ?? ["src/**/*.ts"]);
   jsonEqual(
     `${label} TypeScript 引用`,
     (tsconfig.references ?? []).map(({ path }) => path),
@@ -200,6 +304,33 @@ function validateRequiredWorkspace(workspace) {
   }
 
   equal(`${label} build info 产物`, pathExists(`${workspace.path}/dist/.tsbuildinfo`), true);
+  if (workspace.siteBundle) {
+    equal(`${label} 独立 Vite 页面入口`, pathExists(`${workspace.path}/index.html`), true);
+    equal(`${label} 静态 Vite 配置`, pathExists(`${workspace.path}/vite.config.ts`), true);
+    equal(`${label} 产品页面构建产物`, pathExists(`${workspace.path}/dist/site/index.html`), true);
+    const siteAssetsPath = `${workspace.path}/dist/site/assets`;
+    const siteAssets = pathExists(siteAssetsPath)
+      ? readdirSync(resolve(rootDirectory, siteAssetsPath)).sort()
+      : [];
+    const jsonAssets = siteAssets.filter((asset) => asset.endsWith(".json"));
+    const javaScriptAssets = siteAssets.filter((asset) => asset.endsWith(".js"));
+    equal(`${label} 两个 JSON fixture 独立发出`, jsonAssets.length, 2);
+    jsonEqual(
+      `${label} JSON fixture 字节内容保持`,
+      jsonAssets.map((asset) => readText(`${siteAssetsPath}/${asset}`)).sort(),
+      [
+        readText(`${workspace.path}/src/fixtures/metric-runtime.json`),
+        readText(`${workspace.path}/src/fixtures/story-artifact.json`),
+      ].sort(),
+    );
+    equal(
+      `${label} 页面 bundle 不含 data JSON URL`,
+      javaScriptAssets.some((asset) =>
+        readText(`${siteAssetsPath}/${asset}`).includes("data:application/json"),
+      ),
+      false,
+    );
+  }
 }
 
 async function validateResolution(consumerPath, specifier, expectedWorkspacePath) {
@@ -272,6 +403,26 @@ jsonEqual("Turbo build 任务", turboConfig.tasks?.build, {
   outputs: ["dist/**"],
 });
 jsonEqual(
+  "Story Schema build 不缓存正式历史 merge-base 检查",
+  turboConfig.tasks?.["@datapulse/story-schema#build"],
+  {
+    cache: false,
+    dependsOn: ["^build"],
+    env: ["DATAPULSE_MERGE_BASE"],
+    outputs: ["dist/**"],
+  },
+);
+jsonEqual(
+  "Metric Runtime build 不缓存正式历史 merge-base 检查",
+  turboConfig.tasks?.["@datapulse/metric-runtime#build"],
+  {
+    cache: false,
+    dependsOn: ["^build"],
+    env: ["DATAPULSE_MERGE_BASE"],
+    outputs: ["dist/**"],
+  },
+);
+jsonEqual(
   "根 TypeScript 引用",
   (rootTsconfig.references ?? []).map(({ path }) => path),
   rootReferences,
@@ -290,7 +441,72 @@ for (const workspace of requiredWorkspaces) {
 }
 
 await validateResolution("packages/api-contracts", "@datapulse/domain", "packages/domain");
+await validateResolution(
+  "packages/story-migrations",
+  "@datapulse/domain",
+  "packages/domain",
+);
+await validateResolution(
+  "packages/story-migrations",
+  "@datapulse/story-schema",
+  "packages/story-schema",
+);
+await validateResolution(
+  "packages/story-migrations",
+  "@datapulse/story-schema/development-migration-support",
+  "packages/story-schema",
+);
+await validateResolution(
+  "packages/story-migrations",
+  "@datapulse/story-schema/formal-migration-support",
+  "packages/story-schema",
+);
+await validateResolution(
+  "packages/metric-runtime",
+  "@datapulse/domain",
+  "packages/domain",
+);
+await validateResolution(
+  "packages/renderer",
+  "@datapulse/story-schema",
+  "packages/story-schema",
+);
+await validateResolution(
+  "packages/renderer",
+  "@datapulse/themes",
+  "packages/themes",
+);
 await validateResolution("apps/creator", "@datapulse/domain", "packages/domain");
+await validateResolution(
+  "apps/creator",
+  "@datapulse/metric-runtime",
+  "packages/metric-runtime",
+);
+await validateResolution(
+  "apps/creator",
+  "@datapulse/story-migrations",
+  "packages/story-migrations",
+);
+await validateResolution(
+  "apps/creator",
+  "@datapulse/renderer",
+  "packages/renderer",
+);
+await validateResolution(
+  "apps/viewer",
+  "@datapulse/metric-runtime",
+  "packages/metric-runtime",
+);
+await validateResolution(
+  "apps/viewer",
+  "@datapulse/story-migrations",
+  "packages/story-migrations",
+);
+await validateResolution(
+  "apps/viewer",
+  "@datapulse/renderer",
+  "packages/renderer",
+);
 await validateResolution(
   "apps/custom-connector",
   "@datapulse/api-contracts/connector-message",

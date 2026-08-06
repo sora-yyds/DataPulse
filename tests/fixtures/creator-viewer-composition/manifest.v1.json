@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-creator-viewer-composition-fixture-manifest",
+  "releaseStatus": "m0-stage-fixture",
+  "hashAlgorithm": "SHA-256",
+  "generatorVersion": "hand-authored-m0-015-v1",
+  "purpose": "验证 Creator 与 Viewer 通过正式 Story Artifact Reader、共享 metric-runtime 与受控 Renderer 形成逐值一致的最小二维组合。",
+  "storySchema": {
+    "schemaVersion": "1.0.0",
+    "schemaId": "urn:datapulse:story-blueprint:formal:1.0.0",
+    "path": "packages/story-schema/src/formal/1.0.0/story-blueprint.schema.json",
+    "bytes": 11572,
+    "sha256": "e26a15938896c57844d75a6ee272d4920874f60586b981eadaae686e45090360"
+  },
+  "metricRuntimeCanonicalReference": {
+    "manifest": {
+      "path": "tests/fixtures/metric-runtime/formal/manifest.v1.json",
+      "bytes": 1244,
+      "sha256": "a2e2f07c093fac3d15c6fdae3ab011909602c2dd4e527e5b0fa5a7ea6067c140"
+    },
+    "fixture": {
+      "id": "canonical-creator-viewer-metric-runtime-1.0.0",
+      "caseId": "count-rows-merge",
+      "path": "tests/fixtures/metric-runtime/formal/1.0.0/canonical.creator-viewer.json",
+      "bytes": 3398,
+      "sha256": "825f05e15adaab0f843a6e30b30ea94748d6de9869592fb8b5f2c15d579f5673"
+    }
+  },
+  "contentIdentity": {
+    "storyArtifactSha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386",
+    "metricRuntimeSha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+  },
+  "expected": {
+    "storyId": "story_m0-015-renderer",
+    "datasetVersionId": "dataset_version_m0-015-renderer",
+    "title": "订单概览",
+    "summary": "该合成故事验证 Creator 与 Viewer 共享正式故事契约和确定性指标结果。",
+    "kpiBlockId": "story_block_order-count",
+    "kpiLabel": "订单总数",
+    "metricId": "metric_order-count",
+    "evidenceId": "evidence_order-count",
+    "metricStatus": "available",
+    "metricValue": 23,
+    "metricValueText": "23",
+    "metricScopeText": "范围：全部数据（无附加条件）",
+    "renderMode": "2d",
+    "scenePreset": "none",
+    "motionPreset": "none"
+  },
+  "copies": {
+    "creator": {
+      "storyArtifact": {
+        "path": "apps/creator/src/fixtures/story-artifact.json",
+        "bytes": 1555,
+        "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386"
+      },
+      "metricRuntime": {
+        "path": "apps/creator/src/fixtures/metric-runtime.json",
+        "bytes": 1033,
+        "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+      }
+    },
+    "viewer": {
+      "storyArtifact": {
+        "path": "apps/viewer/src/fixtures/story-artifact.json",
+        "bytes": 1555,
+        "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386"
+      },
+      "metricRuntime": {
+        "path": "apps/viewer/src/fixtures/metric-runtime.json",
+        "bytes": 1033,
+        "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+      }
+    }
+  }
+}

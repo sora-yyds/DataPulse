@@ -5,6 +5,18 @@
   "type": "module",
   "license": "AGPL-3.0-only",
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "build": "tsc --build tsconfig.json && vite build"
+  },
+  "dependencies": {
+    "@datapulse/metric-runtime": "workspace:*",
+    "@datapulse/renderer": "workspace:*",
+    "@datapulse/story-migrations": "workspace:*",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "vite": "8.2.0"
   }
 }

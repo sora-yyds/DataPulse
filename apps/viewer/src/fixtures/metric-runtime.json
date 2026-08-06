@@ -1,0 +1,48 @@
+{
+  "fixtureVersion": "1.0.0",
+  "caseId": "count-rows-merge",
+  "plan": {
+    "schemaVersion": "1.0.0",
+    "metricId": "metric_order-count",
+    "aggregate": "COUNT_ROWS"
+  },
+  "accumulators": [
+    {
+      "schemaVersion": "1.0.0",
+      "metricId": "metric_order-count",
+      "aggregate": "COUNT_ROWS",
+      "mergeKind": "count",
+      "interactionCapability": "exact",
+      "mergeOrdinal": 2,
+      "state": {
+        "count": 5
+      }
+    },
+    {
+      "schemaVersion": "1.0.0",
+      "metricId": "metric_order-count",
+      "aggregate": "COUNT_ROWS",
+      "mergeKind": "count",
+      "interactionCapability": "exact",
+      "mergeOrdinal": 0,
+      "state": {
+        "count": 7
+      }
+    },
+    {
+      "schemaVersion": "1.0.0",
+      "metricId": "metric_order-count",
+      "aggregate": "COUNT_ROWS",
+      "mergeKind": "count",
+      "interactionCapability": "exact",
+      "mergeOrdinal": 1,
+      "state": {
+        "count": 11
+      }
+    }
+  ],
+  "expected": {
+    "status": "available",
+    "value": 23
+  }
+}
