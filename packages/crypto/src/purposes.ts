@@ -10,6 +10,7 @@ export const CRYPTO_PURPOSES = Object.freeze({
   publishedPackage: "datapulse/published-package",
   projectKeyWrap: "datapulse/project-key-wrap",
   projectPackageChunk: "datapulse/project-package-chunk",
+  shareKeyWrap: "datapulse/share-key-wrap",
 } as const);
 
 export type CryptoPurpose =

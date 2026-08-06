@@ -59,7 +59,11 @@ const requiredWorkspaces = [
     kind: "package",
     path: "packages/crypto",
     name: "@datapulse/crypto",
-    dependencies: { "@datapulse/domain": "workspace:*" },
+    dependencies: {
+      "@datapulse/domain": "workspace:*",
+      "hash-wasm": "4.12.0",
+    },
+    devDependencies: { "@types/node": "24.13.3" },
     references: ["../domain"],
     entries: { ".": "index" },
   },
