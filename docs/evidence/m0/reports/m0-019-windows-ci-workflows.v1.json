@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-019-windows-ci-workflows-v1",
+  "milestone": "M0",
+  "taskId": "M0-019",
+  "gateIds": [
+    "CI-ACTIVATION"
+  ],
+  "observedAt": "2026-08-06T15:15:27+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows 11 专业版",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "cleanProjectDirectory": false,
+      "sourceState": "当前 Windows 本地工作树；不是干净公开 Fork。用户所有的未跟踪 package-lock.json 排除在任务、提交和证据索引范围外。",
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "bytes": 4157,
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "modifiedByTask": false
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "actionlint": "1.7.12"
+      },
+      "commands": [
+        {
+          "command": "python PyYAML safe_load 全部 5 个 workflow 文件",
+          "exitCode": 0,
+          "result": "passed",
+          "files": 5
+        },
+        {
+          "command": "actionlint v1.7.12（SHA-256 6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9 已核对）5 个 workflow 文件",
+          "exitCode": 0,
+          "result": "passed",
+          "files": 5
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 95,
+          "selfTestAssertions": 7
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 21
+        },
+        {
+          "command": "corepack pnpm run check:evidence",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 64,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "command": "node docs/evidence/m0/validate-evidence-index.mjs --self-test",
+          "exitCode": 0,
+          "result": "passed",
+          "integrityValid": true,
+          "selfTestValid": true,
+          "historicalGateRecordsPassed": false
+        }
+      ]
+    }
+  ]
+}
