@@ -66,6 +66,8 @@
 
 固定盐／key／nonce 只出现在本探针页与测试向量中；探针页输出不含任何真实用户数据或密钥。Chrome 本地产物为单文件 JS `39.61 kB / gzip 16.09 kB`（含 Argon2id WASM base64）。真实设备运行（Chrome／Edge／iOS Safari／Android 微信／iOS 微信）属于 M0-023 外部矩阵，本页面只是其执行载体，不代表设备认证或完整 WCAG。
 
+执行与登记方法见 [M0-023 设备固定向量矩阵执行协议](./m0-device-probe-protocol.md)：HTTPS 安全上下文要求、每环境登记字段、通过标准与 profile 冻结决策。
+
 ## 5. 证据边界
 
 - 已完成：依赖评估、`packages/crypto` Argon2id KDF 实现、11 个单元测试、黄金向量交叉验证、`test:unit` 全量通过。
