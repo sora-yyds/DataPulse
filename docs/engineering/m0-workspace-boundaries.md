@@ -1,12 +1,12 @@
-# M0-006／010～016／048／049 workspace 与构建边界
+# M0-006／010～016／021／048／049 workspace 与构建边界
 
-> 任务：M0-006、M0-010、M0-011、M0-012、M0-013、M0-014、M0-015、M0-016、M0-048、M0-049
+> 任务：M0-006、M0-010、M0-011、M0-012、M0-013、M0-014、M0-015、M0-016、M0-021、M0-048、M0-049
 >
 > 状态：Windows 工程链、domain 合同、M0-048／049 契约、M0-015 本地页面与 M0-016 五类 runner 阶段已验证；固定视觉／无障碍矩阵、Ubuntu、GitHub Actions 与统一人工验证延期
 >
 > 适用决定：ADR-0028、ADR-0029、ADR-0030
 
-本说明记录后续 M0 近期任务会真实消费的 module、独立构建入口与显式 export seam；其中 `@datapulse/domain` 已按 M0-010 落地最小公共合同，`@datapulse/story-schema` 已在 M0-011／012 基础上按 M0-048 冻结正式 `1.0.0`、生成类型与对象校验 seam，`@datapulse/story-migrations` 按 M0-013／048 集中正式原始字节读取，并把未发布开发迁移隔离在包内测试 seam，`@datapulse/metric-runtime` 按 M0-049 冻结正式 accumulator／plan、最小 `COUNT_ROWS`／`SUM` 求值与两端共享 seam；M0-015 已以受控 Renderer 和两个独立 React／Vite 页面把 Reader、共享指标与正式标题／摘要／KPI fixture 连成最小二维切片。它不提前实现编辑、保存、导入、AI、分享、3D 或其他业务 interface。
+本说明记录后续 M0 近期任务会真实消费的 module、独立构建入口与显式 export seam；其中 `@datapulse/domain` 已按 M0-010 落地最小公共合同，`@datapulse/story-schema` 已在 M0-011／012 基础上按 M0-048 冻结正式 `1.0.0`、生成类型与对象校验 seam，`@datapulse/story-migrations` 按 M0-013／048 集中正式原始字节读取，并把未发布开发迁移隔离在包内测试 seam，`@datapulse/metric-runtime` 按 M0-049 冻结正式 accumulator／plan、最小 `COUNT_ROWS`／`SUM` 求值与两端共享 seam，`@datapulse/crypto` 按 M0-021 建立纯浏览器本地加密原语（base64url、JCS、CSPRNG 与 purpose 绑定 AES-256-GCM）；M0-015 已以受控 Renderer 和两个独立 React／Vite 页面把 Reader、共享指标与正式标题／摘要／KPI fixture 连成最小二维切片。它不提前实现编辑、保存、导入、AI、分享、3D 或其他业务 interface。
 
 ## 1. 当前 workspace
 
@@ -16,6 +16,7 @@
 | `packages/story-schema` | `@datapulse/story-schema` | M0-011～013、M0-048，以及后续 Creator／Viewer Reader | 零内部 workspace 依赖；根 `.` 只公开当前正式 `1.0.0` Schema／对象校验，正式版本 tuple 与 validator mapping 从 history 生成；`./formal-migration-support` 只向迁移包提供正式历史结构校验，`./development-migration-support` 只向迁移包提供未发布开发历史测试；两个受限 subpath 均不得成为产品调用入口 |
 | `packages/story-migrations` | `@datapulse/story-migrations` | M0-013、M0-015、M0-048，以及后续项目包／发布包 Reader | 根 `.` 只开放 `readStoryArtifact(bytes, trustedContext)` 操作与稳定错误码；固定原始字节上限、版本注册、迁移链与逐步校验均留在 implementation 内，正式 Result 不暴露迁移路由或开放绕过入口 |
 | `packages/metric-runtime` | `@datapulse/metric-runtime` | M0-049、M0-015，以及后续 Creator／Viewer 指标求值 | 只依赖 Domain；根 `.` 公开 `createMetricAccumulator`、`evaluateMetric`、稳定错误码与类型，固定版本、binary64 wire、65,536 输入上限及 merge/finalize 语义留在 implementation／正式 history 内 |
+| `packages/crypto` | `@datapulse/crypto` | M0-021，以及后续发布包／项目包／撤销协议 | 只依赖 Domain；纯浏览器本地实现 RFC 4648 无填充 base64url、RFC 8785 JCS、Web Crypto CSPRNG 分块、协议 purpose 与 `aes-256-gcm-v1` 档案；根 `.` 公开封口／开启与稳定错误码，purpose 绑定 JCS AAD 留在 implementation 内 |
 | `packages/api-contracts` | `@datapulse/api-contracts` | M0-036～039、M0-058～062 | 只开放 `./connector-message`、`./http`、`./origin-policy`；禁止根 export 和通配符 export |
 | `packages/themes` | `@datapulse/themes` | M0-014、M0-015、M0-018 | 零依赖根 `.` export；公开由 `DESIGN.md` 生成的四主题语义色及间距、圆角、排版 CSS Token 类型与值 |
 | `packages/renderer` | `@datapulse/renderer` | M0-015、M0-018、M0-067 | 内部 workspace 只依赖 Story Schema 与 Themes，React 为消费者提供的 peer；根 `.` 只接收 `ValidatedStoryBlueprint` 与已解析 KPI 展示 DTO，显式注册 `title-summary`／`kpi`，不读取 fixture、不求值指标或叙事 |
@@ -31,6 +32,7 @@
 ```text
 story-migrations  -> domain + story-schema
 metric-runtime    -> domain
+crypto            -> domain
 api-contracts     -> domain
 renderer          -> story-schema + themes
 creator           -> domain + metric-runtime + story-migrations + renderer
@@ -61,7 +63,7 @@ Story Migrations 当前构建链验证 `@datapulse/domain`、Story Schema 根、
 
 Creator 与 Viewer 的 `build` 先运行独立 `tsc --build`，再由无 plugin、alias 或共享根配置的 Vite `8.2.0` 生成各自 `dist/site`。`assetsInlineLimit: 0` 保持 Story／Metric JSON 为独立静态资源，workspace 检查同时拒绝 `data:application/json` 进入页面脚本。当前 Creator JavaScript 为 `335.48 kB / gzip 85.94 kB`，Viewer 为 `335.47 kB / gzip 85.94 kB`；M0-016 的 Playwright／axe 只对这些 production HTTP preview 做阶段断言，Storybook 只消费根测试 story。这些仍不是可发布产品、HTTPS Origin 隔离、完整 CSP、固定视觉矩阵或 WCAG 认证。
 
-根 `build` 由 Turbo 按 `^build` 排序。`check:workspace` 先运行真实构建，再执行 `tests/architecture/check-workspace.mjs`，当前以 `395/395` 验证必需 workspace、package metadata、显式 exports、project references、构建产物、两端独立 JSON 资源、消费侧解析和禁止的 API Contracts 根 export。失败返回非零，不是占位聚合器。
+根 `build` 由 Turbo 按 `^build` 排序。`check:workspace` 先运行真实构建，再执行 `tests/architecture/check-workspace.mjs`，当前以 `424/424` 验证必需 workspace、package metadata、显式 exports、project references、构建产物、两端独立 JSON 资源、消费侧解析和禁止的 API Contracts 根 export。失败返回非零，不是占位聚合器。
 
 `check:dependencies` 的正常根路径另外使用固定 Node `24.19.0` 与仓库本地 TypeScript `6.0.3` 先构建 `packages/domain`，再运行 `packages/domain/tests/domain-contract.mjs`。该合同覆盖公开 seam 的合法／恶意输入，不允许跳过；临时 `--root` fixture 分支不依赖真实仓库合同。
 
@@ -73,7 +75,7 @@ M0-016 的 RTL、Storybook、Playwright 与 axe 全部是根测试工具，不�
 
 以下 module 在当前任务没有真实 interface，不创建空包：
 
-- `packages/crypto`、`packages/local-storage`：在 M0-021 及后续协议任务创建；
+- `packages/local-storage`：在后续协议任务创建（`packages/crypto` 已由 M0-021 建立）；
 - `packages/import-engine`、`packages/analysis-engine`、`packages/evidence`、`packages/generation`：在 M0-028～033、M0-050、M0-054～056 创建；
 - `packages/narrative`、`packages/package-codec`、`packages/provider-adapters`、`packages/static-export`：分别留给其 M1／M2／M3 能力；
 - `services/model-proxy`、`services/telemetry-ingest`：分别留给 M2 模型连接与后续明确同意遥测；
@@ -84,6 +86,6 @@ M0-016 的 RTL、Storybook、Playwright 与 axe 全部是根测试工具，不�
 
 ## 5. 延期验证
 
-Windows x64 使用固定 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8` 与 TypeScript `6.0.3` 验证冻结安装、11 个 workspace 构建、workspace 契约、M0-010 domain 合同、M0-011～013 Schema／对象校验／Reader、M0-048 正式 Story `1.0.0`／fixture 契约、M0-049 正式 Metric Runtime `1.0.0`／两端黄金契约，以及 M0-015 Renderer／独立 Creator／Viewer Vite 最小页面链。另以本地 HTTP 浏览器检查 Creator 桌面和 Viewer `1280×720`、`1024×768`、`390×844`，标题、KPI `23`、范围和证据引用均可见且无横向溢出；这不是 M0-018 固定视觉／无障碍矩阵或 HTTPS Origin 证据。
+Windows x64 使用固定 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8` 与 TypeScript `6.0.3` 验证冻结安装、12 个 workspace 构建、workspace 契约、M0-010 domain 合同、M0-011～013 Schema／对象校验／Reader、M0-048 正式 Story `1.0.0`／fixture 契约、M0-049 正式 Metric Runtime `1.0.0`／两端黄金契约，以及 M0-015 Renderer／独立 Creator／Viewer Vite 最小页面链。另以本地 HTTP 浏览器检查 Creator 桌面和 Viewer `1280×720`、`1024×768`、`390×844`，标题、KPI `23`、范围和证据引用均可见且无横向溢出；这不是 M0-018 固定视觉／无障碍矩阵或 HTTPS Origin 证据。
 
 当前执行面没有 WSL 发行版或容器运行时，因此干净 Ubuntu 未运行；真实 GitHub Actions 与统一人工边界复核也延期。这些项不会被记为 Windows 的 skipped，也不会被表述为通过。`M0-005`、`M0-006` 与 `REPO-FOUNDATION` 继续保持进行中；`DEPENDENCY-BOUNDARIES` 即使已有 M0-010 Windows 合同证据，仍保持 `in_progress / partially_evidenced`。日常 gate 的激活只表示当前真实根断言必须持续通过，不代表完整 gate 已完成。

@@ -1,0 +1,73 @@
+{
+  "$schema": "./manual-review-attestation.schema.v1.json",
+  "schemaVersion": "1.0.0",
+  "kind": "m0-manual-review-attestation",
+  "gateId": "WAVE0-EVIDENCE-CONTRACT",
+  "recordId": "m0-wave0-evidence-contract-v22",
+  "reviewedAt": "2026-08-06T18:31:13+08:00",
+  "reviewerRefs": [
+    "codex-agent:E:\\DataPulse AI"
+  ],
+  "repositoryState": "working_tree_hashes",
+  "subjectArtifacts": [
+    {
+      "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+      "sha256": "f56b3de06f4509f6ef38573b786bc86f11afa5fbf12104204fac82fd8ab0b80e"
+    },
+    {
+      "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+      "sha256": "9e2dc84b4c98022678a4da6af9f211b0ac8fe5dc706fb8d6430e835489d022ab"
+    },
+    {
+      "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+      "sha256": "702c20d917a7c52f0612d727931f454d3929c388f074d8bbfed841a4e0dc3e82"
+    },
+    {
+      "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+      "sha256": "7ae8d89577907af1bbaa0e8c27632d1e196d339369d65c14525908504584300e"
+    },
+    {
+      "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+      "sha256": "bb15a3659b4d2d5306e0933fc8a07b71b6c8250936f95aa4819a52c7f120ed3f"
+    },
+    {
+      "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+      "sha256": "8ced3f368804710bf089ec8de340ff41519b5c8d750fa926ff377f13c887fbb4"
+    },
+    {
+      "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+      "sha256": "cdf959c523c97c59ff5b7ea7dc7e851394231d2f9d30c42d65da55ae10650c0e"
+    },
+    {
+      "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+      "sha256": "14f771af8e2f64ac0e6a1f6bb80cd9d2477ef9d2c1bee36e04be9ced458dbbdc"
+    },
+    {
+      "path": "docs/evidence/m0/validate-evidence-index.mjs",
+      "sha256": "f1d4bbae64a646ac06ebffd229ab5cb28522e8c5717d9a7d2614eeeea658a1bf"
+    },
+    {
+      "path": "docs/evidence/m0/README.md",
+      "sha256": "3f7e2801c57bbf49a92d63768beba9f5d1cb538efe266200e960e7b705e6109b"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "c280783b38e41289d893eab3037acff50cc08164da49cc5fb304b3438617b190"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PLAN.md",
+      "sha256": "f025bf694cf67a47804c175f6135031728c5574eca7ec200a029f685691c5118"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "sha256": "3f0232d6c3db5233310a1c8d51c2fc5b4641bdb3a0229b8341fec1b69816e97a"
+    }
+  ],
+  "result": "passed",
+  "assertions": {
+    "reviewed": 13,
+    "failed": 0,
+    "unresolvedHighSeverity": 0
+  },
+  "notes": "M0-021 加密原语阶段证据（m0-crypto-primitives-v1）写入后，AGENTS.md 与 docs/engineering 相关文档同步为 12 workspace 与最新通过计数（check:workspace 424/424、check:dependencies 2294/2294、test:unit 8 files/215 tests）；复核全部主题工件与索引一致性，无未决高严重度问题，按 append-only 链取代 v21。"
+}

@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T17:45:31+08:00",
+  "updatedAt": "2026-08-06T18:31:13+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v21",
+      "latestRecordId": "m0-wave0-evidence-contract-v22",
       "blockerRefs": []
     },
     {
@@ -656,14 +656,14 @@
       "scopeStatement": "JCS、base64url、purpose 隔离、CSPRNG 生命周期和固定互操作向量。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {
         "eligible": true,
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-crypto-primitives-v1",
       "blockerRefs": []
     },
     {
@@ -7624,6 +7624,229 @@
         "docs/governance/m0-ownership-and-resources.md#github-与仓库治理"
       ],
       "notes": "正例验证：PR #5（head m0/m046-evidence → base main）触发 m0 / pr-quick conclusion=success，governance / conventional-pr-title success；PUT pulls/5/merge（squash）merged=true，merged sha c9fc67b14889f00898f583aeb88ca6fa873e0e9c；合并后 push 到 main 触发的 m0 / main-review conclusion=success。正例合并证明 m0 / main-protection ruleset 的 pull_request + required_status_checks + non_fast_forward 组合在真实 GitHub 上按预期工作。merge queue 外部阻塞不变（个人账户 sora-yyds，account type User，不支持 merge_queue），GITHUB-GOVERNANCE 保持 external_blocked / partially_evidenced，verify:m0 继续非零为正确预期。"
+    },
+    {
+      "id": "m0-crypto-primitives-v1",
+      "title": "M0-021 Windows 浏览器本地加密原语阶段证据",
+      "gateIds": [
+        "CRYPTO-PRIMITIVES"
+      ],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-021"
+      ],
+      "requirementIds": [
+        "FR-PROJ-006",
+        "SEC-007"
+      ],
+      "adrIds": [
+        "ADR-0019",
+        "ADR-0047"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T18:27:46+08:00",
+      "observedAt": "2026-08-06T18:27:46+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "packages/crypto/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/crypto/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/errors.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/base64url.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/jcs.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/random.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/purposes.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/profiles.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/aes-gcm.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/crypto/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/crypto-primitives.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/crypto-vectors.ts",
+          "immutable": true,
+          "sha256": "c96863bdcf99834091d77a18d73e8ebd25993584005290146f6514fbbe3941e1"
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-boundaries.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows x64 含空格工作树、PowerShell 5.1 下，按架构第 9 节与 ADR-0019／ADR-0047 建立纯浏览器本地 packages/crypto：冻结错误码、RFC 4648 无填充 base64url 严格编解码、RFC 8785 JCS 规范化、Web Crypto CSPRNG 分块、三个协议 purpose 与 aes-256-gcm-v1 档案，并以 purpose 绑定 JCS AAD 实现 AES-256-GCM 封口／开启。新增 tests/unit/crypto-primitives.test.ts（42 个测试）与固定黄金向量 tests/unit/crypto-vectors.ts，覆盖 RFC 4648、RFC 8785、NIST AES-256-GCM 空向量 tag、purpose 固定 key／nonce 向量、恶意输入拒绝与稳定错误码；test:unit 8 files／215/215，check:workspace 424/424，check:dependencies 主断言 2294/2294（self-test 193/193、domain contract 60/60）全部通过。正式协议互操作向量、完整浏览器隔离与真实设备认证仍未完成，因此 CRYPTO-PRIMITIVES 保持进行中、部分取证且不激活日常检查。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v22",
+      "title": "M0-021 阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T18:31:13+08:00",
+      "observedAt": "2026-08-06T18:31:13+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v21",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v22.json",
+          "immutable": true,
+          "sha256": "d0f85f753996423cd8704c723704830f9f8066092111dca10f6058c9565aedbc"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-021 阶段：packages/crypto 纯浏览器本地加密原语与 42 个 Vitest 测试落地，证据记录 m0-crypto-primitives-v1 已按 append-only 链追加，CRYPTO-PRIMITIVES gate 更新为 in_progress / partially_evidenced；AGENTS.md、docs/engineering 相关说明与 release/check 脚本同步为 12 个 workspace 及最新通过计数。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v21。"
     }
   ]
 }

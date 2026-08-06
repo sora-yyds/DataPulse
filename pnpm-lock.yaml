@@ -155,6 +155,12 @@ importers:
         specifier: workspace:*
         version: link:../domain
 
+  packages/crypto:
+    dependencies:
+      '@datapulse/domain':
+        specifier: workspace:*
+        version: link:../domain
+
   packages/domain: {}
 
   packages/metric-runtime:

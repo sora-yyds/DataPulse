@@ -115,6 +115,6 @@ PowerShell 5.1 的默认文本显示编码可能把 UTF-8 无 BOM 中文显示�
 
 ## 7. 阶段验证
 
-根 `corepack pnpm run test:unit` 先构建全部 11 个 workspace，再从公开 `dist` seam 运行 Schema、对象 validator、Reader、Metric Runtime 与 M0-015 Renderer／双页面组合合同；`corepack pnpm run build`、`check:workspace`、`check:dependencies` 和证据检查共同验证生成物、真实 TypeScript／Vite 构建、依赖声明和工作区边界。具体通过计数与 Windows hash 写入对应的不可变阶段报告，不在本说明中复制会漂移的运行结果。
+根 `corepack pnpm run test:unit` 先构建全部 12 个 workspace，再从公开 `dist` seam 运行 Schema、对象 validator、Reader、Metric Runtime 与 M0-015 Renderer／双页面组合合同；`corepack pnpm run build`、`check:workspace`、`check:dependencies` 和证据检查共同验证生成物、真实 TypeScript／Vite 构建、依赖声明和工作区边界。具体通过计数与 Windows hash 写入对应的不可变阶段报告，不在本说明中复制会漂移的运行结果。
 
 M0-016 已在 Windows 为 Vitest、RTL、Storybook、Playwright 与 axe 分别加入真实产品断言并激活结构化日常检查；M0-015 的本地 HTTP 可读性冒烟与 M0-016 Chromium 自动近似都不替代固定视觉／完整无障碍、HTTPS／四 Origin、干净 Ubuntu、GitHub Actions、完整产品消费链与统一人工复核。`FORMAL-STORY-SCHEMA` 与 `BOUNDED-READER-MIGRATION` 继续保持 `in_progress / partially_evidenced` 且不激活日常检查，M0-016／TEST-RUNNERS 也未关闭。

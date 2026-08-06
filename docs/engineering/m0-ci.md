@@ -49,10 +49,10 @@
 
 ## 7. M0-020 release dry-run 供应链骨架
 
-`release-dry-run` 标签 job 在 `build` + `verify:pr` 后执行 `release:dry-run`，把 11 个 workspace 的 `dist` 产物（排除 `node_modules`、`.turbo`、`*.tsbuildinfo`）以冻结结构暂存到 `release/dry-run/<version>/`，并生成：
+`release-dry-run` 标签 job 在 `build` + `verify:pr` 后执行 `release:dry-run`，把 12 个 workspace 的 `dist` 产物（排除 `node_modules`、`.turbo`、`*.tsbuildinfo`）以冻结结构暂存到 `release/dry-run/<version>/`，并生成：
 
 - `manifest.json`：版本、workspace 相对路径、包名、文件数与字节数；
 - `SHA256SUMS.txt`：暂存文件 + `manifest.json` + `sbom.spdx.json` 的 SHA-256（排序、确定性）；
-- `sbom.spdx.json`：SPDX 2.3 文档，含 1 个根包、11 个 workspace 包（AGPL-3.0-only）与 `pnpm licenses list` 派生的全部依赖包（purl 外部引用）；许可证缺失（`Unknown`）归一化为 `NOASSERTION`。
+- `sbom.spdx.json`：SPDX 2.3 文档，含 1 个根包、12 个 workspace 包（AGPL-3.0-only）与 `pnpm licenses list` 派生的全部依赖包（purl 外部引用）；许可证缺失（`Unknown`）归一化为 `NOASSERTION`。
 
 `check:release-dryrun` 已激活为 RELEASE-DRYRUN 日常 gate，先真实构建再重新生成并验证：workspace 契约（当前 11 个）、违禁条目、校验和覆盖与值、SBOM 形状/workspace 与依赖覆盖、NOASSERTION 许可证基线（当前仅 `@google/design.md@0.4.0`、`spawndamnit@3.0.1`）、文件校验和与再生成确定性；`--self-test` 以篡改/删除/违禁/许可证缺失四类变异证明 fail-closed。当前 Windows 本地 5/5 通过；标签触发与公开 Fork 复现（M0-044）未执行，因此 RELEASE-DRYRUN 保持 `in_progress / partially_evidenced`，不冒充正式发布。
