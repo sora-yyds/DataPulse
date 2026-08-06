@@ -1,0 +1,17 @@
+{
+  "name": "@datapulse/device-probe",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "build": "tsc --build tsconfig.json && vite build"
+  },
+  "dependencies": {
+    "@datapulse/crypto": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "vite": "8.2.0"
+  }
+}

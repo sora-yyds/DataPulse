@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T19:02:14+08:00",
+  "updatedAt": "2026-08-06T19:20:32+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v23",
+      "latestRecordId": "m0-wave0-evidence-contract-v24",
       "blockerRefs": []
     },
     {
@@ -694,7 +694,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-crypto-kdf-v1",
+      "latestRecordId": "m0-crypto-kdf-probe-v1",
       "blockerRefs": [
         "docs/governance/m0-ownership-and-resources.md#真实设备与性能资源"
       ]
@@ -8057,6 +8057,215 @@
       ],
       "blockerRefs": [],
       "notes": "M0-022 阶段：Argon2id KDF 依赖评估与固定 a2id-v1-64m-t3-p1 profile 实现落地，证据记录 m0-crypto-kdf-v1 已按 append-only 链追加；AGENTS.md、docs/engineering 相关说明与 release/check 脚本同步为最新通过计数（check:workspace 424/424、check:dependencies 2322/2322、test:unit 9 files/226 tests）。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v22。"
+    },
+    {
+      "id": "m0-crypto-kdf-probe-v1",
+      "title": "M0-022 设备探针页与 13 workspace 接线阶段证据（真实设备矩阵待 M0-023）",
+      "gateIds": [
+        "KDF-DEVICE-MATRIX"
+      ],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-022",
+        "M0-023"
+      ],
+      "requirementIds": [
+        "FR-PROJ-006",
+        "SEC-007"
+      ],
+      "adrIds": [
+        "ADR-0047"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "representative-mobile-device",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T19:20:32+08:00",
+      "observedAt": "2026-08-06T19:20:32+08:00",
+      "supersedesRecordId": "m0-crypto-kdf-v1",
+      "executionKind": "external_environment",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "apps/device-probe/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/device-probe/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/device-probe/vite.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/device-probe/index.html",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/device-probe/src/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/dependency-boundaries.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-release-dry-run.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-crypto-kdf.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [
+        "docs/governance/m0-ownership-and-resources.md#真实设备与性能资源"
+      ],
+      "notes": "Windows x64 含空格工作树、PowerShell 5.1 下完成 M0-022 探针页交付件：新增独立 workspace apps/device-probe（@datapulse/device-probe，仅依赖 @datapulse/crypto），页面在浏览器执行 KDF 固定向量（含 ≤5s 计时）、KDF 拒绝任意参数、AES-256-GCM purpose 固定向量、JCS RFC 8785 与 Fragment passwordEnvelope 固定向量（预计算 wrap 值、≤2048 字符与 KEK 解包往返）；固定盐／key／nonce 只出现在探针页与测试向量。真实 Chromium 运行 5/5 通过（KDF 161.6ms、Fragment 454/2048），bundle 39.61 kB / gzip 16.09 kB。仓库接线为 13 个 workspace：check:workspace 450/450、check:dependencies 主断言 2379/2379（self-test 193/193、domain contract 60/60）、check:test-runners 6/6、test:unit 9 files／226 tests、check:release-dryrun 通过（13 workspace、SBOM 468 依赖包）全部通过。KDF-DEVICE-MATRIX 因 Chrome／Edge／iOS Safari／Android 微信／iOS 微信真实设备固定向量、≤5s 耗时与内存终止探针（M0-023）未运行，保持 in_progress／partially_evidenced、不激活日常且 m0 退出不满足。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v24",
+      "title": "M0-021 阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T19:20:32+08:00",
+      "observedAt": "2026-08-06T19:20:32+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v23",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v24.json",
+          "immutable": true,
+          "sha256": "3b3ce6251fd6c253cb713fbd83fb2dad7b6ea24bfc19bb497b22c5904adbae01"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-022 探针页阶段：apps/device-probe 独立 workspace（KDF/AES/JCS/Fragment 固定向量探针页）落地，证据记录 m0-crypto-kdf-probe-v1 已按 append-only 链追加；AGENTS.md、docs/engineering 相关说明与 release/check 脚本同步为最新计数（check:workspace 450/450、check:dependencies 2379/2379、test:unit 9 files/226 tests、release SBOM 468 依赖包）。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v23。"
     }
   ]
 }

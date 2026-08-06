@@ -142,6 +142,7 @@ const workspacePolicies = new Map([
     ]),
   ],
   ["apps/custom-connector", policy("@datapulse/custom-connector", [names.apiContracts])],
+  ["apps/device-probe", policy("@datapulse/device-probe", [names.crypto])],
   [
     "services/model-proxy",
     policy("@datapulse/model-proxy", [names.apiContracts, names.providerAdapters]),
