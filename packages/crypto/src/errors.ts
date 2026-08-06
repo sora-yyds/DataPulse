@@ -8,6 +8,7 @@ export const CRYPTO_ERROR_CODES = Object.freeze({
   authenticationFailed: "CRYPTO_AES_GCM_AUTHENTICATION_FAILED",
   profileUnknown: "CRYPTO_PROFILE_UNKNOWN",
   randomSourceUnavailable: "CRYPTO_RANDOM_SOURCE_UNAVAILABLE",
+  argon2DerivationFailed: "CRYPTO_ARGON2_DERIVATION_FAILED",
 } as const);
 
 export type CryptoErrorCode =
@@ -33,12 +34,15 @@ export type InvalidArgumentReason =
   | "key-length"
   | "nonce-length"
   | "tag-length"
-  | "purpose";
+  | "purpose"
+  | "password-length"
+  | "salt-length";
 
 export type KeyInvalidReason = "type" | "algorithm" | "length" | "usages";
 export type AuthenticationFailedReason = "decrypt";
 export type ProfileUnknownReason = "unregistered";
 export type RandomSourceUnavailableReason = "crypto-missing";
+export type Argon2DerivationFailedReason = "derivation";
 
 type FrozenError<Code extends CryptoErrorCode, Reason extends string> = Readonly<{
   code: Code;
@@ -73,6 +77,10 @@ export type RandomSourceUnavailableError = FrozenError<
   typeof CRYPTO_ERROR_CODES.randomSourceUnavailable,
   RandomSourceUnavailableReason
 >;
+export type Argon2DerivationFailedError = FrozenError<
+  typeof CRYPTO_ERROR_CODES.argon2DerivationFailed,
+  Argon2DerivationFailedReason
+>;
 
 export type CryptoError =
   | Base64UrlInvalidError
@@ -81,7 +89,8 @@ export type CryptoError =
   | KeyInvalidError
   | AuthenticationFailedError
   | ProfileUnknownError
-  | RandomSourceUnavailableError;
+  | RandomSourceUnavailableError
+  | Argon2DerivationFailedError;
 
 function freezeError<Code extends CryptoErrorCode, Reason extends string>(
   code: Code,
@@ -120,4 +129,8 @@ export function createProfileUnknownError(): ProfileUnknownError {
 
 export function createRandomSourceUnavailableError(): RandomSourceUnavailableError {
   return freezeError(CRYPTO_ERROR_CODES.randomSourceUnavailable, "crypto-missing");
+}
+
+export function createArgon2DerivationFailedError(): Argon2DerivationFailedError {
+  return freezeError(CRYPTO_ERROR_CODES.argon2DerivationFailed, "derivation");
 }

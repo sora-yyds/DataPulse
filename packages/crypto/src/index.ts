@@ -1,5 +1,6 @@
 export {
   CRYPTO_ERROR_CODES,
+  createArgon2DerivationFailedError,
   createAuthenticationFailedError,
   createBase64UrlInvalidError,
   createInvalidArgumentError,
@@ -7,6 +8,8 @@ export {
   createKeyInvalidError,
   createProfileUnknownError,
   createRandomSourceUnavailableError,
+  type Argon2DerivationFailedError,
+  type Argon2DerivationFailedReason,
   type AuthenticationFailedError,
   type Base64UrlInvalidError,
   type Base64UrlInvalidReason,
@@ -44,6 +47,17 @@ export {
   listCryptoProfiles,
   type CryptoProfile,
 } from "./profiles.js";
+
+export {
+  ARGON2_KDF_PROFILES,
+  deriveArgon2KdfKey,
+  getArgon2KdfProfile,
+  hasArgon2KdfProfile,
+  listArgon2KdfProfiles,
+  type Argon2KdfProfile,
+  type Argon2KdfProfileId,
+  type DeriveArgon2KdfKeyInput,
+} from "./argon2kdf.js";
 
 export {
   buildAuthData,
