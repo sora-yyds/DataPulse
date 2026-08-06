@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T21:04:10+08:00",
+  "updatedAt": "2026-08-06T22:38:05+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v27",
+      "latestRecordId": "m0-wave0-evidence-contract-v28",
       "blockerRefs": []
     },
     {
@@ -767,7 +767,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-local-storage-quota-v1",
+      "latestRecordId": "m0-local-storage-project-object-transaction-v1",
       "blockerRefs": []
     },
     {
@@ -8898,6 +8898,215 @@
       ],
       "blockerRefs": [],
       "notes": "M0-051 配额阶段：packages/local-storage 写入前双估算与稳定错误码落地，tests/unit/local-storage-quota.test.ts 15 项，test:unit 全量 11 files/253 tests、check:dependencies 2513/2513、14 workspace；证据记录 m0-local-storage-quota-v1 按 append-only 链取代 m0-local-storage-device-key-v2。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v26。"
+    },
+    {
+      "id": "m0-local-storage-project-object-transaction-v1",
+      "title": "M0-052 OPFS 加密对象先写、IndexedDB 索引后写事务核心",
+      "gateIds": [
+        "LOCAL-PROJECT-REPOSITORY"
+      ],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-026",
+        "M0-027",
+        "M0-051",
+        "M0-052"
+      ],
+      "requirementIds": [
+        "FR-PROJ-003",
+        "FR-PROJ-004",
+        "FR-PROJ-005",
+        "FR-PROJ-007",
+        "FR-PROJ-009"
+      ],
+      "adrIds": [
+        "ADR-0017",
+        "ADR-0019",
+        "ADR-0033"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-development",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T22:38:05+08:00",
+      "observedAt": "2026-08-06T22:38:05+08:00",
+      "supersedesRecordId": "m0-local-storage-quota-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/project-object-store.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/opfs.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/commit-index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/errors.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "tests/unit/local-storage-project-object-store.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "tests/storage-e2e/project-object.spec.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tests/storage-fixture/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-052 事务核心阶段实现：packages/local-storage 新增 opfs.ts（OPFS seam：write/read/delete/按事务目录清理，路径组件白名单防穿越）、commit-index.ts（IndexedDB 提交索引 seam：transactions 与 project-objects 双 store，markCommitted 单 IDB 事务原子写对象记录并翻转 committed）与 project-object-store.ts（OPFS 先写、索引后写：每个对象以设备绑定密钥 sealDeviceBound 加密封装 ciphertext 写入 OPFS 暂存目录，AAD 绑定 {kind: project-object, objectId}，最后原子提交索引；commitProjectObjects 复用 M0-051 双估算在写入前拒绝超限，拒绝重复 objectId／非法标识符／非 Uint8Array 输入（原文件 Blob 永不成为项目对象）；openProjectObject 校验文件长度与明文 sha256 后解密；recoverProjectObjects 幂等回滚 pending 与文件缺失的 committed 事务、清理孤儿暂存目录，保证最后一致索引）。errors.ts 新增 STORAGE_OBJECT_NOT_FOUND 与 opfs-missing／object-file-missing／integrity-mismatch／opfs-write／indexeddb-commit／invalid-identifier／duplicate-object-id／duplicate-transaction-id 稳定原因。新增 tests/unit/local-storage-project-object-store.test.ts 19 项（提交/打开、崩溃点回滚、孤儿清理、不完整 committed 回滚、幂等恢复与幂等提交、篡改/长度/哈希拒绝、Blob 拒绝、4 GiB 与配额拒绝）；test:unit 全量 12 files/272 tests。新增真实 Chromium 验证 tests/storage-e2e/project-object.spec.ts 4 项（OPFS 只存密文、localStorage 为空、staged-only 崩溃回滚、孤儿与不完整事务清理、清除站点数据后不可恢复），test:storage 2 files/9 tests。check:dependencies 主断言 2513→2598、check:evidence 全绿；AGENTS.md 同步。LOCAL-PROJECT-REPOSITORY 仍含 M0-027，保持 in_progress／partially_evidenced、不激活日常且 m0 退出不满足。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v28",
+      "title": "M0-052 事务核心阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T22:38:05+08:00",
+      "observedAt": "2026-08-06T22:38:05+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v27",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v28.json",
+          "immutable": true,
+          "sha256": "bc67609811bc92d372b691ddfb897a4e131ccf3550b62c637e064884a4e9c931"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-052 事务核心阶段：packages/local-storage OPFS 加密对象先写／IndexedDB 索引后写事务核心与稳定错误码落地，tests/unit 12 files/272 tests、test:storage 2 files/9 tests、check:dependencies 2598/2598、14 workspace；证据记录 m0-local-storage-project-object-transaction-v1 按 append-only 链取代 m0-local-storage-quota-v1。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v27。"
     }
   ]
 }

@@ -4,6 +4,7 @@ export {
   createDeviceKeyMissingError,
   createInvalidArgumentError,
   createInvalidDeviceKeyError,
+  createObjectNotFoundError,
   createPersistenceUnavailableError,
   createQuotaUnavailableError,
   createStorageUnavailableError,
@@ -16,6 +17,8 @@ export {
   type InvalidDeviceKeyError,
   type LocalStorageError,
   type LocalStorageErrorCode,
+  type ObjectNotFoundError,
+  type ObjectNotFoundReason,
   type PersistenceUnavailableError,
   type PersistenceUnavailableReason,
   type QuotaUnavailableError,
@@ -69,3 +72,39 @@ export {
   type WriteCapacityDecision,
   type WriteCapacityRejectionReason,
 } from "./quota.js";
+export {
+  PROJECT_INDEX_DB_NAME,
+  PROJECT_INDEX_DB_VERSION,
+  PROJECT_OBJECTS_BY_TRANSACTION_INDEX,
+  PROJECT_OBJECTS_STORE,
+  PROJECT_TRANSACTIONS_STORE,
+  openCommitIndexStore,
+  type CommitIndexStore,
+  type ProjectObjectRecord,
+  type TransactionRecord,
+} from "./commit-index.js";
+
+export {
+  PROJECT_OBJECTS_ROOT_DIR,
+  PROJECT_OBJECTS_TRANSACTIONS_DIR,
+  PROJECT_OBJECT_FILE_SUFFIX,
+  openOpfsObjectStore,
+  type OpfsObjectStore,
+} from "./opfs.js";
+
+export {
+  PROJECT_OBJECT_AAD_KIND,
+  commitProjectObjects,
+  listCommittedObjectIds,
+  openProjectObject,
+  openProjectObjectStore,
+  projectObjectPath,
+  recoverProjectObjects,
+  type CommitProjectObjectsInput,
+  type CommitProjectObjectsResult,
+  type OpenProjectObjectStoreInput,
+  type ProjectObjectCoreDeps,
+  type ProjectObjectInput,
+  type ProjectObjectStore,
+  type RecoveryResult,
+} from "./project-object-store.js";
