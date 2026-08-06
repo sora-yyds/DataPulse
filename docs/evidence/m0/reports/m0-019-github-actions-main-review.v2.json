@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-019-github-actions-main-review-v2",
+  "milestone": "M0",
+  "taskId": "M0-019",
+  "gateIds": [
+    "CI-ACTIVATION"
+  ],
+  "observedAt": "2026-08-06T15:44:07+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "github-actions-ubuntu-24.04-main-review",
+      "status": "passed",
+      "platform": "linux",
+      "architecture": "x64",
+      "operatingSystem": "Ubuntu 24.04 (GitHub Actions hosted)",
+      "workflow": "m0 / main-review",
+      "event": "push",
+      "repository": "sora-yyds/DataPulse",
+      "branch": "main",
+      "runs": [
+        {
+          "commitSha": "1fd3d990a26d3e4d0f0e1978f87bdab81d063a6f",
+          "runId": "31081289668",
+          "jobId": "92550467563",
+          "startedAt": "2026-08-06T07:32:05Z",
+          "completedAt": "2026-08-06T07:33:43Z",
+          "status": "success",
+          "verifyPrResult": "passed",
+          "nonce": "dd326b2db171278af49a8816fe0068a5fcf3be4f5a0feb3acb99308a81ed8fc8"
+        },
+        {
+          "commitSha": "7515f76cd61b65afb3eb9d99e96e901e142c6e19",
+          "runId": "31081709983",
+          "startedAt": "2026-08-06T07:38:42Z",
+          "completedAt": "2026-08-06T07:40:04Z",
+          "status": "success",
+          "verifyPrResult": "passed"
+        }
+      ],
+      "gates": [
+        {
+          "gateId": "REPO-FOUNDATION",
+          "summaryCheck": "repository-foundation",
+          "executed": 3,
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "gateId": "DEPENDENCY-BOUNDARIES",
+          "summaryCheck": "dependency-boundaries",
+          "executed": 2088,
+          "passed": 2088,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "gateId": "TEST-RUNNERS",
+          "summaryCheck": "test-runners",
+          "executed": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "gateId": "DETERMINISTIC-UI-A11Y",
+          "summaryCheck": "design-system",
+          "executed": 356,
+          "passed": 356,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "gateId": "CI-ACTIVATION",
+          "summaryCheck": "m0-quality-aggregators",
+          "executed": 21,
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "notes": "真实 main push 两次通过：run 31081289668（修复后复跑，verify:pr 6/6，nonce dd326b2d）与 run 31081709983（证据提交）。修复内容为全部 job 显式 corepack enable 与 check-design.mjs 剥离 designmd [log] 前缀。首次失败 run 31080835495 根因详见 m0-ci.md 第 6 节。v1 报告的中文说明存在编码损坏，本 v2 报告以正确编码接续。"
+    }
+  ]
+}

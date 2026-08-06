@@ -3,7 +3,7 @@
 > 任务：M0-019
 > 需求：NFR-QA-001、NFR-QA-002、NFR-QA-005、NFR-REL-005、NFR-REL-006
 > 决定：ADR-0037、ADR-0038、ADR-0040
-> 状态：五个 workflow 表面已编写并通过本地校验（PyYAML 解析、`check:governance` 95/95+7/7、actionlint v1.7.12 且二进制 SHA-256 已核对）；远端 `origin` 当前为空仓库，真实 GitHub 运行、merge queue required check、保护分支与否定 PR 未执行，因此任务与 CI-ACTIVATION 保持 `in_progress / partially_evidenced`
+> 状态：五个 workflow 表面已编写并通过本地校验（PyYAML 解析、`check:governance` 95/95+7/7、actionlint v1.7.12 且二进制 SHA-256 已核对）；main 首次推送的真实 `m0 / main-review` 已复跑通过（run 31081289668，`verify:pr` 6/6，详见第 6 节）。merge queue required check、保护分支、失败 PR／merge-group 否定验证、公开 Fork 复现与干净 Ubuntu 矩阵未执行，因此任务与 CI-ACTIVATION 保持 `in_progress / partially_evidenced`
 
 ## 1. 工作流表面
 
@@ -45,4 +45,4 @@
 
 其余已激活 gate（DEPENDENCY-BOUNDARIES 2068/2068、CI-ACTIVATION）在首次 Linux 运行即通过；`DATAPULSE_MERGE_BASE` 由 `github.event.before` 正确解析，`check:evidence` bootstrap 通过。修复后的复跑与 Windows 本地 `check:design` 356/356 均通过。
 
-本切片证明 workflow 文件语法与治理契约有效（PyYAML、`check:governance` 95/95+7/7、actionlint v1.7.12 且二进制 SHA-256 已核对）。它不证明：真实 GitHub 运行、merge queue required check、保护分支、失败 PR／merge-group 否定验证、公开 Fork 复现或干净 Ubuntu 矩阵通过；这些由 M0-046 与退出阶段闭合。远端 `origin` 当前为空仓库，首次推送前 CI 无法运行。
+本切片证明 workflow 文件语法与治理契约有效（PyYAML、`check:governance` 95/95+7/7、actionlint v1.7.12 且二进制 SHA-256 已核对），且 main 推送的真实 `m0 / main-review`（Ubuntu 24.04）已复跑通过（`verify:pr` 6/6）。它不证明：merge queue required check、保护分支、失败 PR／merge-group 否定验证、公开 Fork 复现或干净 Ubuntu 矩阵通过；这些由 M0-046 与退出阶段闭合。
