@@ -15,7 +15,7 @@ corepack pnpm run check:fixtures
 
 该 interface 固定根清单路径、Schema、SHA-256、路径策略、校验顺序和错误投影，调用者不能注入更宽的目录、替换 hash 算法、跳过条目或执行夹具内容。实现集中处理有界读取、fatal UTF-8、JSON Schema、路径 containment、普通文件检查、原始字节 hash、库存完整性和稳定错误排序。Schema、根 manifest、子 manifest／generator 和已提交 artifact 分别在读取前应用 256 KiB、8 MiB、1 MiB 和 16 MiB 上限；库存固定最多 100,000 项／32 层，失败明细最多 256 项。CLI 与 Vitest 的内存快照辅助入口另有 16 MiB 单文件／256 MiB 总量上限，并在主验证失败时不启动自测快照。
 
-成功输出单行 `datapulse-root-check-summary`，其中 `check=fixture-manifest`。当前 Windows 基线为 4 个逻辑集、12 个 artifact、0 个 generated 集，主检查 `312/312`、恶意 self-test `26/26`；完整 `test:unit` 为 `6 files / 172 tests`。该名称刻意不同于未来 `test:corpus`：当前命令只证明 manifest 合同与既有合成文件身份，不证明导入、分析、生成、性能或攻击语料已经运行。
+成功输出单行 `datapulse-root-check-summary`，其中 `check=fixture-manifest`。当前 Windows 基线为 4 个逻辑集、12 个 artifact、0 个 generated 集，主检查 `312/312`、恶意 self-test `26/26`；完整 `test:unit` 为 `8 files / 215 tests`。该名称刻意不同于未来 `test:corpus`：当前命令只证明 manifest 合同与既有合成文件身份，不证明导入、分析、生成、性能或攻击语料已经运行。
 
 ## 2. Manifest 合同
 

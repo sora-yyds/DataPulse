@@ -22,7 +22,7 @@ Storybook 的 `@storybook/addon-a11y` 固定 `parameters.a11y.test = "error"`，
 
 ## 2. 根入口与 fail-closed 行为
 
-每个根入口先构建 11 个 workspace，避免依赖工作树中既有 `dist`：
+每个根入口先构建 12 个 workspace，避免依赖工作树中既有 `dist`：
 
 ```powershell
 corepack pnpm run test:unit

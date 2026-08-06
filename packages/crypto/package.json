@@ -1,0 +1,23 @@
+{
+  "name": "@datapulse/crypto",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "@datapulse/domain": "workspace:*"
+  }
+}

@@ -4,7 +4,7 @@
 
 当前真实入口：
 
-固定 Windows 工作树的当前六类 runner 均已有真实产品断言：Vitest `7 files / 173 tests`、RTL `1 file / 2 tests`、Storybook Chromium `1 file / 1 story test`、Playwright E2E `2 tests`、独立 axe `2 tests`、Playwright 视觉冒烟 `24 run / 18 passed / 6 designed skips`。结构化 `check:test-runners` 真实重跑六个根入口并返回 `6/6`；这仍只是 Windows HTTP 阶段结果，不代表 Ubuntu、GitHub Actions、公开 Fork、HTTPS／四 Origin、完整 WCAG 认证或真实设备矩阵，也不关闭 M0-016／TEST-RUNNERS／M0-018。
+固定 Windows 工作树的当前六类 runner 均已有真实产品断言：Vitest `8 files / 215 tests`、RTL `1 file / 2 tests`、Storybook Chromium `1 file / 1 story test`、Playwright E2E `2 tests`、独立 axe `2 tests`、Playwright 视觉冒烟 `24 run / 18 passed / 6 designed skips`。结构化 `check:test-runners` 真实重跑六个根入口并返回 `6/6`；这仍只是 Windows HTTP 阶段结果，不代表 Ubuntu、GitHub Actions、公开 Fork、HTTPS／四 Origin、完整 WCAG 认证或真实设备矩阵，也不关闭 M0-016／TEST-RUNNERS／M0-018。
 
 - `unit/story-blueprint-schema.test.ts`：M0-011／048 的根级交叉契约；`test:unit` 先构建 workspace，再从三个包的公开 `dist` seam 使用 Vitest + Ajv 验证正式 `1.0.0` Story Schema、原始字节 hash、深只读边界、domain opaque ID 与四主题目录。放在根目录是因为它同时核对三个零内部 workspace 依赖的 workspace 的公开事实，不为任一包制造反向依赖。
 - `unit/story-blueprint-validator.test.ts`：M0-012／048 的公开 `dist` 合同；验证正式确定性生成物、正式根 bundle 不加载实验 validator、Node ESM／Vite no-write 探针、安全对象快照、资源上限、可信身份／引用、全局条件保持、区块条件收紧、版本化中文文本规则和最小 KPI 白名单。它不解析原始字符串／字节，也不冒充完整自然语言证明或产品应用构建。

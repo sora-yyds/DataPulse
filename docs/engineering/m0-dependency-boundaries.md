@@ -101,7 +101,7 @@ M0-013／048 的 Story Migrations 只允许导入 Domain 根、Story Schema 根�
 corepack pnpm run check:dependencies
 ```
 
-通过标准：输出 `check=dependency-boundaries`、`result=passed`，`executed>=1`、`failed=0`、`skipped=0`，当前 Windows 主断言为 `2089/2089`、self-test 为 `193/193`、domain contract 为 `60/60`、`cycles=0`。新增断言冻结 `allowBuilds.esbuild=true` 的唯一安装脚本放行，并继续拒绝其他 pnpm workspace／依赖图改写；仓库违规、domain 构建／合同失败或自测失败返回 `1`，CLI 参数错误返回 `2`。
+通过标准：输出 `check=dependency-boundaries`、`result=passed`，`executed>=1`、`failed=0`、`skipped=0`，当前 Windows 主断言为 `2294/2294`、self-test 为 `193/193`、domain contract 为 `60/60`、`cycles=0`。新增断言冻结 `allowBuilds.esbuild=true` 的唯一安装脚本放行，并继续拒绝其他 pnpm workspace／依赖图改写；仓库违规、domain 构建／合同失败或自测失败返回 `1`，CLI 参数错误返回 `2`。
 
 ## 6. 延期验证
 

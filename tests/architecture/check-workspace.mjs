@@ -57,6 +57,14 @@ const requiredWorkspaces = [
   },
   {
     kind: "package",
+    path: "packages/crypto",
+    name: "@datapulse/crypto",
+    dependencies: { "@datapulse/domain": "workspace:*" },
+    references: ["../domain"],
+    entries: { ".": "index" },
+  },
+  {
+    kind: "package",
     path: "packages/api-contracts",
     name: "@datapulse/api-contracts",
     dependencies: { "@datapulse/domain": "workspace:*" },
@@ -175,6 +183,7 @@ const rootReferences = [
   "./apps/viewer",
   "./apps/custom-connector",
   "./services/share-api",
+  "./packages/crypto",
 ];
 
 const deferredWorkspacePaths = [

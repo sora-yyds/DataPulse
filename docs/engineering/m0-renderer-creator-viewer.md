@@ -68,9 +68,9 @@ manifest 同时引用正式 Story Schema `1.0.0` 和 M0-049 既有 Metric Runtim
 
 | 检查 | 结果 |
 |---|---|
-| `corepack pnpm run build` | 11/11 workspace；Creator JS `335.48 kB`（gzip `85.94 kB`），Viewer JS `335.47 kB`（gzip `85.94 kB`），每端另有 `1.03 kB` Metric JSON 与 `1.55 kB` Story JSON |
-| `corepack pnpm run check:workspace` | `395/395`，含两端独立 JSON 资源及禁止 `data:application/json` |
-| `corepack pnpm run check:dependencies` | M0-015 报告绑定主断言 `2076/2076`；M0-016 冻结测试入口与 esbuild build policy 后为 `2087/2087`；M0-017 增加 fixture 边界后当前为 `2089/2089`，self-test `193/193`、domain contract `60/60`、循环 `0` |
+| `corepack pnpm run build` | 12/12 workspace；Creator JS `335.48 kB`（gzip `85.94 kB`），Viewer JS `335.47 kB`（gzip `85.94 kB`），每端另有 `1.03 kB` Metric JSON 与 `1.55 kB` Story JSON |
+| `corepack pnpm run check:workspace` | `424/424`，含两端独立 JSON 资源及禁止 `data:application/json` |
+| `corepack pnpm run check:dependencies` | M0-015 报告绑定主断言 `2076/2076`；M0-016 冻结测试入口与 esbuild build policy 后为 `2087/2087`；M0-017 增加 fixture 边界后为 `2089/2089`；M0-021 增加 crypto 边界后当前为 `2294/2294`，self-test `193/193`、domain contract `60/60`、循环 `0` |
 | `corepack pnpm run test:unit` | 5 files / 168 tests；M0-015 新增 8 项组合／渲染断言 |
 | `corepack pnpm run check:design` | 主断言 `356/356`、self-test `5/5`、`0 errors / 85 reviewed warnings / 1 info` |
 
