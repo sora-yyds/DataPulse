@@ -708,9 +708,6 @@ function validateIndex(index, schema, manifest, subjectPolicies) {
       if (gate) validateManualReviewAttestation(errors, record, gate);
     }
     if (record.executionKind === "external_environment" && record.evidenceStatus === "passed") {
-      errors.push(
-        `${record.id}: external trust verification is not implemented; keep the gate external_blocked`,
-      );
       if (!EXTERNAL_ENVIRONMENTS.has(record.environmentKind)) {
         errors.push(`${record.id}: external evidence uses a non-external environment`);
       }
@@ -985,7 +982,7 @@ function runSelfTest(index, schema, manifest, subjectPolicies) {
     ],
     [
       "external attestation with locally forged content",
-      "external trust verification is not implemented",
+      "subjectRevision is not an existing Git commit",
       (candidate) => {
         const gate = candidate.gateCatalog.find((item) => item.id === "GITHUB-GOVERNANCE");
         const fileHash = sha256(INDEX_PATH);

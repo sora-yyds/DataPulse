@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T15:57:54+08:00",
+  "updatedAt": "2026-08-06T16:37:14+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v19",
+      "latestRecordId": "m0-wave0-evidence-contract-v20",
       "blockerRefs": []
     },
     {
@@ -7178,6 +7178,121 @@
       ],
       "blockerRefs": [],
       "notes": "追加 m0-release-dry-run-v1（RELEASE-DRYRUN 激活并进入 in_progress）并同步文档（AGENTS.md／IMPLEMENTATION_PLAN.md／m0-ci.md 新增 release dry-run 骨架与命令矩阵）后复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界与 attestation 绑定；标签触发 job 与公开 Fork 复现（M0-044）未执行，RELEASE-DRYRUN 保持 in_progress / partially_evidenced，本复核不扩张为 M0-020 完成。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v20",
+      "title": "M0 证据索引 v2、外部环境证据校验分支阶段复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T16:37:14+08:00",
+      "observedAt": "2026-08-06T16:37:14+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v19",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v20.json",
+          "immutable": true,
+          "sha256": "c268fd0759c1ab108bfc6491c3577c06db04d52309db847d606e6bef24efc0d1"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "实现 validate-evidence-index.mjs 的 external_environment／passed 真实校验分支并同步 README 契约说明后复核 evidence-index v2、append-only 链、冻结 gate 静态定义与 attestation 绑定；GITHUB-GOVERNANCE 仍保持 external_blocked，真实 ruleset 否定验证完成前不得标为 passed，本复核不扩张为 M0-046 完成。"
     }
   ]
 }

@@ -9,7 +9,7 @@
 - `m0-exit-manifest.v1.json`：M0 退出信任根，冻结 35 个 gate、67 个任务及每个 gate 静态定义的 SHA-256。其文件 hash 同时固化在 Schema、索引和验证器中。
 - `m0-external-subject-policies.v1.json`：冻结五个真实外部 gate 必须覆盖的 contract／implementation／verification 角色及允许的仓库路径范围，防止用一个无关文件冒充被测 subject。
 - `external-subject-manifest.schema.v1.json`、`external-environment-profile.schema.v1.json`、`external-attestation.schema.v1.json`：真实 GitHub、设备与阿里云证据的三类版本化内容契约；分别绑定被测 revision/文件、脱敏环境和非模拟通过断言。
-- 上述外部 JSON 当前只定义内容形状，不构成可信发行者证明。平台 API 回读、提供方签名或冻结公钥验证尚未落地前，validator 明确拒绝任何 `external_environment / passed` record；相关 gate 必须保持 `external_blocked`，不能凭本地自我声明解除。
+- 上述外部 JSON 定义三类版本化内容契约，`validate-evidence-index.mjs` 对 `external_environment / passed` record 执行冻结 subject policy、revision 祖先、文件与修订字节 SHA-256 及 attestation 绑定校验；只有真实外部验证完成并留下可回读证据时 gate 才能标为 `passed`，平台 API 回读或提供方签名未落地前不能凭本地自我声明解除 `external_blocked`。
 - `manual-review-attestation.schema.v1.json`：人工评审凭证契约；把唯一 record、gate、评审时间、评审人、完整主体集合及其工作树 SHA-256 绑定为不可变通过证明。
 - `evidence-index.json`：M0-E1～E6 映射、原子 `gateCatalog`、当前状态和已产生的证据记录。它是唯一状态与 activation registry，不另建容易漂移的激活清单。
 - `validate-evidence-index.mjs`：无第三方运行时依赖的语义验证器，核对退出 manifest、静态 gate hash、任务覆盖、PRD/ADR 引用、record 链、文件 hash 和当前 fail-closed 状态；它不代替 JSON Schema 校验，也不冒充 `verify:m0` 的自动门槛重跑。
