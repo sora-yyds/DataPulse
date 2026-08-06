@@ -102,6 +102,12 @@ const STORY_RENDERER_CSS = `
   font-weight: var(--dp-font-weight-body-md);
 }
 
+.dp-story-renderer :focus-visible {
+  outline: 2px solid var(--dp-focus);
+  outline-offset: 2px;
+  border-radius: var(--dp-radius-control);
+}
+
 .dp-story-renderer__blocks {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

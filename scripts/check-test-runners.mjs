@@ -10,6 +10,7 @@ const testScripts = [
   "test:storybook",
   "test:e2e",
   "test:a11y",
+  "test:visual",
 ];
 const childTimeoutMilliseconds = 600_000;
 const childOutputTailLength = 4_000;
