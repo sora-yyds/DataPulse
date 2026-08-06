@@ -5,6 +5,7 @@ export {
 
 export {
   IMPORT_ERROR_CODES,
+  createArchiveInvalidError,
   createCellCountExceededError,
   createColumnLimitExceededError,
   createCompressionRatioExceededError,
@@ -21,6 +22,8 @@ export {
   type ColumnLimitExceededError,
   type CompressionRatioExceededError,
   type CsvDecodeFailedError,
+  type ArchiveInvalidError,
+  type ArchiveInvalidReason,
   type CsvDecodeFailedReason,
   type DecompressedSizeExceededError,
   type FileSizeExceededError,
@@ -71,3 +74,34 @@ export {
   type ImportStateTransitionInvalidError,
   type ImportStateTransitionResult,
 } from "./progress.js";
+export {
+  CSV_MEMORY_ESTIMATE,
+  XLSX_MEMORY_ESTIMATE,
+  estimateCsvWorkingMemoryBytes,
+  estimateXlsxWorkingMemoryBytes,
+  isWorkingMemoryWithinLimit,
+  type CsvMemoryEstimateProfile,
+  type XlsxMemoryEstimateProfile,
+} from "./memory.js";
+
+export {
+  CsvShapeScanner,
+  scanCsvShape,
+  type CsvShape,
+  type CsvShapeResult,
+} from "./csv-shape.js";
+
+export {
+  inspectXlsxArchive,
+  type XlsxArchiveInspection,
+  type XlsxArchiveInspectionResult,
+} from "./zip-archive.js";
+
+export {
+  admitImport,
+  type CsvAdmission,
+  type ImportAdmissionOptions,
+  type ImportAdmissionResult,
+  type ImportAdmissionSuccess,
+  type XlsxAdmission,
+} from "./admission.js";
