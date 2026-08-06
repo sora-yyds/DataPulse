@@ -69,6 +69,15 @@ const requiredWorkspaces = [
   },
   {
     kind: "package",
+    path: "packages/local-storage",
+    name: "@datapulse/local-storage",
+    dependencies: { "@datapulse/crypto": "workspace:*" },
+    devDependencies: { "@types/node": "24.13.3" },
+    references: ["../crypto"],
+    entries: { ".": "index" },
+  },
+  {
+    kind: "package",
     path: "packages/api-contracts",
     name: "@datapulse/api-contracts",
     dependencies: { "@datapulse/domain": "workspace:*" },
@@ -203,6 +212,7 @@ const rootReferences = [
   "./apps/device-probe",
   "./services/share-api",
   "./packages/crypto",
+  "./packages/local-storage",
 ];
 
 const deferredWorkspacePaths = [
