@@ -54,7 +54,19 @@
 
 固定盐只允许出现在测试向量；生产盐必须来自 Web Crypto CSPRNG。
 
-## 4. 证据边界
+## 4. 设备探针页（M0-022 交付件）
+
+`apps/device-probe`（`@datapulse/device-probe`）是独立的最小 Vite 探针 workspace，不进入 Creator／Viewer／Connector 产品链路。页面在浏览器内执行五组固定向量探针并输出 JSON 结果：
+
+- KDF：以固定盐派生 `a2id-v1-64m-t3-p1`，核对黄金 key 并记录单次派生耗时（目标 ≤5 s）；
+- KDF 拒绝：未知 profile id 必须在分配 KDF 内存前抛 `CRYPTO_PROFILE_UNKNOWN`，证明链接无法携带任意 KDF 参数；
+- AES：purpose 绑定 AES-256-GCM 固定向量的 seal／open；
+- JCS：RFC 8785 规范化固定对象；
+- Fragment：构造 `#dp1.p.<base64url(JCS(passwordEnvelope))>` 固定向量，核对预计算 wrap 值、2,048 字符长度上限与 KEK 解包往返。
+
+固定盐／key／nonce 只出现在本探针页与测试向量中；探针页输出不含任何真实用户数据或密钥。Chrome 本地产物为单文件 JS `39.61 kB / gzip 16.09 kB`（含 Argon2id WASM base64）。真实设备运行（Chrome／Edge／iOS Safari／Android 微信／iOS 微信）属于 M0-023 外部矩阵，本页面只是其执行载体，不代表设备认证或完整 WCAG。
+
+## 5. 证据边界
 
 - 已完成：依赖评估、`packages/crypto` Argon2id KDF 实现、11 个单元测试、黄金向量交叉验证、`test:unit` 全量通过。
 - 未完成（M0-023，外部阻塞）：Chrome／Edge／iOS Safari／Android 微信／iOS 微信真实设备固定向量、单次派生 ≤5 秒与内存终止探针；只有真实设备矩阵通过后才冻结 profile 并激活 `KDF-DEVICE-MATRIX`。

@@ -166,6 +166,20 @@ const requiredWorkspaces = [
     entries: { main: "main" },
   },
   {
+    kind: "app",
+    path: "apps/device-probe",
+    name: "@datapulse/device-probe",
+    dependencies: { "@datapulse/crypto": "workspace:*" },
+    devDependencies: {
+      "@types/node": "24.13.3",
+      vite: "8.2.0",
+    },
+    references: ["../../packages/crypto"],
+    entries: { main: "main" },
+    inputs: ["src/**/*.ts"],
+    buildScript: "tsc --build tsconfig.json && vite build",
+  },
+  {
     kind: "service",
     path: "services/share-api",
     name: "@datapulse/share-api",
@@ -186,6 +200,7 @@ const rootReferences = [
   "./apps/creator",
   "./apps/viewer",
   "./apps/custom-connector",
+  "./apps/device-probe",
   "./services/share-api",
   "./packages/crypto",
 ];
