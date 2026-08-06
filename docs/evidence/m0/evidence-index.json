@@ -7341,37 +7341,37 @@
           "kind": "external-record",
           "path": "docs/evidence/m0/external/github-ruleset-readback.v1.json",
           "immutable": true,
-          "sha256": "4aadb2d0f842660da23122623cfa06da0174a40e158c629106aa83ac948e00ab"
+          "sha256": "9eb2798e915f4faf59c783c483360ac0c189f469eb85b2173c42ac234415c1b7"
         },
         {
           "kind": "external-record",
           "path": "docs/evidence/m0/external/negative-direct-push-result.txt",
           "immutable": true,
-          "sha256": "9de48ebd938258770f064132bd26046d9891dbd34057bb4c1ffe771506dfe9e1"
+          "sha256": "ca668132ec78084f62232502612c1004ed204581856e790f59b2d5c009d04953"
         },
         {
           "kind": "external-record",
           "path": "docs/evidence/m0/external/negative-failing-pr-summary.json",
           "immutable": true,
-          "sha256": "3babfd6151099e55751f3036634f09fb4290140e94f233b9f0a7185361c3217a"
+          "sha256": "506aa03f03752844abe514aab4a86599a80ddb7ee1f08f173bba4d41c44fcc4f"
         },
         {
           "kind": "external-record",
           "path": "docs/evidence/m0/external/negative-failing-pr-merge-blocked.json",
           "immutable": true,
-          "sha256": "edcd496fa3d6c24595195d9e1cd4725159d220163d07dfaa0a245f005aabdf96"
+          "sha256": "b140218fa93123dcc056263ecf77eb32a3fd3dc7564a93f782604320433758bf"
         },
         {
           "kind": "external-record",
           "path": "docs/evidence/m0/external/github-remote-environment-profile.v1.json",
           "immutable": true,
-          "sha256": "5e703f95a172cc7130b35000879acab0496f033a0bb833971a1e6277639f4c5a"
+          "sha256": "78e0659b25668e82c9ffe428cbbf2547cfa1ef59d2d117a4fbd3f158c329e7b6"
         },
         {
           "kind": "external-record",
           "path": "docs/evidence/m0/external/m0-046-github-ruleset-validation.v1.json",
           "immutable": true,
-          "sha256": "541e8711f85a1f6afaabf41db7cd45ab04ac7020fc36971f97326091d7d2ba5c"
+          "sha256": "b394bf2380d1af730bed0e0453a8c1a3a74e4482bd710a2e90fdf350956ba70b"
         },
         {
           "kind": "contract",
@@ -7508,7 +7508,7 @@
           "kind": "manual-review",
           "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v21.json",
           "immutable": true,
-          "sha256": "f175cb522de9d1182fc7d830d846fa93f24302bede6e8501b68f2e8034a968e0"
+          "sha256": "7cf2ee6f210d41804d2460c3857acbf8a866a304e7f9726e47fad3e242325d18"
         }
       ],
       "blockerRefs": [],
@@ -7564,7 +7564,7 @@
           "kind": "manual-review",
           "path": "docs/evidence/m0/attestations/m0-wave0-ownership-review.v2.json",
           "immutable": true,
-          "sha256": "6eff0669aa8d0300db6a3ebf90146417ec9d00e92a9a3e8a02b3de262b8f5231"
+          "sha256": "c0a1be9921bbd0659343e35202484dbb790e9d8ba15e614fc46143e124009271"
         }
       ],
       "blockerRefs": [],

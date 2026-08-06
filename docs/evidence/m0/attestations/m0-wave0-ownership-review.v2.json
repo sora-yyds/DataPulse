@@ -12,7 +12,7 @@
   "subjectArtifacts": [
     {
       "path": "docs/governance/m0-ownership-and-resources.md",
-      "sha256": "59fa898e4772e72cc70f5fec00b79c6662dfacce91fb5f0b4392467e0e02ba59"
+      "sha256": "3e711cb7829e3fa446cf12f89bb0d8968938a90ae59d8feb0de85d109967aba8"
     }
   ],
   "result": "passed",
