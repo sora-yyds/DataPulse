@@ -409,6 +409,8 @@ v1 只有 `interaction-data` 可使用 `gzip-rfc1952-v1`，其他 entry 必须 `
 
 分享密钥、分享密码和发布管理凭证是三个独立秘密。Fragment、密码、KEK 和分享密钥均不发送服务器；必要能力缺失时拒绝使用，不能降级明文。发布管理凭证随机生成、只在创作端本地设备绑定加密保存；服务端 TTL KV 仅保存其不可逆校验值，项目包不导出该凭证。
 
+本地设备绑定密封使用独立注册 purpose \`datapulse/device-bound-seal\`，与发布／项目包／分享材料完全隔离：设备密钥由 Web Crypto CSPRNG 生成、不可导出，句柄只经 IndexedDB 持久化，密封 AAD 为 JCS 编码的 \`{v: 1, purpose: "datapulse/device-bound-seal", ...fields}\`。首次绑定请求 \`navigator.storage.persist()\`；拒绝或不支持时返回稳定错误且不得声称持久。清除站点数据后密钥句柄丢失、已密封对象永久不可读，不提供恢复路径。[ADR-0053](adr/0053-non-exportable-device-keys.md)
+
 ### 9.3 下载、探索与撤销
 
 观看端先按发布 ID 获取密文，再使用 Fragment 和可选密码本地解密，随后对明文执行当前/上一主版本 Schema 校验。观看者筛选只操作交互数据包，由共享 `metric-runtime` 合并版本化累加器、求值派生指标，并由叙事规则更新、隐藏或标记失效结论，不调用 AI。任何指标若声明为固定或不支持当前筛选，界面必须禁用该筛选或明确标记该区块不联动，不能静默展示过期数值。
