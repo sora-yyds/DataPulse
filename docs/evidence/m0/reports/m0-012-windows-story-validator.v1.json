@@ -1,0 +1,327 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-012-windows-story-validator-v1",
+  "milestone": "M0",
+  "taskId": "M0-012",
+  "gateId": "FORMAL-STORY-SCHEMA",
+  "observedAt": "2026-08-05T21:12:44+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows NT 10.0.26200.0",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务、提交与证据索引范围外。",
+      "cleanProjectDirectory": false,
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "unchangedByFrozenInstall": true
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3",
+        "ajv": "8.17.1",
+        "json-schema-to-typescript": "15.0.4",
+        "vitest": "4.1.10",
+        "vite": "8.2.0"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run build",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run check:design",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "result": "passed"
+        }
+      ],
+      "generationResult": {
+        "result": "passed",
+        "mode": "deterministic-check",
+        "selfTest": {
+          "executed": 6,
+          "passed": 6,
+          "failed": 0,
+          "coverage": [
+            "合法 UTF-8",
+            "UTF-8 BOM 拒绝",
+            "畸形 UTF-8 拒绝",
+            "CRLF 拒绝",
+            "外部 $ref 拒绝",
+            "外部 $ref 稳定错误码大小写归一"
+          ]
+        },
+        "artifacts": {
+          "sourceSchema": {
+            "path": "packages/story-schema/src/experimental/story-blueprint.schema.json",
+            "bytes": 11571,
+            "sha256": "6dc81e7825b0fff3e1961b57d4139c58ade5b1fd4d4c141bd83822f2d7f501e9"
+          },
+          "distSchema": {
+            "path": "packages/story-schema/dist/experimental/story-blueprint.schema.json",
+            "bytes": 15043,
+            "sha256": "9d00a164969c747238a22cec3db3e0b81fc2b8046305dd45ba9d113b94eb93f1"
+          },
+          "generatedType": {
+            "path": "packages/story-schema/src/generated/experimental-story-blueprint.generated.ts",
+            "bytes": 3588,
+            "sha256": "65002368f13d6cde8148437ef2fa6509163ff111651235045a610ae38c411686"
+          },
+          "standaloneValidator": {
+            "path": "packages/story-schema/src/generated/experimental-story-blueprint.validator.generated.ts",
+            "bytes": 95823,
+            "sha256": "24573e21dc74798533422799bda19e39fc9c29a1556331171b7590319fe863ba"
+          }
+        },
+        "sourceDistSchema": {
+          "semanticEqual": true,
+          "byteHashesEqual": false
+        },
+        "cspStaticSourceChecks": {
+          "eval": "absent",
+          "newFunction": "absent",
+          "commonJsRequire": "absent",
+          "dynamicImport": "absent",
+          "runtimeAjvCompile": "absent"
+        },
+        "externalCurrentWorkingDirectoryProbe": "passed",
+        "absoluteRepositoryPathEmitted": false,
+        "failureCliProbe": {
+          "result": "passed",
+          "exitCode": 1,
+          "singleStructuredJson": true,
+          "absolutePathOrStackLeak": false
+        }
+      },
+      "validatorContractResult": {
+        "result": "passed",
+        "testFiles": {
+          "executed": 2,
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "tests": {
+          "executed": 65,
+          "passed": 65,
+          "failed": 0,
+          "skipped": 0
+        },
+        "resourceProfile": {
+          "profileVersion": "0.1.0",
+          "maxSnapshotUtf8Bytes": 16777216,
+          "maxDepth": 16,
+          "maxNodes": 65536,
+          "maxReferenceOccurrences": 65536,
+          "maxPublicIssues": 32
+        },
+        "runtimeProbes": {
+          "nodeNativeEsmFromAbsoluteSpacePath": "passed",
+          "viteWriteFalseBundle": "passed",
+          "viteProbeProducedFiles": false,
+          "productApplicationBundleProduced": false
+        },
+        "coverage": [
+          "已解析对象的 getter／setter、Symbol、稀疏数组、数组额外属性、共享别名、循环、非 plain object、非 JSON 值与反射 trap 拒绝",
+          "数组节点上限在 ownKeys 前拒绝；超限普通对象在读取 property descriptor 前拒绝且不复制第二份 key 列表",
+          "16 MiB 重编码 UTF-8、深度 16、节点 65,536、引用出现次数 65,536 与最多 32 个公开 issue 的稳定拒绝",
+          "story／dataset 可信身份、候选引用目录不能自授权、使用点必须同时属于候选与可信目录",
+          "重复 block／condition ID、悬空引用、全局条件删除或改写及区块条件放宽拒绝",
+          "手写 Gregorian／offset 时间比较不依赖 Date.parse、设备时区或当前时间",
+          "title-summary 与 KPI 登记字段的版本化中文数量／评价词规则；不声称完整自然语言证明",
+          "KPI metric 必须属于可信的最小适用白名单；不声称完整图表适用矩阵",
+          "成功快照与输入隔离、深只读；失败 DTO 稳定、有界且不回显输入"
+        ]
+      },
+      "workspaceResult": {
+        "result": "passed",
+        "workspaces": 8,
+        "assertions": {
+          "executed": 248,
+          "passed": 248,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "dependencyBoundaryResult": {
+        "result": "passed",
+        "workspaces": 8,
+        "cycles": 0,
+        "sourceFiles": 22,
+        "moduleSpecifiers": 33,
+        "assertions": {
+          "executed": 885,
+          "passed": 885,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 165,
+          "passed": 165,
+          "failed": 0,
+          "skipped": 0
+        },
+        "domainContract": {
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "toolchainResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 54,
+          "passed": 54,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "governanceResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 81,
+          "passed": 81,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "designResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 313,
+          "passed": 313,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0
+        },
+        "lint": {
+          "errors": 0,
+          "reviewedWarnings": 85,
+          "infos": 1
+        },
+        "themes": 4,
+        "semanticRolesPerTheme": 35
+      },
+      "aggregatorResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 21,
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代干净 Ubuntu 的冻结安装、路径大小写、JSON module 与 ESM 行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地构建、Vitest 与聚合器结果不冒充 CI 或公开 Fork。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "bounded-reader-and-migration",
+      "status": "not_run",
+      "reason": "M0-013 才在 JSON.parse 前执行原始 payload 精确字节限制，并建立统一 Reader、迁移与失败不替换合同。"
+    },
+    {
+      "validation": "formal-story-schema-freeze",
+      "status": "not_run",
+      "reason": "M0-048 才冻结正式 1.0.0、永久 Schema hash 与 Creator／Viewer fixture；当前 0.1.0 是未发布实验版本。"
+    },
+    {
+      "validation": "trusted-evidence-relations",
+      "status": "not_run",
+      "reason": "当前可信 context 只有 ID 集合、全局条件与 KPI 最小白名单，尚未证明 evidence 到 metric／judgment rule 的关系。"
+    },
+    {
+      "validation": "complete-language-and-chart-applicability",
+      "status": "not_run",
+      "reason": "版本化词表不能识别全部中文或外语数量／评价表达，当前登记区块也不构成完整图表适用矩阵。"
+    },
+    {
+      "validation": "windows-and-browser-matrix",
+      "status": "not_run",
+      "reason": "Windows ARM64／Server、PowerShell 7、长路径、受限权限、杀毒软件锁文件、低内存、真实浏览器／CSP 及产品 Creator／Viewer 构建均未验证。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-012 Windows 阶段的确定性类型／Ajv standalone 生成、已解析对象安全快照、对象资源上限、可信引用／条件与当前登记区块最小适用性校验，以及公开 dist seam 的 Node 原生 ESM、Vite no-write 和 Vitest 恶意输入合同",
+    "notImplemented": "原始 payload Reader／迁移、正式 1.0.0／永久 hash／Creator-Viewer fixture、完整 evidence 关系、完整自然语言与图表矩阵、产品应用构建、真实浏览器、Ubuntu 和 GitHub Actions",
+    "storySchemaRuntimeDependencies": [
+      "ajv@8.17.1"
+    ],
+    "storySchemaBuildDependencies": [
+      "json-schema-to-typescript@15.0.4"
+    ],
+    "productApplicationBundleProduced": false,
+    "evidenceIndexAndAggregateReadback": "本不可变报告写入并登记 hash 后单独运行，避免报告自引用；结果由最终仓库检查与交付说明记录。"
+  },
+  "conclusion": "Windows x64、PowerShell 5.1、含空格工作区中的 M0-012 阶段生成、构建、65/65 Vitest 断言、8 workspace 契约、依赖边界、治理、Design 与聚合器检查均通过。由于 M0-013、M0-048、跨平台、CI、产品构建、真实浏览器及完整关系／语言／图表语义尚未完成，FORMAL-STORY-SCHEMA 继续保持 in_progress / partially_evidenced 且不激活，本报告总体为 partial。"
+}

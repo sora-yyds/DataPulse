@@ -8,7 +8,7 @@
 
 根 [`DESIGN.md`](../../DESIGN.md) 仍是品牌视觉、界面语言和可视化 Token 的唯一手写事实源。M0-014 只冻结四主题的机器可读语义色契约和可重复检查，不声称四主题组件、视觉基线、真实浏览器无障碍或 M3 完整渲染系统已经完成。
 
-`@datapulse/themes` 是零依赖、纯 TypeScript workspace。它不依赖 React、Renderer、Story Schema、存储或网络，只导出由 `DESIGN.md` 生成的稳定主题 ID、35 个 `--dp-*` 语义变量及其解析后 sRGB hex。M0-015 的 Renderer 可以消费该类型化接口，组件不得反向读取 primitive color。
+`@datapulse/themes` 是零依赖、纯 TypeScript workspace。它不依赖 React、Renderer、Story Schema、存储或网络，只导出由 `DESIGN.md` 生成的稳定主题 ID、每主题 35 个语义色变量，以及 70 个间距、圆角和排版 CSS 变量。M0-015 的 Renderer 只消费这些类型化 `--dp-*` 接口，组件不得反向读取 primitive color 或在页面散落视觉常量。
 
 ## 2. DataPulse themes 扩展
 
@@ -29,6 +29,8 @@ themes:
 - 每个主题精确提供同一组 35 个角色：17 个表面／文字／交互／状态角色、8 个分类图表角色、5 个顺序色阶角色和 5 个发散色阶角色；
 - 每个值只能是 `{colors.*}` 引用，禁止字面色、CSS、脚本、其他 token group 或缺失时跨主题回退；
 - 每个引用必须由固定 CLI 解析为有效 color，生成结果统一为小写 sRGB hex。
+
+同一生成物还从标准 `spacing`、`rounded` 和 `typography` 组生成稳定 CSS 变量：11 个间距、6 个圆角，以及 15 套排版的字体族、字号、字重和已登记字距，共 70 个变量。Google `0.4.0` 的解析结果不会暴露 front matter 中的 `lineHeight`，因此当前类型化接口不伪造第二份行高来源；M0-015 页面不引用不存在的行高变量，后续升级格式前需先评估迁移。
 
 ## 3. 固定工具与 warning 基线
 
@@ -56,8 +58,10 @@ node scripts/check-design.mjs --self-test
 node scripts/check-design.mjs --write --self-test
 ```
 
-`--write` 只有在固定工具版本、零 error、warning 基线和 4×35 主题契约全部通过后才覆盖 `packages/themes/src/index.ts`。普通检查只读并逐字核对生成结果。
+`--write` 只有在固定工具版本、零 error、warning 基线、4×35 主题契约与 11/6/15 个标准 Token 集合全部通过后才覆盖 `packages/themes/src/index.ts`。普通检查只读并逐字核对生成结果。
 
 同一命令还运行五个 fail-closed 否定样例：恶意 CSS／代码样式色值、未审查 component warning、缺失主题角色、主题字面色绕过和生成物漂移。通过报告必须同时满足主检查与 self-test 的 `failed=0`、`skipped=0`。
+
+当前 Windows 根结果为主断言 `356/356`、self-test `5/5`。M0-015 Renderer 通过主题规则消费全部变量，故事画布使用 `DESIGN.md` 明确的 1440px 最大内容宽度并居中；元素不写入主题 `style` 属性。受控 `<style>` 的最终 CSP hash／nonce 策略仍由 M0-036 Origin Policy 原子定义，不能以 `unsafe-inline` 放宽。
 
 Google CLI 的文字对比度检查只覆盖已登记 component 的 `backgroundColor`／`textColor`。图表非文本对比度、非颜色区分、键盘、焦点、200% 缩放、弱动效、四主题页面截图和真实浏览器行为仍由 M0-018 及后续视觉／无障碍门槛验证。

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-016-windows-vitest-bootstrap-v2",
+  "milestone": "M0",
+  "taskId": "M0-016",
+  "gateId": "TEST-RUNNERS",
+  "observedAt": "2026-08-05T23:55:46+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务与证据范围外。",
+      "cleanProjectDirectory": false,
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "unchangedByFrozenInstall": true
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "vitest": "4.1.10",
+        "vite": "8.2.0",
+        "ajv": "8.17.1"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaceProjects": 10
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 3,
+          "tests": 98
+        }
+      ],
+      "runnerResults": [
+        {
+          "runner": "Vitest",
+          "status": "passed",
+          "environment": "node",
+          "testFiles": 3,
+          "tests": 98,
+          "failed": 0,
+          "skipped": 0,
+          "fileResults": [
+            {
+              "path": "tests/unit/story-blueprint-schema.test.ts",
+              "tests": 16
+            },
+            {
+              "path": "tests/unit/story-blueprint-validator.test.ts",
+              "tests": 53
+            },
+            {
+              "path": "tests/unit/story-artifact-reader.test.ts",
+              "tests": 29
+            }
+          ],
+          "productAssertion": "从公开 dist seam 验证正式 Story Schema、结构／语义校验与有界 Reader；从受限开发 seam 验证未发布迁移样本，并覆盖永久历史和恶意输入否定断言。"
+        },
+        {
+          "runner": "React Testing Library",
+          "status": "not_run",
+          "reason": "M0-015 最小 Creator／Viewer 页面尚未建立。"
+        },
+        {
+          "runner": "Storybook",
+          "status": "not_run",
+          "reason": "M0-015 最小 Renderer 与产品区块尚未建立。"
+        },
+        {
+          "runner": "Playwright",
+          "status": "not_run",
+          "reason": "独立 Creator／Viewer 产品页面和 HTTPS 测试宿主尚未建立。"
+        },
+        {
+          "runner": "axe",
+          "status": "not_run",
+          "reason": "可访问性产品页面与浏览器 runner 尚未建立。"
+        }
+      ],
+      "runnerPolicy": {
+        "passWithNoTests": false,
+        "allowOnly": false,
+        "environment": "node",
+        "pool": "forks",
+        "maxWorkers": 1,
+        "buildsPublicPackageSeamsFirst": true,
+        "activatedDailyGate": false
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 工作树测试不替代干净 Ubuntu 的安装与 runner 复现。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 尚未建立 workflow；本地 Vitest 不冒充 GitHub required check。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "remaining-product-runners",
+      "status": "not_run",
+      "reason": "M0-015 后必须为 RTL、Storybook、Playwright 与 axe 分别加入真实产品断言。"
+    },
+    {
+      "validation": "stable-activated-test-gate",
+      "status": "not_run",
+      "reason": "完整 runner 尚未到位，因此 TEST-RUNNERS 不激活日常 gate。"
+    },
+    {
+      "validation": "public-fork-reproduction",
+      "status": "not_run",
+      "reason": "M0-044 才在干净公开 Fork 重跑当前全部测试与发布矩阵。"
+    }
+  ],
+  "scope": {
+    "implemented": "固定 Vitest／Vite 的 Node 单元测试入口，先构建公开包 seam；3 个真实测试文件共 98 个断言覆盖正式 Schema、校验、Reader、开发迁移隔离、恶意输入与永久历史保护。",
+    "notImplemented": "RTL、Storybook、Playwright、axe、浏览器产品断言、GitHub Actions、干净 Ubuntu、公开 Fork、TEST-RUNNERS 日常激活与 M0-016 整体验收。",
+    "productBundleProduced": false
+  },
+  "conclusion": "Windows 本地 Vitest-only 子集已扩展到 3 个真实文件、98/98 断言并通过；其余四类 runner、CI 与公开 Fork 均未运行，因此 TEST-RUNNERS 继续保持 in_progress / partially_evidenced，M0-016 不得标记完成。"
+}

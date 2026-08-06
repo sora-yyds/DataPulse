@@ -1,0 +1,385 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-048-windows-formal-story-schema-v1",
+  "milestone": "M0",
+  "taskId": "M0-048",
+  "gateIds": [
+    "FORMAL-STORY-SCHEMA",
+    "BOUNDED-READER-MIGRATION"
+  ],
+  "observedAt": "2026-08-05T23:55:46+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows 10.0.26200",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务、提交与证据索引范围外。",
+      "cleanProjectDirectory": false,
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "unchangedByFrozenInstall": true
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3",
+        "ajv": "8.17.1",
+        "json-schema-to-typescript": "15.0.4",
+        "vitest": "4.1.10",
+        "vite": "8.2.0"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaceProjects": 10,
+          "includesRepositoryRoot": true
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 54
+        },
+        {
+          "command": "corepack pnpm run build",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 9,
+          "storySchemaBuildCache": "disabled",
+          "storySchemaGeneratorSelfTests": 10
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 3,
+          "tests": 98
+        },
+        {
+          "command": "$env:DATAPULSE_MERGE_BASE = (git rev-parse HEAD); corepack pnpm run build",
+          "exitCode": 1,
+          "result": "passed",
+          "probeKind": "negative",
+          "expectedStableErrorCode": "STORY_SCHEMA_FORMAL_HISTORY_INVALID",
+          "storySchemaBuildCache": "bypassed"
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 9,
+          "assertions": 297
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 1444,
+          "cycles": 0
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 81
+        },
+        {
+          "command": "corepack pnpm run check:design",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 313
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 21
+        },
+        {
+          "command": "corepack pnpm run check:foundation",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 3
+        }
+      ],
+      "formalSchemaContractResult": {
+        "result": "passed",
+        "currentVersion": "1.0.0",
+        "schemaId": "urn:datapulse:story-blueprint:formal:1.0.0",
+        "schemaPath": "packages/story-schema/src/formal/1.0.0/story-blueprint.schema.json",
+        "schemaBytes": 11572,
+        "schemaSha256": "e26a15938896c57844d75a6ee272d4920874f60586b981eadaae686e45090360",
+        "hashInput": "raw-source-bytes",
+        "distContract": "semantic-equivalence-only",
+        "history": {
+          "manifestPath": "packages/story-schema/src/formal/history.v1.json",
+          "currentVersion": "1.0.0",
+          "versions": [
+            {
+              "version": "1.0.0",
+              "predecessor": null,
+              "changeKind": "initial"
+            }
+          ],
+          "existingVersionsImmutable": true,
+          "futureCompatibilityMode": "append-new-version-and-migration-only",
+          "trustedMergeBaseChecked": true,
+          "allReachableProtectedPathRevisionsChecked": true,
+          "revisionCommand": "git rev-list --full-history --topo-order --reverse HEAD -- packages/story-schema/src/formal",
+          "shallowRepositoryRejected": true,
+          "invalidRevisionRejected": true,
+          "explicitHeadOverrideRejected": true
+        },
+        "generatedArtifactsAligned": true,
+        "generatedTypesAligned": true,
+        "standaloneValidatorAligned": true,
+        "historyMetadataAligned": true,
+        "validatorRegistryAligned": true,
+        "formalRootRuntimeLoadsExperimentalValidator": false,
+        "formalViteProbe": {
+          "status": "passed",
+          "write": false,
+          "chunks": 1,
+          "modules": 12,
+          "containsExperimentalModule": false,
+          "containsDevelopmentVersion": false,
+          "productApplicationBundleProduced": false
+        }
+      },
+      "formalFixtureContractResult": {
+        "result": "passed",
+        "manifestPath": "tests/fixtures/story-artifacts/formal/manifest.v1.json",
+        "manifestSha256": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da",
+        "formalHistory": true,
+        "compatibilityPromise": true,
+        "fixturePath": "tests/fixtures/story-artifacts/formal/1.0.0/canonical.creator-viewer.json",
+        "fixtureBytes": 1025,
+        "fixtureSha256": "e4e1d43507b455f145f73858c028fc0bd06882e20a44b3c1c9d5285772a74c06",
+        "consumers": [
+          "creator",
+          "viewer"
+        ],
+        "consumerByteCopiesIndependent": true,
+        "readerValuesEquivalent": true,
+        "manifestMissingWithExistingFixtureRejected": true,
+        "allReachableProtectedPathRevisionsChecked": true,
+        "revisionCommand": "git rev-list --full-history --topo-order --reverse HEAD -- tests/fixtures/story-artifacts/formal"
+      },
+      "readerContractResult": {
+        "result": "passed",
+        "publicExports": [
+          "STORY_ARTIFACT_READ_ERROR_CODES",
+          "readStoryArtifact"
+        ],
+        "successResultKeys": [
+          "ok",
+          "value"
+        ],
+        "acceptsFormalVersions": [
+          "1.0.0"
+        ],
+        "publicSeamAcceptsDevelopmentVersions": false,
+        "callerCanOverrideLimits": false,
+        "callerCanInjectMigrationRoute": false,
+        "failureHasValue": false,
+        "failureReplacesLastReadableArtifact": false,
+        "nodeNativeEsmFromExternalCwdAndAbsoluteSpacePath": "passed",
+        "viteWriteFalsePackageProbe": "passed",
+        "productApplicationBundleProduced": false
+      },
+      "developmentFixtureIsolation": {
+        "result": "passed",
+        "versions": [
+          "0.0.1",
+          "0.1.0"
+        ],
+        "releaseStatus": "unpublished-development-sample",
+        "formalHistory": false,
+        "compatibilityPromise": false,
+        "publicFormalRootReachable": false,
+        "access": "internal-development-seam-only"
+      },
+      "schemaAndGeneratedArtifacts": [
+        {
+          "path": "packages/story-schema/src/formal/1.0.0/story-blueprint.schema.json",
+          "bytes": 11572,
+          "sha256": "e26a15938896c57844d75a6ee272d4920874f60586b981eadaae686e45090360"
+        },
+        {
+          "path": "packages/story-schema/src/formal/history.v1.json",
+          "bytes": 507,
+          "sha256": "9f417bcf3bfc488c6c76eb632ab1b40b6c4dde7cbb85764c271f74110a2f774a"
+        },
+        {
+          "path": "packages/story-schema/src/generated/formal-story-blueprint-v1_0_0.generated.ts",
+          "bytes": 3582,
+          "sha256": "8ded833f0e9b5eed3fbd448f6ee4584efc65dbf95136c31162dbe599a8185382"
+        },
+        {
+          "path": "packages/story-schema/src/generated/formal-story-blueprint-v1_0_0.validator.generated.ts",
+          "bytes": 95817,
+          "sha256": "c3bd15b5d54992f3875ff0b9740c705f6b6bfb77073b194c708e27d9e2af8d73"
+        },
+        {
+          "path": "packages/story-schema/src/generated/formal-story-history.generated.ts",
+          "bytes": 916,
+          "sha256": "cf4fe7b1d3af58a748e985ad054d0a2972ae337cfae445a591a5f74f2a8f06d6"
+        },
+        {
+          "path": "packages/story-schema/src/generated/formal-story-validator-registry.generated.ts",
+          "bytes": 747,
+          "sha256": "d62041f4cb119a2e6db4d1aa68aaef802687aa8463d69f4cec9b4cdf12fd32d2"
+        }
+      ],
+      "workspaceResult": {
+        "result": "passed",
+        "workspaces": 9,
+        "assertions": {
+          "executed": 297,
+          "passed": 297,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "dependencyBoundaryResult": {
+        "result": "passed",
+        "workspaces": 9,
+        "cycles": 0,
+        "assertions": {
+          "executed": 1444,
+          "passed": 1444,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 169,
+          "passed": 169,
+          "failed": 0,
+          "skipped": 0
+        },
+        "domainContract": {
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "toolchainResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 54,
+          "passed": 54,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "governanceResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 81,
+          "passed": 81,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "designResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 313,
+          "passed": 313,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "aggregatorResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 21,
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "foundationResult": {
+        "result": "passed",
+        "checks": {
+          "executed": 3,
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "environment": "windows-arm64-server-and-constrained-hosts",
+      "status": "not_run",
+      "reason": "Windows ARM64、Windows Server、PowerShell 7、非 ASCII／长路径、UNC／网络盘、受限 ACL、杀毒软件锁文件和低内存环境尚未验证；本地 x64 ASCII 含空格路径结果不冒充这些环境。"
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代干净 Ubuntu 的冻结安装、大小写路径、Git 完整历史与 ESM 行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地构建和 Vitest 不冒充 CI 或公开 Fork。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "creator-viewer-product-integration",
+      "status": "not_run",
+      "reason": "正式 Creator／Viewer 页面与 Renderer 属于 M0-015；本轮仅冻结双方共用的正式字节 fixture 和 Reader 契约。"
+    },
+    {
+      "validation": "future-formal-migration-edge",
+      "status": "not_run",
+      "reason": "当前正式历史只有 1.0.0；只有未来真实兼容版本出现后才能验证正式迁移边，不伪造发布历史。"
+    },
+    {
+      "validation": "real-browser-matrix",
+      "status": "not_run",
+      "reason": "当前只有 Node 原生 ESM 与 Vite write:false 包级探针；没有真实 Chrome、Edge、Firefox、Safari、Web Worker、CSP 或产品 Creator／Viewer 浏览器运行。"
+    },
+    {
+      "validation": "ubuntu-github-actions-and-public-fork",
+      "status": "not_run",
+      "reason": "仍需在固定干净 Ubuntu、真实 GitHub Actions 和公开 Fork 中重跑适用矩阵。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-048 Windows 阶段的正式 1.0.0 Story Schema、原始字节 hash、append-only 历史、生成类型／standalone validator／静态 registry、正式根运行时隔离、Creator／Viewer canonical fixture、正式 Reader 纯 Result 收口与恶意历史输入否定测试。",
+    "notImplemented": "Creator／Viewer 产品页面与 Renderer、未来真实正式迁移边、RTL、Storybook、Playwright、axe、真实浏览器矩阵、Windows 变体、干净 Ubuntu、GitHub Actions 和公开 Fork。",
+    "productApplicationBundleProduced": false,
+    "viteProbeProducedFiles": false,
+    "gateState": "FORMAL-STORY-SCHEMA 与 BOUNDED-READER-MIGRATION 均保持 in_progress / partially_evidenced，daily gate 不激活。"
+  },
+  "conclusion": "Windows x64、PowerShell 5.1 与含空格工作区中的 M0-048 正式 Story Schema、fixture、Reader 收口和永久历史保护已通过；未运行的产品、浏览器、Ubuntu、CI 与公开 Fork 门槛仍使两个 gate 保持进行中、部分取证，本报告总体为 partial。"
+}

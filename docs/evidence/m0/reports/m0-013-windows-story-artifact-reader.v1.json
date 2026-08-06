@@ -1,0 +1,390 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-013-windows-story-artifact-reader-v1",
+  "milestone": "M0",
+  "taskId": "M0-013",
+  "gateId": "BOUNDED-READER-MIGRATION",
+  "observedAt": "2026-08-05T22:02:48+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows NT 10.0.26200.0",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务、提交与证据索引范围外。",
+      "cleanProjectDirectory": false,
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "unchangedByFrozenInstall": true
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3",
+        "ajv": "8.17.1",
+        "json-schema-to-typescript": "15.0.4",
+        "vitest": "4.1.10",
+        "vite": "8.2.0"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaceProjects": 10,
+          "includesRepositoryRoot": true
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 54
+        },
+        {
+          "command": "corepack pnpm run build",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 9,
+          "finalUnitRunTurboCache": "9 cache hits with replayed logs",
+          "freshUncachedCompilationClaimed": false
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 3,
+          "tests": 86
+        },
+        {
+          "command": "corepack pnpm exec vitest run tests/unit/story-artifact-reader.test.ts --config vitest.config.mts --reporter=verbose",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 1,
+          "tests": 21,
+          "diagnosticOnly": true
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 288
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 1136
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 81
+        },
+        {
+          "command": "corepack pnpm run check:design",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 313
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 21
+        },
+        {
+          "command": "corepack pnpm run check:foundation",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 3
+        }
+      ],
+      "readerContractResult": {
+        "result": "passed",
+        "allUnitTests": {
+          "testFiles": {
+            "executed": 3,
+            "passed": 3,
+            "failed": 0,
+            "skipped": 0
+          },
+          "tests": {
+            "executed": 86,
+            "passed": 86,
+            "failed": 0,
+            "skipped": 0
+          }
+        },
+        "m013Tests": {
+          "testFiles": {
+            "executed": 1,
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0
+          },
+          "tests": {
+            "executed": 21,
+            "passed": 21,
+            "failed": 0,
+            "skipped": 0
+          }
+        },
+        "resourceProfile": {
+          "profileVersion": "0.1.0",
+          "maxInputBytes": 16777216,
+          "maxMigrationSteps": 64
+        },
+        "inputContract": {
+          "onlyRealUint8Array": true,
+          "nodeBufferAccepted": true,
+          "crossRealmUint8ArrayAccepted": true,
+          "stringRejected": true,
+          "proxyRejected": true,
+          "otherTypedArrayRejected": true,
+          "sharedArrayBufferViewRejected": true,
+          "detachedBufferViewRejected": true,
+          "byteLimitCheckedBeforeCopyDecodeAndParse": true
+        },
+        "decodeContract": {
+          "fatalUtf8": true,
+          "singleLeadingUtf8BomAccepted": true,
+          "bomCountsTowardRawByteLimit": true,
+          "secondBomRejectedByJsonBoundary": true
+        },
+        "versionAndMigrationContract": {
+          "registryVisibility": "private",
+          "legacyDevelopmentVersion": "0.0.1",
+          "currentDevelopmentVersion": "0.1.0",
+          "migration": "storyTimeZone -> storyTimezone",
+          "migrationMutatesSource": false,
+          "sourceValidatedBeforeMigration": true,
+          "eachTargetValidatedAfterMigration": true,
+          "finalTrustedSemanticValidation": true,
+          "callerCanInjectRegistry": false,
+          "callerCanOverrideLimits": false
+        },
+        "resultContract": {
+          "successDeepFrozen": true,
+          "successInputIdentityIsolated": true,
+          "failureHasValue": false,
+          "failureReplacesCurrentProject": false,
+          "unknownVersionEchoed": false,
+          "errorCodesClosedAndStable": true
+        },
+        "runtimeProbes": {
+          "nodeNativeEsmFromExternalCwdAndAbsoluteSpacePath": "passed",
+          "nodeProbeUsesShell": false,
+          "viteWriteFalsePackageProbe": "passed",
+          "viteProbeProducedFiles": false,
+          "productApplicationBundleProduced": false
+        },
+        "coverage": [
+          "原始字节超过 16 MiB 时在复制、fatal UTF-8 解码和 JSON.parse 前拒绝；恰好 16 MiB 的合法 JSON 通过",
+          "JSON、根值、畸形版本与合法但未登记版本使用受控失败结果",
+          "0.1.0 直接读取，0.0.1 只在副本上逐步迁移到 0.1.0",
+          "恶意 source、迁移目标结构错误和最终可信语义错误分别 fail-closed",
+          "成功值与输入隔离并深冻结；失败没有 value、不回显 payload 且示例当前对象不被替换",
+          "Windows 含空格绝对路径的 Node 原生 ESM 和 Vite write:false 包级探针通过"
+        ]
+      },
+      "developmentFixtures": {
+        "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+        "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+        "fixtureCount": 6,
+        "allHashesMatched": true,
+        "releaseStatus": "unpublished-development-sample",
+        "formalHistory": false,
+        "compatibilityPromise": false
+      },
+      "schemaAndGeneratedArtifacts": [
+        {
+          "path": "packages/story-schema/src/experimental/story-blueprint.schema.json",
+          "bytes": 11571,
+          "sha256": "6dc81e7825b0fff3e1961b57d4139c58ade5b1fd4d4c141bd83822f2d7f501e9"
+        },
+        {
+          "path": "packages/story-schema/src/experimental/story-blueprint-v0_0_1.schema.json",
+          "bytes": 11969,
+          "sha256": "ac97e23637ab13b60f22cd69ab3517565348686148478a737726c1599d593896"
+        },
+        {
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint.generated.ts",
+          "bytes": 3588,
+          "sha256": "65002368f13d6cde8148437ef2fa6509163ff111651235045a610ae38c411686"
+        },
+        {
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint.validator.generated.ts",
+          "bytes": 95823,
+          "sha256": "24573e21dc74798533422799bda19e39fc9c29a1556331171b7590319fe863ba"
+        },
+        {
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint-v0_0_1.generated.ts",
+          "bytes": 3638,
+          "sha256": "b48f6a2ba1afd79eb8d49111c9d2a9bde96a6a986a3be8134b4bc9ce4a2206e0"
+        },
+        {
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint-v0_0_1.validator.generated.ts",
+          "bytes": 95408,
+          "sha256": "9bfe5b2994ae2eed3b849f4f4d9f0cdc8d70542edaba85491c4a13f28e271412"
+        }
+      ],
+      "workspaceResult": {
+        "result": "passed",
+        "workspaces": 9,
+        "assertions": {
+          "executed": 288,
+          "passed": 288,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "dependencyBoundaryResult": {
+        "result": "passed",
+        "workspaces": 9,
+        "cycles": 0,
+        "assertions": {
+          "executed": 1136,
+          "passed": 1136,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 165,
+          "passed": 165,
+          "failed": 0,
+          "skipped": 0
+        },
+        "domainContract": {
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "toolchainResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 54,
+          "passed": 54,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "governanceResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 81,
+          "passed": 81,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "designResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 313,
+          "passed": 313,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "aggregatorResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 21,
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "foundationResult": {
+        "result": "passed",
+        "checks": {
+          "executed": 3,
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "environment": "windows-arm64-server-and-constrained-hosts",
+      "status": "not_run",
+      "reason": "Windows ARM64、Windows Server、PowerShell 7、非 ASCII／长路径、UNC／网络盘、受限 ACL、杀毒软件锁文件和低内存环境尚未验证；本地 x64 ASCII 含空格路径结果不冒充这些环境。"
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地结果不替代干净 Ubuntu 的冻结安装、路径大小写、TextDecoder、JSON module 与 ESM 行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地构建、Vitest 与 Vite 探针不冒充 CI 或公开 Fork。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "formal-story-schema-and-migration-history",
+      "status": "not_run",
+      "reason": "M0-048 才冻结正式 1.0.0、永久 hash、Creator／Viewer fixture 与正式迁移历史；0.0.1 和 0.1.0 只是不发布开发样本。"
+    },
+    {
+      "validation": "project-repository-atomic-switch",
+      "status": "not_run",
+      "reason": "M0-027 才由 Project Repository 实现持久化原子切换与恢复；本阶段只证明 Reader 为纯 Result 且失败无 value，不冒充存储事务。"
+    },
+    {
+      "validation": "creator-viewer-consumer-integration",
+      "status": "not_run",
+      "reason": "正式 Creator／Viewer 经 Reader 读取并渲染的合同属于 M0-015、M0-048 与后续产品集成任务。"
+    },
+    {
+      "validation": "real-browser-matrix",
+      "status": "not_run",
+      "reason": "当前只有 Node 原生 ESM 与 Vite write:false 包级打包探针；没有真实 Chrome、Edge、Firefox、Safari、Web Worker／CSP 或产品 Creator／Viewer 浏览器运行。"
+    },
+    {
+      "validation": "text-decoder-unavailable-branch",
+      "status": "not_run",
+      "reason": "当前黑盒矩阵覆盖 fatal UTF-8 成功与失败，但没有移除全局 TextDecoder 后验证 reader-unavailable 分支。"
+    },
+    {
+      "validation": "ubuntu-github-actions-and-public-fork",
+      "status": "not_run",
+      "reason": "仍需在固定干净 Ubuntu、真实 GitHub Actions 和公开 Fork 中重跑适用矩阵。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-013 Windows 阶段的唯一原始 Uint8Array Story Artifact Reader、解析前 16 MiB 字节限制、fatal UTF-8、私有版本注册、0.0.1 到 0.1.0 复制迁移、逐步和最终校验、深冻结输入隔离、稳定有界错误以及失败不替换合同",
+    "notImplemented": "正式 1.0.0 与永久迁移历史、Project Repository 原子提交、Creator／Viewer 产品集成、真实浏览器运行、其他 Windows 变体、干净 Ubuntu、GitHub Actions 和公开 Fork",
+    "productApplicationBundleProduced": false,
+    "viteProbeProducedFiles": false,
+    "evidenceIndexAndAggregateReadback": "本不可变报告写入并登记 hash 后单独运行，避免报告自引用；结果由最终仓库检查与交付说明记录。"
+  },
+  "conclusion": "Windows x64、PowerShell 5.1 与含空格工作区中的 M0-013 Reader／未发布开发迁移合同和恶意输入矩阵通过。由于正式 1.0.0、存储原子切换、产品消费者、其他 Windows 变体、真实浏览器、Ubuntu 与 GitHub Actions 尚未完成，BOUNDED-READER-MIGRATION 保持 in_progress / partially_evidenced 且不激活日常检查，本报告总体为 partial。"
+}

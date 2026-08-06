@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-011-windows-experimental-story-schema-v1",
+  "milestone": "M0",
+  "taskId": "M0-011",
+  "gateId": "FORMAL-STORY-SCHEMA",
+  "observedAt": "2026-08-05T14:29:12+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务与证据范围外。",
+      "cleanProjectDirectory": false,
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3",
+        "ajv": "8.17.1",
+        "vitest": "4.1.10",
+        "vite": "8.2.0"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0
+        },
+        {
+          "command": "corepack pnpm run build",
+          "exitCode": 0
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0
+        }
+      ],
+      "schemaContractResult": {
+        "result": "passed",
+        "testFiles": {
+          "executed": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "tests": {
+          "executed": 12,
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0
+        },
+        "coverage": [
+          "0.1.0 实验版本与唯一 Schema ID",
+          "精确单一 datasetVersion 与显式 storyTimezone；草稿生命周期状态不混入蓝图",
+          "全局条件与区块追加条件的独立字段",
+          "field／metric／evidence／judgment／narrative 引用目录",
+          "只登记 title-summary 与 KPI，KPI 不保存数值或公式",
+          "四主题、语义布局、二维与无场景／无动效边界",
+          "额外属性、任意 HTML／图表 option／Shader、未知区块、错误 ID、隐式时区和 3D 拒绝",
+          "全部对象 additionalProperties=false，公开机器对象递归冻结且深只读",
+          "交叉合同只读取三个 workspace 的公开 dist seam",
+          "九类 domain opaque ID 与四主题目录交叉一致"
+        ]
+      },
+      "workspaceResult": {
+        "result": "passed",
+        "workspaces": 8,
+        "assertions": {
+          "executed": 240,
+          "passed": 240,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "dependencyBoundaryResult": {
+        "result": "passed",
+        "workspaces": 8,
+        "cycles": 0,
+        "assertions": {
+          "executed": 743,
+          "passed": 743,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 164,
+          "passed": 164,
+          "failed": 0,
+          "skipped": 0
+        },
+        "domainContract": {
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "toolchainResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 54,
+          "passed": 54,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代干净 Ubuntu 的冻结安装、路径、大小写与 JSON module 行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地 Vitest／构建结果不冒充 CI。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "generated-types-and-runtime-validator",
+      "status": "not_run",
+      "reason": "M0-012 才生成蓝图类型，并建立 Ajv 读取边界、总字节／深度／节点限制及引用、条件、硬编码数值与适用性语义校验。"
+    },
+    {
+      "validation": "bounded-reader-and-migration",
+      "status": "not_run",
+      "reason": "M0-013 才建立有界 Story Artifact Reader、复制迁移、实验样本目录和失败不替换合同。"
+    },
+    {
+      "validation": "formal-story-schema-freeze",
+      "status": "not_run",
+      "reason": "M0-048 才冻结正式 1.0.0、Schema hash 与 Creator／Viewer fixture；0.1.0 不构成正式历史。"
+    }
+  ],
+  "scope": {
+    "implemented": "零内部依赖 @datapulse/story-schema workspace、唯一 0.1.0 实验 JSON Schema、递归冻结的深只读公开对象、受控最小标题／摘要／KPI 蓝图，以及从公开 dist seam 运行的 domain／themes 交叉合同与真实 Vitest + Ajv 恶意输入测试",
+    "notImplemented": "生成类型、统一运行时 validator、总量限制与语义校验、Reader／迁移、正式 1.0.0／hash／fixture、Renderer、Ubuntu 与 GitHub Actions",
+    "directDevelopmentDependenciesAdded": 2,
+    "productRuntimeDependenciesAdded": 0,
+    "productBundleProduced": false
+  },
+  "conclusion": "Windows 本地工作树中的实验 Story Schema 构建、12/12 Vitest 断言、8 workspace 契约、依赖边界与固定工具链均通过。由于 M0-012、M0-013、M0-048、干净 Ubuntu 和 GitHub Actions 尚未完成，FORMAL-STORY-SCHEMA 只进入 in_progress / partially_evidenced，本报告总体为 partial。"
+}

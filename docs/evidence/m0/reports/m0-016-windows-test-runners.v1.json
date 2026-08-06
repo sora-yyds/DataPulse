@@ -1,0 +1,309 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-016-windows-test-runners-v1",
+  "milestone": "M0",
+  "taskId": "M0-016",
+  "gateId": "TEST-RUNNERS",
+  "observedAt": "2026-08-06T06:23:40+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows NT 10.0.26200.0",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "transport": "http",
+      "cleanProjectDirectory": false,
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务、提交和证据索引范围外。",
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "bytes": 4157,
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "unchangedByFrozenInstall": true
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3",
+        "vite": "8.2.0",
+        "vitest": "4.1.10",
+        "react": "19.2.8",
+        "reactTestingLibrary": "16.3.2",
+        "testingLibraryDom": "10.4.1",
+        "jestDom": "7.0.0",
+        "jsdom": "30.0.1",
+        "storybook": "10.5.6",
+        "vitestBrowserPlaywright": "4.1.10",
+        "playwright": "1.62.1",
+        "playwrightCore": "1.62.1",
+        "axeCorePlaywright": "4.12.1",
+        "chromiumRevision": "1234",
+        "chromeForTesting": "151.0.7922.34"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaceProjectsIncludingRoot": 12,
+          "lockfileRewritten": false
+        },
+        {
+          "command": "corepack pnpm exec playwright install chromium",
+          "exitCode": 0,
+          "result": "passed",
+          "chromiumRevision": "1234"
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 54
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 11,
+          "assertions": 395
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 2087,
+          "selfTestAssertions": 193,
+          "domainContractAssertions": 60,
+          "cycles": 0
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "invokedBy": "corepack pnpm run check:test-runners",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 5,
+          "tests": 168
+        },
+        {
+          "command": "corepack pnpm run test:component",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 1,
+          "tests": 2
+        },
+        {
+          "command": "corepack pnpm run test:storybook",
+          "exitCode": 0,
+          "result": "passed",
+          "staticBuild": "passed",
+          "testFiles": 1,
+          "tests": 1
+        },
+        {
+          "command": "corepack pnpm run test:e2e",
+          "exitCode": 0,
+          "result": "passed",
+          "projects": 2,
+          "tests": 2
+        },
+        {
+          "command": "corepack pnpm run test:a11y",
+          "exitCode": 0,
+          "result": "passed",
+          "projects": 2,
+          "tests": 2
+        },
+        {
+          "command": "corepack pnpm run check:test-runners",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": {
+            "executed": 5,
+            "passed": 5,
+            "failed": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 81,
+          "selfTestAssertions": 7
+        },
+        {
+          "command": "corepack pnpm run check:design",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 356,
+          "selfTestAssertions": 5,
+          "lint": {
+            "errors": 0,
+            "warnings": 85,
+            "infos": 1
+          }
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 21
+        }
+      ],
+      "runnerResults": [
+        {
+          "runner": "Vitest",
+          "environment": "node",
+          "status": "passed",
+          "testFiles": 5,
+          "tests": 168,
+          "failed": 0,
+          "skipped": 0,
+          "productAssertion": "从公开 dist seam 验证正式 Story／Metric Runtime Schema、对象校验、Reader、隔离开发迁移、确定性指标、Creator／Viewer composition 与受控 Renderer，并覆盖恶意输入和失败不替换。"
+        },
+        {
+          "runner": "React Testing Library",
+          "environment": "jsdom",
+          "status": "passed",
+          "testFiles": 1,
+          "tests": 2,
+          "failed": 0,
+          "skipped": 0,
+          "mockedBoundary": "browser-fetch-only",
+          "productAssertion": "分别挂载真实 Creator／Viewer App，验证正式独立字节从 loading 进入标题、KPI 23、范围和 evidence 可见的 ready 状态，且无 alert。"
+        },
+        {
+          "runner": "Storybook",
+          "environment": "playwright-chromium",
+          "status": "passed",
+          "staticBuild": "passed",
+          "testFiles": 1,
+          "tests": 1,
+          "failed": 0,
+          "skipped": 0,
+          "addonA11yMode": "error",
+          "productAssertion": "真实 Viewer fixture 经 Reader／composition 形成 Renderer story，play 断言标题、KPI 23、范围和 evidence。"
+        },
+        {
+          "runner": "Playwright",
+          "environment": "production-http-preview-chromium",
+          "status": "passed",
+          "projects": 2,
+          "tests": 2,
+          "failed": 0,
+          "skipped": 0,
+          "creatorUrl": "http://127.0.0.1:4173/",
+          "viewerUrl": "http://127.0.0.1:4174/",
+          "productAssertion": "两端真实 production preview 分别显示正确文档标题、应用身份、标题、KPI 23、范围、evidence，且无 alert。"
+        },
+        {
+          "runner": "axe",
+          "environment": "production-http-preview-chromium",
+          "status": "passed",
+          "projects": 2,
+          "tests": 2,
+          "failed": 0,
+          "skipped": 0,
+          "productContentExcluded": false,
+          "rulesDisabled": false,
+          "evaluatedRuleResultsGreaterThanZero": true,
+          "violations": 0,
+          "productAssertion": "Creator／Viewer 完整页面均实际执行未裁剪的 axe 自动扫描，自动可检测违规为零。"
+        }
+      ],
+      "runnerPolicy": {
+        "buildsElevenWorkspacesFirst": true,
+        "vitestPassWithNoTests": false,
+        "vitestAllowOnly": false,
+        "playwrightForbidOnly": true,
+        "playwrightRetries": 0,
+        "playwrightWorkers": 1,
+        "locale": "zh-CN",
+        "timezone": "Asia/Shanghai",
+        "reducedMotion": "reduce",
+        "serviceWorkers": "block",
+        "strictPorts": true,
+        "reuseExistingServer": false,
+        "structuredRootCheck": "test-runners",
+        "structuredAssertions": 5,
+        "activatedDailyGate": true
+      },
+      "activation": {
+        "checkName": "m0 / test-runners",
+        "summaryCheck": "test-runners",
+        "rootScript": "check:test-runners",
+        "rootCommand": "node ./scripts/check-test-runners.mjs",
+        "rootScriptCommandSha256": "b188d26b5eca9e36d0199bced5106125bb63313bbd1c78341b88553a110c5909"
+      },
+      "dependencyPolicy": {
+        "testDependenciesAtRootOnly": true,
+        "viewerManifestContainsStorybookDependencies": false,
+        "creatorManifestContainsTestDependencies": false,
+        "rootViteConfigPresent": false,
+        "viteAliasUsed": false,
+        "pnpmAllowedBuilds": {
+          "esbuild": true
+        },
+        "wildcardBuildScriptPermission": false
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 工作树结果不替代干净 Ubuntu 的冻结安装、Chromium 安装和五类 runner 复现。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 尚未建立 workflow；本地结构化检查不冒充 GitHub required check 或 merge queue。"
+    },
+    {
+      "environment": "public-fork",
+      "status": "not_run",
+      "reason": "公开 Fork 的无 secrets／无付费 SaaS 复现尚未执行。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "https-four-origin-browser-security",
+      "status": "not_run",
+      "reason": "当前只有两个本地 HTTP preview；端口差异不是 Cookie 或 Origin 隔离证据。"
+    },
+    {
+      "validation": "fixed-visual-keyboard-zoom-matrix",
+      "status": "not_run",
+      "reason": "M0-018 才固定字体、四主题、视口、键盘、焦点、200% 缩放和视觉基线。"
+    },
+    {
+      "validation": "complete-wcag-2-2-aa",
+      "status": "not_run",
+      "reason": "axe 只覆盖自动可检测规则，不替代人工、键盘、对比度、缩放或真实设备认证。"
+    },
+    {
+      "validation": "real-browser-and-device-certification",
+      "status": "not_run",
+      "reason": "Playwright Chromium 不冒充真实 Chrome／Edge、Safari、微信或手机设备。"
+    },
+    {
+      "validation": "complete-product-e2e",
+      "status": "not_run",
+      "reason": "当前页面是 M0-015 只读探针；导入、分析、生成、编辑、保存、分享与恢复链尚未建立。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-016 Windows 阶段五类真实 runner、固定 Chromium production HTTP preview、独立 axe 扫描和 nonce 绑定的结构化 check:test-runners 日常入口。",
+    "notImplemented": "干净 Ubuntu、GitHub Actions、公开 Fork、HTTPS／四 Origin、固定视觉／键盘／缩放、完整 WCAG、真实设备和完整产品端到端。",
+    "completeProductApplicationProduced": false,
+    "gateState": "TEST-RUNNERS 已激活日常检查，但保持 in_progress / partially_evidenced；M0-016 不得标记完成。"
+  },
+  "conclusion": "Windows x64 含空格工作树中，Vitest、RTL、Storybook、Playwright 与 axe 均含真实产品断言，结构化根检查 5/5 通过并具备稳定激活合同。Ubuntu、CI、公开 Fork、HTTPS／四 Origin、固定视觉／完整无障碍与真实设备仍未运行，因此本报告总体为 partial，M0-016／TEST-RUNNERS 保持进行中、部分取证。"
+}

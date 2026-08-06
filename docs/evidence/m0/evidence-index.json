@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-05T13:44:36+08:00",
+  "updatedAt": "2026-08-06T03:27:29+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -259,7 +259,7 @@
       "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": false, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v6",
+      "latestRecordId": "m0-wave0-evidence-contract-v13",
       "blockerRefs": []
     },
     {
@@ -381,11 +381,11 @@
       "scopeStatement": "正式版本、生成类型、hash、结构/语义校验和受控字段边界冻结。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-formal-story-schema-m0-048-windows-v3",
       "blockerRefs": []
     },
     {
@@ -399,11 +399,11 @@
       "scopeStatement": "解析前字节限尺寸、复制迁移、逐步校验与失败保留原副本。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-bounded-reader-migration-m0-048-windows-v2",
       "blockerRefs": []
     },
     {
@@ -417,11 +417,11 @@
       "scopeStatement": "COUNT_ROWS、SUM、稳定 merge/finalize 和 Creator/Viewer 黄金一致。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-metric-runtime-m0-049-windows-v1",
       "blockerRefs": []
     },
     {
@@ -439,7 +439,7 @@
       "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-creator-viewer-contract-m0-014-windows-v1",
+      "latestRecordId": "m0-creator-viewer-contract-m0-015-windows-v2",
       "blockerRefs": []
     },
     {
@@ -687,11 +687,18 @@
       "scopeStatement": "Vitest、RTL、Storybook、Playwright 与 axe 各含至少一个真实产品断言。",
       "environmentKind": "ci",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / test-runners",
+        "summaryCheck": "test-runners",
+        "rootScript": "check:test-runners",
+        "rootScriptCommandSha256": "b188d26b5eca9e36d0199bced5106125bb63313bbd1c78341b88553a110c5909"
+      },
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-test-runners-m0-016-windows-v4",
       "blockerRefs": []
     },
     {
@@ -2584,6 +2591,2670 @@
       ],
       "blockerRefs": [],
       "notes": "M0-010 将 Windows domain 合同与 fail-closed 摘要接入 check:dependencies 后，已按最终工作树重新复核证据索引 v2、append-only 链、激活命令身份、人工与外部凭证边界及 AGENTS.md 验收语义；未把本地结果扩张为 Ubuntu、GitHub Actions 或完整人工签署。"
+    },
+    {
+      "id": "m0-formal-story-schema-m0-011-windows-v1",
+      "title": "M0-011 Windows 实验 StoryBlueprint Schema 阶段证据",
+      "gateIds": [
+        "FORMAL-STORY-SCHEMA"
+      ],
+      "epicIds": [
+        "M0-E2"
+      ],
+      "taskIds": [
+        "M0-011",
+        "M0-012",
+        "M0-048"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-001",
+        "NFR-SCHEMA-002",
+        "NFR-SCHEMA-003",
+        "NFR-SCHEMA-004",
+        "FR-ANA-009"
+      ],
+      "adrIds": [
+        "ADR-0002",
+        "ADR-0036",
+        "ADR-0048",
+        "ADR-0051"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T14:29:12+08:00",
+      "observedAt": "2026-08-05T14:29:12+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/experimental/story-blueprint.schema.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-schema.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-011-windows-experimental-story-schema.v1.json",
+          "immutable": true,
+          "sha256": "77b492f333cae7db296b9110554177655f0ea9d964bda7329b29f645e55fe9a9"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows 本地工作树已验证 0.1.0 实验 StoryBlueprint Schema、12/12 Vitest 断言、8 workspace 契约、依赖边界与固定工具链；当前不是干净副本，用户所有的未跟踪 package-lock.json 保持排除且未索引。M0-012 的生成类型、总量限制与引用／条件／适用性语义校验，M0-013 Reader／迁移，以及 M0-048 正式 1.0.0、Schema hash 与 Creator／Viewer fixture 均未完成；Ubuntu 与 GitHub Actions 也未运行，因此 gate 保持进行中、部分取证且不激活日常检查。"
+    },
+    {
+      "id": "m0-test-runners-m0-016-vitest-windows-v1",
+      "title": "M0-016 Windows Vitest-only bootstrap 阶段证据",
+      "gateIds": [
+        "TEST-RUNNERS"
+      ],
+      "epicIds": [
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-016"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T14:29:12+08:00",
+      "observedAt": "2026-08-05T14:29:12+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-schema.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-tool-dependencies.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-016-windows-vitest-bootstrap.v1.json",
+          "immutable": true,
+          "sha256": "8ad6c30b3a86ab8b22c6a74671aee934625b6ee233d48367d9ae8e9e609bfe48"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows 本地工作树已建立固定 Vitest 4.1.10／Vite 8.2.0 的 Node 单元测试入口，并以 1 个真实 Story Schema 测试文件、12/12 断言通过；当前不是干净副本，用户所有的未跟踪 package-lock.json 保持排除且未索引。React Testing Library、Storybook、Playwright、axe、GitHub Actions、干净 Ubuntu 与公开 Fork 均未运行，且尚无满足 attestation 合同的结构化根 runner，因此 TEST-RUNNERS 保持进行中、部分取证、daily gate 未激活，M0-016 不得标记完成。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v7",
+      "title": "M0 证据索引 v2、实验 Story Schema 与 Vitest bootstrap 复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T14:31:23+08:00",
+      "observedAt": "2026-08-05T14:31:23+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v6",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v7.json",
+          "immutable": true,
+          "sha256": "91d24f5c719ddcdabd14d158a86b56f3f1709460d340797b5d74a401a0273ac1"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-011 实验 Story Schema 与 M0-016 Vitest-only 阶段 bootstrap 落地后，已按最终工作树重新复核证据索引 v2、append-only 链、激活与未激活 gate 边界、人工／外部凭证语义、AGENTS.md 命令矩阵及实施计划映射；实验 Schema 和 Windows 单元测试结果未被扩张为正式 Schema、完整 runner、Ubuntu 或 GitHub Actions 认证。"
+    },
+    {
+      "id": "m0-formal-story-schema-m0-012-windows-v2",
+      "title": "M0-012 Windows StoryBlueprint 对象校验阶段证据",
+      "gateIds": [
+        "FORMAL-STORY-SCHEMA"
+      ],
+      "epicIds": [
+        "M0-E2"
+      ],
+      "taskIds": [
+        "M0-011",
+        "M0-012",
+        "M0-048"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-001",
+        "NFR-SCHEMA-002",
+        "NFR-SCHEMA-003",
+        "NFR-SCHEMA-004",
+        "FR-ANA-009"
+      ],
+      "adrIds": [
+        "ADR-0002",
+        "ADR-0036",
+        "ADR-0048",
+        "ADR-0051"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T21:12:44+08:00",
+      "observedAt": "2026-08-05T21:12:44+08:00",
+      "supersedesRecordId": "m0-formal-story-schema-m0-011-windows-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/scripts/generate-artifacts.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/experimental/story-blueprint.schema.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint.validator.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated-type-contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/validation-contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/safe-json-snapshot.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/validator.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-schema.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-validator.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-012-windows-story-validator.v1.json",
+          "immutable": true,
+          "sha256": "8325620c3efb270f83ac6ce0dcce71da46a6a22d51447f37173461a29912a804"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows x64、PowerShell 5.1 与含空格工作区已验证确定性类型／Ajv standalone 生成、已解析对象安全快照、资源上限、可信引用／条件和当前登记区块最小适用性；2 个 Vitest 文件共 65/65 断言、8 workspace、依赖边界、治理、Design 与聚合器检查通过。当前不是干净副本，用户所有的未跟踪 package-lock.json 保持排除且未索引；M0-013 Reader／迁移、M0-048 正式 1.0.0／永久 hash／Creator-Viewer fixture、完整 evidence 关系、完整语言／图表矩阵、产品构建、浏览器、Ubuntu 与 GitHub Actions 均未完成，因此 gate 保持进行中、部分取证且不激活日常检查。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v8",
+      "title": "M0 证据索引 v2 与 M0-012 Windows 对象校验复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T20:58:43+08:00",
+      "observedAt": "2026-08-05T20:58:43+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v7",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v8.json",
+          "immutable": true,
+          "sha256": "61f8858251acd9f5e028baae6914b6857e2ce67ed979ea87c79c6833293f5d54"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-012 Windows StoryBlueprint 对象校验阶段实现与 65 项 Vitest 断言落地后，已按最终工作树重新复核证据索引 v2、append-only 链、激活与未激活 gate 边界、人工／外部凭证语义、AGENTS.md 命令矩阵及实施计划映射；实验 Schema、本地对象校验和 Windows 探针未被扩张为正式 Schema、完整 runner、Reader／迁移、产品应用构建、Ubuntu、GitHub Actions 或浏览器认证。"
+    },
+    {
+      "id": "m0-bounded-reader-migration-m0-013-windows-v1",
+      "title": "M0-013 Windows 有界 Story Artifact Reader 与开发迁移阶段证据",
+      "gateIds": [
+        "BOUNDED-READER-MIGRATION"
+      ],
+      "epicIds": [
+        "M0-E2"
+      ],
+      "taskIds": [
+        "M0-013"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-002",
+        "NFR-SCHEMA-003"
+      ],
+      "adrIds": [
+        "ADR-0036",
+        "ADR-0048"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T22:05:15+08:00",
+      "observedAt": "2026-08-05T22:02:48+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [
+        {
+          "id": "m0-013-development-0-0-1-target-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.target-invalid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "216c25c3a5429cf0216809e8af200cadf2b84e58eb60280cca5b3fd63cbd4b51",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-0-1-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.valid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "7490b239a99dee566cbbd691df1c3d300c33f2dd8dc0fb7d040e3385781d49ea",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-1-0-final-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.final-invalid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "4a2cdfc776dd40e848e885cf9199e4d26744263097dd023409a3c21c7361873a",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-1-0-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.valid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "8f668b0949df54b29f9eaaecad80fc4cd9cc23577aaaea90f2afe717de50fbd2",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-malicious-source",
+          "path": "tests/fixtures/story-artifacts/development/malicious-source.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "22e52fe289f4489d71744de1da8d25656976f3a750eab657c5ec2fae5ef2b407",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-unknown-version",
+          "path": "tests/fixtures/story-artifacts/development/unknown-version.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "bf95b0049e77eed033064fa9f3c160985fa168ffc41aeeb5a3dcc78a73c5f259",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        }
+      ],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-workspace.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/scripts/generate-artifacts.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/experimental/story-blueprint-v0_0_1.schema.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint-v0_0_1.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint-v0_0_1.validator.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/development-migration-support.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-migrations/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-migrations/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/reader.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/internal/development-registry.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-artifact-reader.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "fixture-manifest",
+          "path": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "immutable": true,
+          "sha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de"
+        },
+        {
+          "kind": "report",
+          "path": "tests/fixtures/story-artifacts/development/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-013-windows-story-artifact-reader.v1.json",
+          "immutable": true,
+          "sha256": "9d0bfc3f5625cf881bd2bcf38276d7ce6459319a5d7d15910c8d2f61d0cd208a"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows x64、PowerShell 5.1 与 ASCII 含空格工作区已验证原始 Uint8Array 解析前 16 MiB 限制、fatal UTF-8、严格版本识别、未发布 0.0.1 到 0.1.0 复制迁移、逐步和最终校验、深冻结输入隔离、稳定有界错误及失败不替换的纯 Result 语义；当前不是干净副本，用户所有的未跟踪 package-lock.json 保持排除且未索引。0.x 仅为未发布开发样本，不构成正式历史；本轮先行 Turbo build 命中缓存，也不声明全部 tsc 为本次未缓存执行。正式 1.0.0、Project Repository 原子提交／恢复、Creator／Viewer 产品集成、真实浏览器、其他 Windows 变体、Ubuntu 与 GitHub Actions 均未完成，因此 gate 保持进行中、部分取证且不激活日常检查。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v9",
+      "title": "M0 证据索引 v2 与 M0-013 Windows Artifact Reader 复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-05T22:07:48+08:00",
+      "observedAt": "2026-08-05T22:07:48+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v8",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v9.json",
+          "immutable": true,
+          "sha256": "1a287f22b423895914adc0c0fc3e3a792452ca7e50d907962ee4d787bf9946ac"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-013 Windows Story Artifact Reader 与未发布开发迁移阶段实现落地后，已按最终工作树重新复核证据索引 v2、append-only 链、冻结 gate 静态定义、激活与未激活 gate 边界、人工／外部凭证语义、AGENTS.md 命令矩阵及实施计划接口；Windows 包级结果未被扩张为正式 Story Schema／迁移历史、Project Repository 原子恢复、完整 runner、产品构建、浏览器、Ubuntu、GitHub Actions 或公开 Fork 认证。"
+    },
+    {
+      "id": "m0-formal-story-schema-m0-048-windows-v3",
+      "title": "M0-048 Windows 正式 1.0.0 Story Schema 与 Creator／Viewer fixture 阶段证据",
+      "gateIds": [
+        "FORMAL-STORY-SCHEMA"
+      ],
+      "epicIds": [
+        "M0-E2"
+      ],
+      "taskIds": [
+        "M0-011",
+        "M0-012",
+        "M0-048"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-001",
+        "NFR-SCHEMA-002",
+        "NFR-SCHEMA-003",
+        "NFR-SCHEMA-004",
+        "FR-ANA-009"
+      ],
+      "adrIds": [
+        "ADR-0002",
+        "ADR-0036",
+        "ADR-0048",
+        "ADR-0051"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T00:00:22+08:00",
+      "observedAt": "2026-08-05T23:55:46+08:00",
+      "supersedesRecordId": "m0-formal-story-schema-m0-012-windows-v2",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [
+        {
+          "id": "m0-048-formal-canonical-creator-viewer-1-0-0",
+          "path": "tests/fixtures/story-artifacts/formal/1.0.0/canonical.creator-viewer.json",
+          "manifestPath": "tests/fixtures/story-artifacts/formal/manifest.v1.json",
+          "manifestSha256": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da",
+          "sha256": "e4e1d43507b455f145f73858c028fc0bd06882e20a44b3c1c9d5285772a74c06",
+          "generatorVersion": "hand-authored-m0-048-v1"
+        }
+      ],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "turbo.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/scripts/generate-artifacts.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/formal/1.0.0/story-blueprint.schema.json",
+          "immutable": true,
+          "sha256": "e26a15938896c57844d75a6ee272d4920874f60586b981eadaae686e45090360"
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/formal/history.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/formal-migration-support.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated-type-contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/validation-contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/safe-json-snapshot.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/semantic-core.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/validator.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/formal-story-blueprint-v1_0_0.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/formal-story-blueprint-v1_0_0.validator.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/formal-story-history.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/formal-story-validator-registry.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-schema.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-validator.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-artifact-reader.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-dependencies.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "fixture-manifest",
+          "path": "tests/fixtures/story-artifacts/formal/manifest.v1.json",
+          "immutable": true,
+          "sha256": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da"
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-048-windows-formal-story-schema.v1.json",
+          "immutable": true,
+          "sha256": "5d1e3512b0e089fa148c1b962071fe6448a451bfba176bc3bf25dd8a4db56428"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows x64、PowerShell 5.1 与含空格工作区已冻结正式 1.0.0 Story Schema 原始字节 hash、append-only 历史、生成类型／standalone validator／静态 registry、正式根运行时隔离和 Creator／Viewer canonical fixture；98/98 Vitest、9 workspace、依赖边界及 foundation 矩阵通过，显式 HEAD 与不可信历史输入 fail-closed。用户所有的未跟踪 package-lock.json 保持排除且未索引。Creator／Viewer 产品页面、完整 runner、真实浏览器、Windows 变体、Ubuntu、GitHub Actions 与公开 Fork 均未完成，因此 gate 保持进行中、部分取证且不激活日常检查。"
+    },
+    {
+      "id": "m0-bounded-reader-migration-m0-048-windows-v2",
+      "title": "M0-048 Windows 正式 Story Artifact Reader 收口阶段证据",
+      "gateIds": [
+        "BOUNDED-READER-MIGRATION"
+      ],
+      "epicIds": [
+        "M0-E2"
+      ],
+      "taskIds": [
+        "M0-013"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-002",
+        "NFR-SCHEMA-003"
+      ],
+      "adrIds": [
+        "ADR-0036",
+        "ADR-0048"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T00:00:22+08:00",
+      "observedAt": "2026-08-05T23:55:46+08:00",
+      "supersedesRecordId": "m0-bounded-reader-migration-m0-013-windows-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [
+        {
+          "id": "m0-013-development-0-0-1-target-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.target-invalid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "216c25c3a5429cf0216809e8af200cadf2b84e58eb60280cca5b3fd63cbd4b51",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-0-1-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.valid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "7490b239a99dee566cbbd691df1c3d300c33f2dd8dc0fb7d040e3385781d49ea",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-1-0-final-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.final-invalid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "4a2cdfc776dd40e848e885cf9199e4d26744263097dd023409a3c21c7361873a",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-1-0-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.valid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "8f668b0949df54b29f9eaaecad80fc4cd9cc23577aaaea90f2afe717de50fbd2",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-malicious-source",
+          "path": "tests/fixtures/story-artifacts/development/malicious-source.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "22e52fe289f4489d71744de1da8d25656976f3a750eab657c5ec2fae5ef2b407",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-unknown-version",
+          "path": "tests/fixtures/story-artifacts/development/unknown-version.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "bf95b0049e77eed033064fa9f3c160985fa168ffc41aeeb5a3dcc78a73c5f259",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-048-formal-canonical-creator-viewer-1-0-0",
+          "path": "tests/fixtures/story-artifacts/formal/1.0.0/canonical.creator-viewer.json",
+          "manifestPath": "tests/fixtures/story-artifacts/formal/manifest.v1.json",
+          "manifestSha256": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da",
+          "sha256": "e4e1d43507b455f145f73858c028fc0bd06882e20a44b3c1c9d5285772a74c06",
+          "generatorVersion": "hand-authored-m0-048-v1"
+        }
+      ],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-workspace.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "turbo.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-schema/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-migrations/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/story-migrations/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/scripts/generate-artifacts.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/formal/1.0.0/story-blueprint.schema.json",
+          "immutable": true,
+          "sha256": "e26a15938896c57844d75a6ee272d4920874f60586b981eadaae686e45090360"
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/formal/history.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/formal-migration-support.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/development-migration-support.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/experimental/story-blueprint.schema.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint.validator.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/experimental/story-blueprint-v0_0_1.schema.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint-v0_0_1.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-schema/src/generated/experimental-story-blueprint-v0_0_1.validator.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/reader.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/internal/reader-core.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/internal/formal-registry.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/internal/history-adapter.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/internal/development-reader.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/internal/development-registry.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-artifact-reader.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-dependencies.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "fixture-manifest",
+          "path": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "immutable": true,
+          "sha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de"
+        },
+        {
+          "kind": "fixture-manifest",
+          "path": "tests/fixtures/story-artifacts/formal/manifest.v1.json",
+          "immutable": true,
+          "sha256": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da"
+        },
+        {
+          "kind": "report",
+          "path": "tests/fixtures/story-artifacts/development/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-048-windows-formal-story-schema.v1.json",
+          "immutable": true,
+          "sha256": "5d1e3512b0e089fa148c1b962071fe6448a451bfba176bc3bf25dd8a4db56428"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows x64 正式 Reader 已只公开 readStoryArtifact 与稳定错误码，成功 Result 仅含 ok/value，正式 seam 只接受 1.0.0，调用者不能注入版本路由或放宽限额；既有 6 个未发布开发 fixture 与正式 Creator／Viewer fixture 均按独立 manifest/hash 保留。Project Repository 原子持久化、Creator／Viewer 产品消费、未来真实正式迁移边、真实浏览器、Ubuntu 与 GitHub Actions 尚未完成，因此 BOUNDED-READER-MIGRATION 保持进行中、部分取证且不激活。"
+    },
+    {
+      "id": "m0-test-runners-m0-016-vitest-windows-v2",
+      "title": "M0-016 Windows Vitest-only 正式契约扩展阶段证据",
+      "gateIds": [
+        "TEST-RUNNERS"
+      ],
+      "epicIds": [
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-016"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T00:00:22+08:00",
+      "observedAt": "2026-08-05T23:55:46+08:00",
+      "supersedesRecordId": "m0-test-runners-m0-016-vitest-windows-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-schema.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-validator.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-artifact-reader.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-tool-dependencies.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-016-windows-vitest-bootstrap.v2.json",
+          "immutable": true,
+          "sha256": "ede64e4ac8035eb7e2a05d50fbf0ba84091a5d9872049304e0d2c7291f941403"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows 本地 Vitest-only 子集已从 1 个文件 12 项扩展到 3 个真实文件 98/98，覆盖正式 Schema、结构／语义校验、Reader、受限开发迁移、恶意输入与永久历史否定断言；用户所有的未跟踪 package-lock.json 保持排除且未索引。RTL、Storybook、Playwright、axe、GitHub Actions、干净 Ubuntu 与公开 Fork 均未运行，因此 TEST-RUNNERS 保持进行中、部分取证、daily gate 未激活，M0-016 不得标记完成。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v10",
+      "title": "M0 证据索引 v2 与 M0-048 正式 Story 契约复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T00:00:22+08:00",
+      "observedAt": "2026-08-05T23:59:09+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v9",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v10.json",
+          "immutable": true,
+          "sha256": "e1d2c4d34e534955c61e8173bf5aa7550f2acd51a98ded1b3231c2ab0daba61e"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-048 正式 1.0.0 Story Schema、永久历史保护、Creator／Viewer canonical fixture、正式 Reader 收口与 98 项 Vitest 断言落地后，已按最终工作树重新复核证据索引 v2、append-only 链、冻结 gate 静态定义、激活与未激活 gate 边界、人工／外部凭证语义、AGENTS.md 命令矩阵及实施计划接口；Windows 包级结果未被扩张为 Creator／Viewer 产品应用、完整 runner、真实浏览器、Ubuntu、GitHub Actions 或公开 Fork 认证。"
+    },
+    {
+      "id": "m0-metric-runtime-m0-049-windows-v1",
+      "title": "M0-049 Windows 共享确定性指标运行时阶段证据",
+      "gateIds": [
+        "METRIC-RUNTIME"
+      ],
+      "epicIds": [
+        "M0-E2",
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-049"
+      ],
+      "requirementIds": [
+        "FR-MET-009"
+      ],
+      "adrIds": [
+        "ADR-0051"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T02:00:30+08:00",
+      "observedAt": "2026-08-06T01:54:28+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [
+        {
+          "id": "m0-049-formal-canonical-creator-viewer-metric-runtime-1-0-0",
+          "path": "tests/fixtures/metric-runtime/formal/1.0.0/canonical.creator-viewer.json",
+          "manifestPath": "tests/fixtures/metric-runtime/formal/manifest.v1.json",
+          "manifestSha256": "a2e2f07c093fac3d15c6fdae3ab011909602c2dd4e527e5b0fa5a7ea6067c140",
+          "sha256": "825f05e15adaab0f843a6e30b30ea94748d6de9869592fb8b5f2c15d579f5673",
+          "generatorVersion": "hand-authored-m0-049-v1"
+        }
+      ],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-workspace.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "turbo.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/metric-runtime/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/metric-runtime/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/scripts/generate-artifacts.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/schema/1.0.0/metric-accumulator.schema.json",
+          "immutable": true,
+          "sha256": "0e9fdf5c0925a388c5fcdf36a8bfedae8e198f28fa6feee1a15eb62792da00d4"
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/schema/1.0.0/metric-evaluation-plan.schema.json",
+          "immutable": true,
+          "sha256": "e3605377a5efef6de81b0b12c706e40e0d05a913f4a84d925ed1b13229e413d6"
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/schema/history.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/generated/metric-accumulator-v1_0_0.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/generated/metric-accumulator-v1_0_0.validator.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/generated/metric-evaluation-plan-v1_0_0.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/generated/metric-evaluation-plan-v1_0_0.validator.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/generated/metric-runtime-history.generated.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/runtime.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/internal/f64.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/internal/snapshot.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/metric-runtime/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/creator/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/creator/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/creator/src/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/viewer/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/viewer/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/viewer/src/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/metric-runtime.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-dependencies.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/dependency-boundaries.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "fixture-manifest",
+          "path": "tests/fixtures/metric-runtime/formal/manifest.v1.json",
+          "immutable": true,
+          "sha256": "a2e2f07c093fac3d15c6fdae3ab011909602c2dd4e527e5b0fa5a7ea6067c140"
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-metric-runtime.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-boundaries.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-dependency-boundaries.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-tool-dependencies.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-049-windows-metric-runtime.v1.json",
+          "immutable": true,
+          "sha256": "87bf573f0e1ac8007a54f2c7f1775218adda8f0c7241ba6976cd1a73983b7f15"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows x64、PowerShell 5.1 与含空格工作区已验证正式 Metric Accumulator／Evaluation Plan 1.0.0 Schema、原始字节 hash、append-only 历史、COUNT_ROWS／SUM、固定 binary64 wire、稳定 merge／finalize、固定多错误优先级、65,536 accumulator 数量边界及 Creator／Viewer 对同一正式 fixture 的隔离读取和 available／unavailable／error 一致性；4 个 Vitest 文件共 160/160 通过。用户所有的未跟踪 package-lock.json 保持排除且未索引。M0-015 产品 composition、AVG、精确 COUNT_DISTINCT、完整 FR-MET-009、真实浏览器、Ubuntu、GitHub Actions 与公开 Fork 均未完成，因此 METRIC-RUNTIME 保持进行中、部分取证且不激活日常检查。"
+    },
+    {
+      "id": "m0-test-runners-m0-016-vitest-windows-v3",
+      "title": "M0-016 Windows Vitest-only Metric Runtime 契约扩展阶段证据",
+      "gateIds": [
+        "TEST-RUNNERS"
+      ],
+      "epicIds": [
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-016"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T02:00:30+08:00",
+      "observedAt": "2026-08-06T01:54:28+08:00",
+      "supersedesRecordId": "m0-test-runners-m0-016-vitest-windows-v2",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-schema.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-blueprint-validator.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/story-artifact-reader.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/metric-runtime.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-tool-dependencies.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-metric-runtime.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-016-windows-vitest-bootstrap.v3.json",
+          "immutable": true,
+          "sha256": "7eeec95fe22dec43b03b4d73f7fb4c11534d26f7e2916ce53fc0cde1706d2a73"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows 本地 Vitest-only 子集已从 3 个文件 98 项扩展到 4 个真实文件 160/160，新增共享 Metric Runtime 的正式 Schema、COUNT_ROWS／SUM、binary64、固定错误优先级、65,536 accumulator 边界、两端包级一致性与恶意输入否定断言；用户所有的未跟踪 package-lock.json 保持排除且未索引。RTL、Storybook、Playwright、axe、GitHub Actions、干净 Ubuntu 与公开 Fork 均未运行，因此 TEST-RUNNERS 保持进行中、部分取证、daily gate 未激活，M0-016 不得标记完成。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v11",
+      "title": "M0 证据索引 v2 与 M0-049 共享指标运行时复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T02:00:30+08:00",
+      "observedAt": "2026-08-06T02:00:30+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v10",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v11.json",
+          "immutable": true,
+          "sha256": "19b30a07a04aa76966a05431e0241dc483a07292d8dd3af9568edfc43ababc64"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-049 正式 Metric Accumulator／Evaluation Plan 1.0.0 Schema、永久历史保护、COUNT_ROWS／SUM 共享运行时、固定错误优先级、65,536 accumulator 边界、Creator／Viewer 包级黄金一致性与 160 项 Vitest 断言落地后，已按最终工作树重新复核证据索引 v2、append-only 记录链、冻结 gate 静态定义、激活与未激活边界、人工／外部凭证语义、AGENTS.md 命令矩阵及实施计划接口；Windows 包级结果未被扩张为 M0-015 产品应用、完整 FR-MET-009、完整测试 runner、真实浏览器、Ubuntu、GitHub Actions 或公开 Fork 认证。"
+    },
+    {
+      "id": "m0-creator-viewer-contract-m0-015-windows-v2",
+      "title": "M0-015 Windows 最小二维 Renderer 与 Creator／Viewer 页面阶段证据",
+      "gateIds": [
+        "CREATOR-VIEWER-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E2",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-014",
+        "M0-015",
+        "M0-067"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-004",
+        "FR-MET-009",
+        "SEC-008"
+      ],
+      "adrIds": [
+        "ADR-0002",
+        "ADR-0030",
+        "ADR-0036"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-https",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T03:27:29+08:00",
+      "observedAt": "2026-08-06T03:24:25+08:00",
+      "supersedesRecordId": "m0-creator-viewer-contract-m0-014-windows-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [
+        {
+          "id": "m0-015-creator-story-artifact",
+          "path": "apps/creator/src/fixtures/story-artifact.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        },
+        {
+          "id": "m0-015-creator-metric-runtime",
+          "path": "apps/creator/src/fixtures/metric-runtime.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        },
+        {
+          "id": "m0-015-viewer-story-artifact",
+          "path": "apps/viewer/src/fixtures/story-artifact.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        },
+        {
+          "id": "m0-015-viewer-metric-runtime",
+          "path": "apps/viewer/src/fixtures/metric-runtime.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        }
+      ],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-workspace.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "turbo.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "DESIGN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-design.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/themes/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/themes/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/renderer/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "packages/renderer/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/renderer/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/renderer/src/story-renderer.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/creator/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/creator/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/creator/vite.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/creator/index.html",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/creator/src/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/creator/src/composition.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/creator/src/app.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/creator/src/browser.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/viewer/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/viewer/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "apps/viewer/vite.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/viewer/index.html",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/viewer/src/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/viewer/src/composition.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/viewer/src/app.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/viewer/src/browser.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/creator-viewer-renderer.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-dependencies.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/dependency-boundaries.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "fixture-manifest",
+          "path": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "immutable": true,
+          "sha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374"
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-renderer-creator-viewer.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-boundaries.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-dependency-boundaries.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-workspace-tool-dependencies.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-design-system.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-story-schema.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-metric-runtime.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-015-windows-renderer-creator-viewer.v1.json",
+          "immutable": true,
+          "sha256": "a021f2c4ab334108e4b753e7aac36f37e62f704805322ecbaec1c88ca7bf1682"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "Windows x64 当前工作树已验证 11 个 workspace、独立 Creator／Viewer Vite bundle、四份物理独立 fixture、正式 Reader → 共享 metric-runtime → composition → 受控 Renderer、失败不渲染、四主题与 React 文本转义；5 个 Vitest 文件 168/168，workspace 395/395，dependency 2076/2076，Design 356/356。environmentKind=local-https 继承冻结 gate 合同，但本轮浏览器观察仅为本地 HTTP 可读性冒烟；HTTPS、四 Origin／SEC-008、M0-018、RTL、Storybook、Playwright、axe、WCAG、Ubuntu、GitHub Actions、公开 Fork 与完整 FR-MET-009 均未完成，因此 gate 保持进行中、部分取证且不激活。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v12",
+      "title": "M0 证据索引 v2 与 M0-015 最小渲染链复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T03:27:29+08:00",
+      "observedAt": "2026-08-06T03:27:29+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v11",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v12.json",
+          "immutable": true,
+          "sha256": "08f1676bad7da711abd04fc2c28fa96a9b4fed1c45ff62d885d2e93d96586698"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-015 最小二维 Renderer、独立 Creator／Viewer React + Vite 验证页、四份独立 fixture、正式 Reader → 共享 metric-runtime → composition → Renderer、168 项 Vitest 及本地 HTTP 多视口可读性冒烟落地后，已按最终工作树复核 evidence-index v2、append-only 记录链、冻结 gate 静态定义、激活边界、人工／外部凭证语义、AGENTS.md 命令矩阵和实施计划接口；结果未扩张为 HTTPS／四 Origin、SEC-008、完整 FR-MET-009、M0-016 完整 runner、M0-018、WCAG、Ubuntu、GitHub Actions 或公开 Fork 认证。"
+    },
+    {
+      "id": "m0-test-runners-m0-016-windows-v4",
+      "title": "M0-016 Windows 五类真实测试 runner 阶段证据",
+      "gateIds": [
+        "TEST-RUNNERS"
+      ],
+      "epicIds": [
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-016"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T06:25:53+08:00",
+      "observedAt": "2026-08-06T06:23:40+08:00",
+      "supersedesRecordId": "m0-test-runners-m0-016-vitest-windows-v3",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / test-runners",
+        "summaryCheck": "test-runners",
+        "rootScript": "check:test-runners",
+        "rootScriptCommandSha256": "b188d26b5eca9e36d0199bced5106125bb63313bbd1c78341b88553a110c5909"
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-lock.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "pnpm-workspace.yaml",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.component.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "vitest.storybook.config.mts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".storybook/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": ".storybook/preview.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "playwright.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "playwright.a11y.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/component/creator-viewer-app.test.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/storybook/story-renderer.stories.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/e2e/creator-viewer.spec.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/a11y/creator-viewer-a11y.spec.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-test-runners.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-test-runners.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-016-windows-test-runners.v1.json",
+          "immutable": true,
+          "sha256": "dc09caa019c8cb60adad42f2600fd3ac115495542c8b92ab3385bd6b4bfb6102"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "environmentKind=ci 继承冻结 TEST-RUNNERS gate 合同；实际执行只发生在 Windows x64 本地含空格工作树。Vitest 5 files／168 tests、RTL 1 file／2 tests、Storybook 1 story test、Playwright E2E 2 tests 与独立 axe 2 tests 均含真实产品断言，结构化 check:test-runners 5/5 通过并原子激活日常 gate。用户所有的未跟踪 package-lock.json 保持排除且 frozen install 后 SHA-256 不变。当前 HTTP Chromium／axe 结果不证明 HTTPS／四 Origin、固定视觉／键盘／缩放、完整 WCAG、真实设备、干净 Ubuntu、GitHub Actions 或公开 Fork，因此 TEST-RUNNERS 保持进行中、部分取证，M0-016 不得标记完成。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v13",
+      "title": "M0 证据索引 v2 与 M0-016 五类测试 runner 复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T06:28:08+08:00",
+      "observedAt": "2026-08-06T06:26:56+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v12",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v13.json",
+          "immutable": true,
+          "sha256": "716cc5712f21cb86d26a256cd5370951ba8aa65765d4c87a98abe7e90b064f8f"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-016 Windows 五类真实 runner、固定 production HTTP preview、独立 axe 扫描与 nonce 绑定的 check:test-runners 落地并原子激活 TEST-RUNNERS 后，已按最终工作树复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界、人工／外部凭证语义、AGENTS.md 命令矩阵和实施计划顺序；结果未扩张为 M0-016 完成、Ubuntu／GitHub Actions／公开 Fork、HTTPS／四 Origin、固定视觉／完整 WCAG、真实设备或 M0 退出认证。"
     }
   ]
 }

@@ -8,9 +8,9 @@
 
 本文把已确认的路线图转换为依赖有序、可以逐项验收的实施 backlog。它不替代 PRD、架构、ADR 或路线图，不新增产品范围；如出现冲突，先修正上位事实源或建立明确的取代决定，再修改实现。
 
-## 1. 当前准备度
+## 1. 规划基线时准备度（历史快照）
 
-截至基线日期，仓库只有规划文档，尚未进入 M0 脚手架：
+下表只记录 2026-08-04 基线建立时的仓库状态，不是当前进度；当前执行状态以 M0 证据索引及其最新 record 为准。
 
 | 项目 | 当前状态 | 实施影响 |
 |---|---|---|
@@ -29,7 +29,8 @@
 4. 每个 PR 至少产生一个真实可运行结果或真实失败断言；禁止用返回成功的空脚本占位。
 5. 当前里程碑已到期但尚未实现的门槛标记为“计划中”或“未运行”，并使 **M0 退出聚合**失败；日常 PR/merge queue 聚合只运行已激活的真实门槛，某门槛必须在实现真实断言的同一 PR 中原子激活，激活后不得退回占位。“尚未到期”只适用于 M3 四主题完整组件矩阵、M4 的 30/200/100/1000 全量语料和正式外部认证，以及尚不存在适用历史正式主版本时的上一主版本兼容性，不能写成“通过”。
 6. 原始数据、模型输出、跨 Origin 消息、项目包和发布物一律按不可信输入处理，在模块的 interface 处限尺寸、解析和校验。
-7. M0 前半段可以使用 `0.x` 实验 Schema；在项目包固定向量、Project Repository 和纵向 E2E 开始前，必须先冻结首个正式版本并进入永久迁移承诺。不得为了测试迁移器而伪造已发布的产品历史。
+7. M0 前半段可以使用 `0.x` 实验 Schema；M0-048 已在项目包固定向量、Project Repository 和纵向 E2E 开始前冻结首个正式 `1.0.0` 并进入永久迁移承诺。`0.x` 永久保持未发布开发历史，不存在通向 `1.0.0` 的正式迁移边；不得为了测试迁移器而伪造已发布的产品历史。
+8. 任务若需要分阶段建立测试 runner，只有任务表明确写出的子集可以在整体依赖完成前启动；该子集只能记为阶段实现，不能把整项任务或对应 gate 写成完成。M0-016 的 Node 环境 Vitest bootstrap 已在 M0-011 前提供真实 Schema 单元断言；M0-015 后又建立了 Windows RTL、Storybook、Playwright、axe 与结构化根检查。干净 Ubuntu、GitHub Actions 和公开 Fork 尚未运行，因此 M0-016／TEST-RUNNERS 仍只能记为阶段实现、部分取证。
 
 ## 3. M0 的唯一验收切片
 
@@ -106,8 +107,8 @@ flowchart TD
 
 | 模块 | 小 interface | 隐藏的实现复杂度 | seam 与测试策略 |
 |---|---|---|---|
-| `story-schema` | `validateCurrentStory(inProcessCandidate) -> ValidationResult` | Ajv 编译、当前版本结构/语义错误归一化、引用与条件检查 | 当前版本写入与内部迁移步骤的 seam；生成类型不能替代运行时校验。外部字节不得绕过 Artifact Reader 直接调用它 |
-| Story Artifact Reader（由 `story-migrations` 提供） | `readStoryArtifact(input: Uint8Array \| string, limits) -> StoryReadResult` | **编码字节长度先验检查**、受控 UTF-8 解码/JSON 解析、版本识别、副本逐步迁移、每步校验、最终校验、原字节保留 | 本地项目、Viewer 和历史夹具统一读取 seam；也可接受 codec 产生的 branded `BoundedDecodedStory`。禁止无界 `JSON.parse` 后再调用 Reader，调用者不得自行挑迁移步骤或把未校验蓝图交给 Renderer |
+| `story-schema` | `currentStoryContract + validateCurrentStory(inProcessCandidate) -> ValidationResult` | 构建期生成 Ajv standalone、当前版本结构/语义错误归一化、引用与条件检查 | 当前版本写入与内部迁移步骤的 seam；正式根 runtime 不依赖实验 validator，生成类型不能替代运行时校验。外部字节不得绕过 Artifact Reader 直接调用它 |
+| Story Artifact Reader（由 `story-migrations` 提供） | `readStoryArtifact(bytes: Uint8Array, trustedContext) -> StoryReadResult` | **编码字节长度先验检查**、受控 UTF-8 解码/JSON 解析、私有版本注册、副本逐步迁移、每步校验和最终可信语义校验 | 本地项目、Viewer 和历史夹具统一读取 seam；只接受真实 `Uint8Array`（含 Node `Buffer` 与跨 realm 实例），固定限额与迁移链不能由调用方注入，正式 Result 不暴露来源版本、目标版本或迁移步数。禁止先解码或无界 `JSON.parse` 后再调用 Reader，调用者不得自行挑迁移步骤或把未校验蓝图交给 Renderer |
 | `metric-runtime` | `evaluate(plan, accumulators) -> MetricResultSet` | 固定合并顺序、不可用语义、单位/币种、精确集合并集 | 纯进程内深模块；Creator 与 Viewer 通过同一 interface 做黄金对比 |
 | Creator `LocalAnalysis` | `run(request, abortSignal) -> progress/AnalysisResult` | 唯一版本化消息 Schema、task ID/nonce、transferable 元数据与字节上限、取消/释放状态机 | 外部 seam；`BrowserWorkerAdapter` 与 `InProcessTestAdapter` 必须通过同一 contract suite，消息 Schema 由该模块的受限 export 子路径唯一拥有 |
 | `import-engine` | `runImport(request, abortSignal) -> ImportResult` | 准入、CSV/XLSX、Arrow、公式/链接拒绝和资源释放 | 只隐藏解析，不拥有 postMessage 或浏览器 Worker；合成输入、攻击夹具和取消路径通过同一 interface |
@@ -128,7 +129,7 @@ flowchart TD
 ```text
 domain              story-schema              themes
 story-migrations -> domain + story-schema
-metric-runtime   -> domain + story-schema
+metric-runtime   -> domain
 crypto           -> domain
 import-engine    -> domain
 api-contracts    -> domain
@@ -181,10 +182,10 @@ services/*       -/> import-engine / analysis-engine / local-storage
 | ID | 结果与验收 | 依赖 | 大小 |
 |---|---|---|---:|
 | M0-010 | 实现领域 ID、版本注册、稳定错误码和可区分 Result DTO；沿用 `CONTEXT.md` 术语 | M0-006 | S |
-| M0-011 | 定义实验 StoryBlueprint Schema，覆盖版本、数据集引用、全局/区块条件、证据/叙事引用、注册区块、布局、主题和视觉选择；关闭额外属性与任意代码配置 | M0-010 | M |
-| M0-012 | 从 Schema 生成类型，建立 Ajv 结构校验、尺寸限制与引用/条件/图表适用性语义校验；未知引用、区块条件放宽和硬编码额外数值均失败 | M0-011 | M |
+| M0-011 | 定义实验 StoryBlueprint Schema，覆盖版本、数据集引用、全局/区块条件、证据/叙事引用、注册区块、布局、主题和视觉选择；关闭额外属性与任意代码配置 | M0-009、010；先完成 M0-016 的 Vitest-only bootstrap（该子集不代表 M0-016 完成） | M |
+| M0-012 | 从 Schema 生成类型与 CSP 兼容 Ajv standalone；对已解析对象建立安全复制、重编码 UTF-8／深度／节点／引用限制和可信上下文引用／条件／当前已登记区块的最小适用性语义校验，其中 KPI metric 必须属于可信白名单；未知／自授权引用、全局条件漂移、区块条件放宽和硬编码额外数值均失败。原始 payload 的 parse 前字节限制仍属于 M0-013 | M0-011 | M |
 | M0-013 | 建立 Story Artifact Reader、复制迁移执行器、版本注册表、实验样本、未知/恶意样本和失败不替换测试；Reader 必须先按编码字节限尺寸再解码/解析，调用者不能绕过统一读取 seam | M0-012 | M |
-| M0-048 | 冻结首个正式 Story Schema；重新生成类型和 Schema hash，产出正式 Creator/Viewer fixture 及 hash，并将实验样本明确标记为未发布开发样本。此后兼容变化只能新增版本/迁移，不覆写正式历史 | M0-013 | S |
+| M0-048 | 冻结首个正式 Story Schema；重新生成类型和 Schema hash，产出正式 Creator/Viewer fixture 及 hash，并将实验样本明确标记为未发布开发样本。正式根 runtime 不得加载实验 validator，Reader 正式 Result 不得公开可调限额或迁移路由；此后兼容变化只能新增版本/迁移，不覆写正式历史 | M0-013 | S |
 | M0-049 | 定义版本化 `MetricAccumulator` Schema 与最小纯 `metric-runtime`，覆盖 `COUNT_ROWS`、`SUM`、稳定 merge/finalize 顺序、数值边界和不可用错误；Creator/Viewer 对同一 accumulator 的黄金结果逐值一致 | M0-048 | M |
 | M0-014 | 从 `DESIGN.md` 生成或自动核对主题语义 Token；固定 Design CLI 版本并记录既有 warning 基线，新错误或未审查 warning 阻断 | M0-005 | S |
 | M0-015 | 建立只依赖 `story-schema + themes` 的最小二维 Renderer，以及独立 Creator/Viewer 页面；两端经 Story Artifact Reader 读取正式标题/摘要/KPI fixture，composition 使用同一 `metric-runtime`，Renderer 不计算指标或叙事 | M0-014、048、049 | M |
@@ -193,12 +194,14 @@ services/*       -/> import-engine / analysis-engine / local-storage
 
 | ID | 结果与验收 | 依赖 | 大小 |
 |---|---|---|---:|
-| M0-016 | 配置 Vitest、React Testing Library、Storybook、Playwright 与 axe；每个 runner 至少有一个真实产品断言 | M0-009、015 | M |
+| M0-016 | 分阶段配置测试栈：M0-011 前先建立 Node 环境 Vitest 根 runner 与真实 Schema 单元断言；M0-015 后再配置 React Testing Library、Storybook、Playwright 与 axe，并要求五类 runner 各至少一个真实产品断言后才完成整项任务 | 启动依赖 M0-009；整体完成依赖 M0-015 | M |
 | M0-017 | 建立 fixture manifest，记录 ID、用途、固定种子、生成器版本、预期结果与 hash；大型夹具确定性生成，不提交真实用户数据 | M0-010、016 | M |
 | M0-018 | 固定 `zh-CN`、`Asia/Shanghai`、字体、浏览器、视口、随机种子和弱动效；对 M0 最小页建立视觉、键盘、焦点与 200% 缩放冒烟 | M0-014～017 | M |
 | M0-019 | GitHub Actions：PR 快检、`merge_group` 当前**已激活**完整矩阵、`main` 复核、M0 退出候选与标签 release dry-run；提供稳定命名的日常 required aggregate，以及独立的 `verify:m0` 退出 aggregate。已激活项失败必须非零，未实现项不能伪装通过但不锁死日常合并；最小权限、无 `pull_request_target`、Fork 路径无 secrets/付费 SaaS | M0-008、M0-016～M0-018 | M |
 | M0-020 | release dry-run 生成构建物、校验和与 SBOM；只证明供应链骨架，不创建或宣传公开 MVP | M0-019 | S |
 | M0-046 | 在真实 GitHub 远端配置并回读 protected `main`、merge queue、squash merge 和**日常已激活聚合** required check；用一次失败 PR/merge-group 与直接推送否定验证证明日常门槛无法绕过。`verify:m0` 保持独立退出检查，不在 Wave 3 设成每个 PR 都必须通过；把 ruleset 与测试 PR 证据写入索引 | M0-019；仓库所有者权限 | M |
+
+当前 M0-016 Windows 阶段已让 Vitest、RTL、Storybook、Playwright 与 axe 各含真实产品断言，并以 `check:test-runners` 原子激活 TEST-RUNNERS 日常 gate；激活不等于任务或 M0 完成。规划顺序上的下一项仍是 M0-017，随后才进入 M0-018 固定视觉／键盘／缩放矩阵和 M0-019 CI。
 
 ### Wave 4：项目加密与本地存储
 

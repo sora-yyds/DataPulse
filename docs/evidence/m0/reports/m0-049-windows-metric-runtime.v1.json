@@ -1,0 +1,371 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-049-windows-metric-runtime-v1",
+  "milestone": "M0",
+  "taskId": "M0-049",
+  "gateId": "METRIC-RUNTIME",
+  "observedAt": "2026-08-06T01:54:28+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows 10.0.26200",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务、提交与证据索引范围外。",
+      "cleanProjectDirectory": false,
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "unchangedByFrozenInstall": true
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3",
+        "ajv": "8.17.1",
+        "json-schema-to-typescript": "15.0.4",
+        "vitest": "4.1.10",
+        "vite": "8.2.0"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaceProjects": 11,
+          "includesRepositoryRoot": true
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 54
+        },
+        {
+          "command": "corepack pnpm run build",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 10,
+          "storySchemaBuildCache": "disabled",
+          "metricRuntimeBuildCache": "disabled"
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 4,
+          "tests": 160
+        },
+        {
+          "command": "$env:DATAPULSE_MERGE_BASE = (git rev-parse HEAD); corepack pnpm --filter @datapulse/metric-runtime run build",
+          "exitCode": 1,
+          "result": "passed",
+          "probeKind": "negative",
+          "expectedStableErrorCode": "METRIC_RUNTIME_HISTORY_INVALID",
+          "metricRuntimeBuildCache": "bypassed"
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 10,
+          "assertions": 332
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 1738,
+          "selfTestAssertions": 193,
+          "domainContractAssertions": 60,
+          "cycles": 0
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 81
+        },
+        {
+          "command": "corepack pnpm run check:design",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 313
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 21
+        },
+        {
+          "command": "corepack pnpm run check:foundation",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 3
+        }
+      ],
+      "metricRuntimeContractResult": {
+        "result": "passed",
+        "currentVersion": "1.0.0",
+        "historyPath": "packages/metric-runtime/src/schema/history.v1.json",
+        "historyBytes": 1693,
+        "historySha256": "705370cce415127dac4a22a56234383931f7bf6bcb15386296a133a17081595b",
+        "hashInput": "raw-source-bytes",
+        "distContract": "semantic-equivalence-only",
+        "supportedAggregates": [
+          "COUNT_ROWS",
+          "SUM"
+        ],
+        "interactionCapabilities": [
+          "exact"
+        ],
+        "sumWireEncoding": "ieee754-binary64-big-endian-lowercase-hex",
+        "negativeZero": "canonicalize-to-positive-zero",
+        "mergeOrder": "mergeOrdinal-ascending",
+        "failurePriority": [
+          "accumulator-shape",
+          "accumulator-version-invalid",
+          "accumulator-version-unsupported",
+          "metric-id-mismatch",
+          "aggregate-mismatch",
+          "merge-ordinal-duplicate"
+        ],
+        "maxAccumulatorsPerEvaluation": 65536,
+        "maxAccumulatorLimitKind": "parsed-accumulator-count-not-raw-byte-limit",
+        "generatedArtifactsAligned": true,
+        "generatedTypesAligned": true,
+        "standaloneValidatorsAligned": true,
+        "historyMetadataAligned": true,
+        "publicRuntimeLoadsAjv": false,
+        "runtimeWorkspaceDependencies": [
+          "@datapulse/domain"
+        ],
+        "trustedMergeBaseChecked": true,
+        "allReachableProtectedPathRevisionsChecked": true,
+        "shallowRepositoryRejected": true,
+        "invalidRevisionRejected": true,
+        "explicitHeadOverrideRejected": true
+      },
+      "schemaAndGeneratedArtifacts": [
+        {
+          "path": "packages/metric-runtime/src/schema/1.0.0/metric-accumulator.schema.json",
+          "bytes": 2592,
+          "sha256": "0e9fdf5c0925a388c5fcdf36a8bfedae8e198f28fa6feee1a15eb62792da00d4"
+        },
+        {
+          "path": "packages/metric-runtime/src/schema/1.0.0/metric-evaluation-plan.schema.json",
+          "bytes": 677,
+          "sha256": "e3605377a5efef6de81b0b12c706e40e0d05a913f4a84d925ed1b13229e413d6"
+        },
+        {
+          "path": "packages/metric-runtime/src/schema/history.v1.json",
+          "bytes": 1693,
+          "sha256": "705370cce415127dac4a22a56234383931f7bf6bcb15386296a133a17081595b"
+        },
+        {
+          "path": "packages/metric-runtime/src/generated/metric-accumulator-v1_0_0.generated.ts",
+          "bytes": 688,
+          "sha256": "16bfc2d500bddb7dec62bdec013e0bcdb0a34eaa0a5b70811631332fda10485b"
+        },
+        {
+          "path": "packages/metric-runtime/src/generated/metric-accumulator-v1_0_0.validator.generated.ts",
+          "bytes": 19095,
+          "sha256": "d6f833a4da96539bd97d0ca0ac36e44451493e685fe2ce49ea39b6abe5181d12"
+        },
+        {
+          "path": "packages/metric-runtime/src/generated/metric-evaluation-plan-v1_0_0.generated.ts",
+          "bytes": 302,
+          "sha256": "50f1e1ce9d3392715cac308fe372bc4db62b8ecb25220fb34d55320d81ed4fbe"
+        },
+        {
+          "path": "packages/metric-runtime/src/generated/metric-evaluation-plan-v1_0_0.validator.generated.ts",
+          "bytes": 3954,
+          "sha256": "6339c51eb1b151213b10ca4c74c45dea0802e35b5475aa7199654e91f0fac313"
+        },
+        {
+          "path": "packages/metric-runtime/src/generated/metric-runtime-history.generated.ts",
+          "bytes": 309,
+          "sha256": "7d909dc384ca6331b749b8dff6499966eb45d70b7bad3e0f408d682535365c09"
+        }
+      ],
+      "formalFixtureContractResult": {
+        "result": "passed",
+        "manifestPath": "tests/fixtures/metric-runtime/formal/manifest.v1.json",
+        "manifestBytes": 1244,
+        "manifestSha256": "a2e2f07c093fac3d15c6fdae3ab011909602c2dd4e527e5b0fa5a7ea6067c140",
+        "formalHistory": true,
+        "compatibilityPromise": true,
+        "fixturePath": "tests/fixtures/metric-runtime/formal/1.0.0/canonical.creator-viewer.json",
+        "fixtureBytes": 3398,
+        "fixtureSha256": "825f05e15adaab0f843a6e30b30ea94748d6de9869592fb8b5f2c15d579f5673",
+        "consumers": [
+          "creator",
+          "viewer"
+        ],
+        "consumersReadFixtureSeparately": true,
+        "consumerParsedObjectsIsolated": true,
+        "availableResultsEquivalent": true,
+        "unavailableResultsEquivalent": true,
+        "errorResultsEquivalent": true,
+        "nonAssociativeSumAndBinary64RoundingCovered": true
+      },
+      "runtimeBehaviorResult": {
+        "result": "passed",
+        "publicExports": [
+          "createMetricAccumulator",
+          "evaluateMetric",
+          "METRIC_RUNTIME_ERROR_CODES"
+        ],
+        "countRowsEmptySelection": "available-zero",
+        "sumEmptySelection": "unavailable-empty-selection",
+        "finiteOverflow": "unavailable-numeric-overflow",
+        "contractFailureReturnsPartialValue": false,
+        "stableErrorCodeAndReasonMappingsFrozen": true,
+        "multiErrorPermutationDeterministic": true,
+        "accumulatorCount65536Accepted": true,
+        "accumulatorCount65537RejectedBeforeElementAccess": true,
+        "getterExecuted": false,
+        "proxyAndExceptionalObjectsCrossPublicResultSeam": false,
+        "outputsFrozen": true,
+        "inputMutated": false,
+        "nodeNativeEsmFromExternalCwdAndAbsoluteSpacePath": "passed",
+        "viteWriteFalsePackageProbe": "passed",
+        "productApplicationBundleProduced": false
+      },
+      "workspaceResult": {
+        "result": "passed",
+        "workspaces": 10,
+        "assertions": {
+          "executed": 332,
+          "passed": 332,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "dependencyBoundaryResult": {
+        "result": "passed",
+        "workspaces": 10,
+        "cycles": 0,
+        "assertions": {
+          "executed": 1738,
+          "passed": 1738,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 193,
+          "passed": 193,
+          "failed": 0,
+          "skipped": 0
+        },
+        "domainContract": {
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "toolchainResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 54,
+          "passed": 54,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "governanceResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 81,
+          "passed": 81,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "designResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 313,
+          "passed": 313,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "aggregatorResult": {
+        "result": "passed",
+        "assertions": {
+          "executed": 21,
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "foundationResult": {
+        "result": "passed",
+        "checks": {
+          "executed": 3,
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "environment": "windows-arm64-server-and-constrained-hosts",
+      "status": "not_run",
+      "reason": "Windows ARM64、Windows Server、PowerShell 7、非 ASCII／长路径、UNC／网络盘、受限 ACL、杀毒软件锁文件和低内存环境尚未验证；本地 x64 ASCII 含空格路径结果不冒充这些环境。"
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代干净 Ubuntu 的冻结安装、大小写路径、Git 完整历史与 ESM 行为。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地构建和 Vitest 不冒充 CI 或公开 Fork。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "creator-viewer-product-composition",
+      "status": "not_run",
+      "reason": "M0-015 才建立独立 Creator／Viewer 页面与二维 Renderer；本轮只有包级委托 seam。"
+    },
+    {
+      "validation": "complete-fr-met-009-aggregates",
+      "status": "not_run",
+      "reason": "AVG 的 sum + count、精确 COUNT_DISTINCT 集合并集及完整筛选一致性属于 M1；当前只覆盖 M0 的 COUNT_ROWS 与 SUM。"
+    },
+    {
+      "validation": "real-browser-matrix",
+      "status": "not_run",
+      "reason": "当前只有 Node 原生 ESM 与 Vite write:false 包级探针；没有真实 Chrome、Edge、Firefox、Safari、独立 Origin 或产品交互。"
+    },
+    {
+      "validation": "stable-activated-metric-gate",
+      "status": "not_run",
+      "reason": "真实 CI、Ubuntu 与公开 Fork 尚未建立，因此 METRIC-RUNTIME 日常 gate 不激活。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-049 Windows 包级正式 Metric Accumulator／Evaluation Plan 1.0.0 Schema、原始字节 hash、append-only 历史、生成类型／standalone validator、COUNT_ROWS／SUM、固定 binary64 wire、稳定 merge／finalize 与错误优先级，以及 Creator／Viewer 对同一正式 fixture 的隔离读取和逐值一致合同。",
+    "notImplemented": "M0-015 产品页面与 Renderer、AVG、精确 COUNT_DISTINCT、完整指标集合、真实浏览器矩阵、独立 Origin、RTL、Storybook、Playwright、axe、干净 Ubuntu、GitHub Actions、公开 Fork、METRIC-RUNTIME 日常激活与完整 FR-MET-009。",
+    "productApplicationBundleProduced": false,
+    "viteProbeProducedFiles": false,
+    "gateState": "METRIC-RUNTIME 保持 in_progress / partially_evidenced，daily gate 不激活。"
+  },
+  "conclusion": "Windows x64、PowerShell 5.1 与含空格工作区中的 M0-049 包级正式契约、确定性运行时、恶意输入边界和 Creator／Viewer 黄金一致性已通过；未运行的产品、完整指标、浏览器、Ubuntu、CI 与公开 Fork 门槛仍使 METRIC-RUNTIME 保持进行中、部分取证，本报告总体为 partial。"
+}

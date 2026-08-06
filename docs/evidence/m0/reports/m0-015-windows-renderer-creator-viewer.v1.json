@@ -1,0 +1,367 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-015-windows-renderer-creator-viewer-v1",
+  "milestone": "M0",
+  "taskId": "M0-015",
+  "gateId": "CREATOR-VIEWER-CONTRACT",
+  "observedAt": "2026-08-06T03:24:25+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows NT 10.0.26200.0",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "sourceState": "当前 Windows 本地工作树；不是干净副本。用户所有的未跟踪 package-lock.json 排除在任务、提交与证据索引范围外。",
+      "cleanProjectDirectory": false,
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "unchangedByFrozenInstall": true
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "turbo": "2.10.8",
+        "typescript": "6.0.3",
+        "vitest": "4.1.10",
+        "vite": "8.2.0",
+        "react": "19.2.8"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm install --frozen-lockfile",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaceProjectsIncludingRoot": 12,
+          "workspacePackages": 11
+        },
+        {
+          "command": "corepack pnpm run check:toolchain",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 54
+        },
+        {
+          "command": "corepack pnpm run build",
+          "attempt": 1,
+          "exitCode": 1,
+          "result": "transient_failure",
+          "observation": "Turbo reported @datapulse/story-schema exit 1 without a package diagnostic; no generated mismatch was printed."
+        },
+        {
+          "command": "corepack pnpm run build",
+          "workingDirectory": "packages/story-schema",
+          "exitCode": 0,
+          "result": "passed",
+          "selfTestAssertions": 10,
+          "generatedMismatches": 0
+        },
+        {
+          "command": "corepack pnpm run build",
+          "attempt": 2,
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 11,
+          "storySchemaBuildCache": "disabled",
+          "metricRuntimeBuildCache": "disabled"
+        },
+        {
+          "command": "corepack pnpm run check:workspace",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 11,
+          "assertions": 395
+        },
+        {
+          "command": "corepack pnpm run check:dependencies",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 2076,
+          "selfTestAssertions": 193,
+          "domainContractAssertions": 60,
+          "cycles": 0
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 5,
+          "tests": 168
+        },
+        {
+          "command": "corepack pnpm run check:governance",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 81,
+          "selfTestAssertions": 7
+        },
+        {
+          "command": "corepack pnpm run check:design",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 356,
+          "selfTestAssertions": 5,
+          "lint": {
+            "errors": 0,
+            "warnings": 85,
+            "infos": 1
+          }
+        },
+        {
+          "command": "corepack pnpm run check:aggregators",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 21
+        },
+        {
+          "command": "corepack pnpm run check:foundation",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 3
+        },
+        {
+          "command": "git diff --check",
+          "exitCode": 0,
+          "result": "passed"
+        }
+      ],
+      "compositionFixtureContractResult": {
+        "result": "passed",
+        "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+        "manifestBytes": 2991,
+        "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+        "generatorVersion": "hand-authored-m0-015-v1",
+        "creatorStory": {
+          "path": "apps/creator/src/fixtures/story-artifact.json",
+          "bytes": 1555,
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386"
+        },
+        "viewerStory": {
+          "path": "apps/viewer/src/fixtures/story-artifact.json",
+          "bytes": 1555,
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386"
+        },
+        "creatorMetric": {
+          "path": "apps/creator/src/fixtures/metric-runtime.json",
+          "bytes": 1033,
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+        },
+        "viewerMetric": {
+          "path": "apps/viewer/src/fixtures/metric-runtime.json",
+          "bytes": 1033,
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+        },
+        "copiesArePhysicallyIndependent": true,
+        "storyBytesEquivalent": true,
+        "metricBytesEquivalent": true
+      },
+      "rendererContractResult": {
+        "result": "passed",
+        "workspace": "@datapulse/renderer",
+        "workspaceDependencies": [
+          "@datapulse/story-schema",
+          "@datapulse/themes"
+        ],
+        "registeredBlocks": [
+          "title-summary",
+          "kpi"
+        ],
+        "acceptedStoryInput": "ValidatedStoryBlueprint",
+        "acceptedMetricInput": "resolved-kpi-dto",
+        "computesMetrics": false,
+        "computesNarrative": false,
+        "acceptsArbitraryHtmlCssJavaScriptShaderOrChartOptions": false,
+        "reactTextEscapingCovered": true,
+        "failureStateStable": true,
+        "maxStoryWidthPixels": 1440,
+        "storyCentered": true,
+        "themeVariablesOnElementStyleAttribute": false,
+        "controlledInlineStyleElementPresent": true,
+        "cspFollowUpRequiredByM0036": true
+      },
+      "creatorViewerCompositionResult": {
+        "result": "passed",
+        "pipeline": [
+          "independent-story-and-metric-bytes",
+          "story-artifact-reader",
+          "shared-metric-runtime",
+          "zh-CN-composition",
+          "controlled-renderer"
+        ],
+        "storyTitle": "订单概览",
+        "storySummary": "该合成故事验证 Creator 与 Viewer 共享正式故事契约和确定性指标结果。",
+        "kpiLabel": "订单总数",
+        "metricId": "metric_order-count",
+        "evidenceId": "evidence_order-count",
+        "metricValue": 23,
+        "metricValueText": "23",
+        "metricScopeText": "范围：全部数据（无附加条件）",
+        "creatorViewerValuesEquivalent": true,
+        "readerFailureReturnsCandidateBlueprint": false,
+        "fixtureMismatchReturnsComposition": false,
+        "metricMismatchReturnsComposition": false,
+        "conditionMismatchReturnsComposition": false,
+        "unitTestPath": "tests/unit/creator-viewer-renderer.test.ts",
+        "unitTestBytes": 17701,
+        "unitTestSha256": "fa4841754fc75bd6b82c0f333266c7ac49f406589ca45e91c4fb020a5c454cf5"
+      },
+      "viteBuildResult": {
+        "result": "passed",
+        "assetsInlineLimit": 0,
+        "creator": {
+          "javascriptKilobytes": 335.48,
+          "javascriptGzipKilobytes": 85.94,
+          "metricJsonKilobytes": 1.03,
+          "storyJsonKilobytes": 1.55
+        },
+        "viewer": {
+          "javascriptKilobytes": 335.47,
+          "javascriptGzipKilobytes": 85.94,
+          "metricJsonKilobytes": 1.03,
+          "storyJsonKilobytes": 1.55
+        },
+        "jsonAssetsEmittedSeparately": true,
+        "dataApplicationJsonFetchPresent": false,
+        "completePublishableProduct": false
+      },
+      "browserSmokeResult": {
+        "result": "passed",
+        "transport": "http",
+        "automation": "codex-in-app-browser",
+        "playwright": false,
+        "creatorViewports": [
+          {
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "viewerViewports": [
+          {
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "width": 1024,
+            "height": 768
+          },
+          {
+            "width": 390,
+            "height": 844
+          }
+        ],
+        "requiredTitleSummaryMetricScopeAndEvidenceVisible": true,
+        "alertsPresent": false,
+        "consoleWarningsOrErrors": false,
+        "horizontalOverflow": false,
+        "requiredContentClipped": false,
+        "tabletAndPhoneSingleColumn": true,
+        "rendererRootHasThemeInlineStyleAttribute": false,
+        "httpsVerified": false,
+        "fourOriginIsolationVerified": false,
+        "realDeviceVerified": false
+      },
+      "workspaceResult": {
+        "result": "passed",
+        "workspaces": 11,
+        "assertions": {
+          "executed": 395,
+          "passed": 395,
+          "failed": 0,
+          "skipped": 0
+        }
+      },
+      "dependencyBoundaryResult": {
+        "result": "passed",
+        "workspaces": 11,
+        "cycles": 0,
+        "assertions": {
+          "executed": 2076,
+          "passed": 2076,
+          "failed": 0,
+          "skipped": 0
+        },
+        "selfTest": {
+          "executed": 193,
+          "passed": 193,
+          "failed": 0,
+          "skipped": 0
+        },
+        "domainContract": {
+          "executed": 60,
+          "passed": 60,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "environment": "local-https-four-origin",
+      "status": "not_run",
+      "reason": "本轮浏览器冒烟只通过本地 HTTP 验证页面可读性；未建立 HTTPS、Creator／Viewer／API／Connector 四个 Origin 或 Cookie／存储隔离否定测试。"
+    },
+    {
+      "environment": "browser-and-real-device-matrix",
+      "status": "not_run",
+      "reason": "未运行固定 Chrome／Edge／Firefox／Safari、平板与手机真实设备矩阵；本地 in-app Browser 冒烟不冒充真实设备认证。"
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代干净 Ubuntu 的冻结安装、生产构建、字体与浏览器渲染。"
+    },
+    {
+      "environment": "github-actions-and-public-fork",
+      "status": "not_run",
+      "reason": "M0-019 与真实 required check 尚未落地；本地结果不冒充 CI、merge queue 或公开 Fork。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "rtl-storybook-playwright-axe",
+      "status": "not_run",
+      "reason": "按计划在 M0-016 才补齐 React Testing Library、Storybook、Playwright 与 axe；当前只有 Vitest composition／Renderer 断言和浏览器冒烟。"
+    },
+    {
+      "validation": "fixed-visual-and-accessibility-matrix",
+      "status": "not_run",
+      "reason": "M0-018 才执行四主题、桌面／平板／手机、二维回退、键盘、焦点、缩放、对比度与弱动效矩阵。"
+    },
+    {
+      "validation": "csp-and-origin-isolation",
+      "status": "not_run",
+      "reason": "受控内联 style 的 hash／nonce 或外部 CSS、严格 CSP 与四 Origin 部署属于 M0-036 及后续安全任务；不得通过 unsafe-inline 放宽。"
+    },
+    {
+      "validation": "viewer-storage-isolation",
+      "status": "not_run",
+      "reason": "M0-067 才以独立 Viewer Playwright 链证明无法读取 Creator IDB、OPFS 或设备密钥。"
+    },
+    {
+      "validation": "complete-product-workflow",
+      "status": "not_run",
+      "reason": "导入、分析、生成、编辑、撤销／重做、保存、分享、3D 与 AI 均不在 M0-015 最小只读验证页范围。"
+    },
+    {
+      "validation": "stable-activated-creator-viewer-gate",
+      "status": "not_run",
+      "reason": "HTTPS、四 Origin、完整浏览器／无障碍矩阵、真实 CI 与公开 Fork 尚未建立，因此 CREATOR-VIEWER-CONTRACT 日常 gate 不激活。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-015 Windows 阶段最小二维 Renderer、独立 Creator／Viewer React + Vite 只读验证页，以及两端独立 Story／Metric 字节经正式 Reader、共享 metric-runtime、zh-CN composition 到受控 Renderer 的逐值一致链路。",
+    "notImplemented": "编辑器、导入、AI、分享、3D、RTL、Storybook、Playwright、axe、固定视觉／WCAG 矩阵、HTTPS、四 Origin、存储隔离、真实设备、干净 Ubuntu、GitHub Actions、公开 Fork与完整可发布产品。",
+    "readOnlyValidationBundlesProduced": true,
+    "completeProductApplicationProduced": false,
+    "gateState": "CREATOR-VIEWER-CONTRACT 保持 in_progress / partially_evidenced，daily gate 不激活。"
+  },
+  "conclusion": "M0-015 的最小只读渲染链在 Windows x64、固定工具链、单元合同、生产构建与本地 HTTP 浏览器冒烟中可验证；首次根 build 的无诊断瞬态失败经包级检查和原命令重跑后通过。未运行的 HTTPS、四 Origin、完整 runner、视觉／无障碍、真实设备、Ubuntu、CI 与公开 Fork 门槛仍使 CREATOR-VIEWER-CONTRACT 保持进行中、部分取证，本报告总体为 partial。"
+}
