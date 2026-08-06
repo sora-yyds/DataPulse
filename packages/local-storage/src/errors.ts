@@ -6,6 +6,9 @@ export const LOCAL_STORAGE_ERROR_CODES = Object.freeze({
   deviceKeyMissing: "STORAGE_DEVICE_KEY_MISSING",
   writeFailed: "STORAGE_WRITE_FAILED",
   invalidDeviceKey: "STORAGE_INVALID_DEVICE_KEY",
+  invalidArgument: "STORAGE_INVALID_ARGUMENT",
+  quotaUnavailable: "STORAGE_QUOTA_UNAVAILABLE",
+  capacityExceeded: "STORAGE_CAPACITY_EXCEEDED",
 } as const);
 
 export type LocalStorageErrorCode =
@@ -29,6 +32,15 @@ export type InvalidDeviceKeyReason =
   | "length"
   | "usages"
   | "extractable";
+
+export type InvalidArgumentReason = "type" | "negative-length";
+
+export type QuotaUnavailableReason = "estimate-unsupported" | "estimate-failed";
+
+export type CapacityExceededReason =
+  | "quota-exceeded"
+  | "backup-payload-exceeded"
+  | "quota-and-payload-exceeded";
 
 type FrozenError<Code extends LocalStorageErrorCode, Reason extends string> = Readonly<{
   code: Code;
@@ -55,13 +67,28 @@ export type InvalidDeviceKeyError = FrozenError<
   typeof LOCAL_STORAGE_ERROR_CODES.invalidDeviceKey,
   InvalidDeviceKeyReason
 >;
+export type InvalidArgumentError = FrozenError<
+  typeof LOCAL_STORAGE_ERROR_CODES.invalidArgument,
+  InvalidArgumentReason
+>;
+export type QuotaUnavailableError = FrozenError<
+  typeof LOCAL_STORAGE_ERROR_CODES.quotaUnavailable,
+  QuotaUnavailableReason
+>;
+export type CapacityExceededError = FrozenError<
+  typeof LOCAL_STORAGE_ERROR_CODES.capacityExceeded,
+  CapacityExceededReason
+>;
 
 export type LocalStorageError =
   | StorageUnavailableError
   | PersistenceUnavailableError
   | DeviceKeyMissingError
   | StorageWriteFailedError
-  | InvalidDeviceKeyError;
+  | InvalidDeviceKeyError
+  | InvalidArgumentError
+  | QuotaUnavailableError
+  | CapacityExceededError;
 
 function freezeError<Code extends LocalStorageErrorCode, Reason extends string>(
   code: Code,
@@ -92,4 +119,20 @@ export function createStorageWriteFailedError(): StorageWriteFailedError {
 
 export function createInvalidDeviceKeyError(reason: InvalidDeviceKeyReason): InvalidDeviceKeyError {
   return freezeError(LOCAL_STORAGE_ERROR_CODES.invalidDeviceKey, reason);
+}
+
+export function createInvalidArgumentError(reason: InvalidArgumentReason): InvalidArgumentError {
+  return freezeError(LOCAL_STORAGE_ERROR_CODES.invalidArgument, reason);
+}
+
+export function createQuotaUnavailableError(
+  reason: QuotaUnavailableReason,
+): QuotaUnavailableError {
+  return freezeError(LOCAL_STORAGE_ERROR_CODES.quotaUnavailable, reason);
+}
+
+export function createCapacityExceededError(
+  reason: CapacityExceededReason,
+): CapacityExceededError {
+  return freezeError(LOCAL_STORAGE_ERROR_CODES.capacityExceeded, reason);
 }

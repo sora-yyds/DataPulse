@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T20:27:47+08:00",
+  "updatedAt": "2026-08-06T21:04:10+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v26",
+      "latestRecordId": "m0-wave0-evidence-contract-v27",
       "blockerRefs": []
     },
     {
@@ -767,7 +767,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-local-storage-device-key-v2",
+      "latestRecordId": "m0-local-storage-quota-v1",
       "blockerRefs": []
     },
     {
@@ -8709,6 +8709,195 @@
       ],
       "blockerRefs": [],
       "notes": "M0-026 浏览器否定验证阶段：test:storage 第 7 类 runner 与 tests/storage-e2e／tests/storage-fixture 落地（真实 Chromium 5/5），证据记录 m0-local-storage-device-key-v2 按 append-only 链取代 v1；AGENTS.md 同步为最新计数（14 workspace、check:test-runners 7 runner、check:dependencies 2494/2494、test:unit 10 files/238 tests、release SBOM 469 依赖包）。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v25。"
+    },
+    {
+      "id": "m0-local-storage-quota-v1",
+      "title": "M0-051 写入前双估算：4 GiB 备份载荷上界与配额投影拒绝",
+      "gateIds": [
+        "LOCAL-PROJECT-REPOSITORY"
+      ],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-026",
+        "M0-027",
+        "M0-051",
+        "M0-052"
+      ],
+      "requirementIds": [
+        "FR-PROJ-003",
+        "FR-PROJ-004",
+        "FR-PROJ-005",
+        "FR-PROJ-007",
+        "FR-PROJ-009"
+      ],
+      "adrIds": [
+        "ADR-0017",
+        "ADR-0019",
+        "ADR-0033"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-development",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T21:04:10+08:00",
+      "observedAt": "2026-08-06T21:04:10+08:00",
+      "supersedesRecordId": "m0-local-storage-device-key-v2",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "test-result",
+          "path": "tests/unit/local-storage-quota.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/quota.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/errors.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-051 写入前双估算阶段实现：packages/local-storage 新增 quota.ts——PROJECT_BACKUP_PAYLOAD_LIMIT_BYTES=4 GiB 全量备份 payload 上界，project-envelope-v1 的 1 MiB manifest／4 KiB header／1 MiB chunk／16B tag／4B length field／48B wrapped key 常量；computeBackupPayloadBytes 估算完整明文备份载荷（parts 之和 + 1 MiB manifest 保守界）；computeProjectedStoredBytes 投影加密存储字节（payload + header + wrapped key + chunk 数×(16+4)）；evaluateWriteCapacity 在分配与提交前同时检查“投影存储 ≤ 可用配额”与“投影备份 payload ≤ 4 GiB”，任一超限即拒绝（quota-exceeded／backup-payload-exceeded，双超给 quota-and-payload-exceeded），失败路径不触碰最后可读索引；estimateAvailableQuota 封装 navigator.storage.estimate（Node 或 API 缺失／不一致抛 STORAGE_QUOTA_UNAVAILABLE）；assertWriteCapacityAllowed 在写入前显式抛 STORAGE_CAPACITY_EXCEEDED。errors.ts 新增 STORAGE_INVALID_ARGUMENT／STORAGE_QUOTA_UNAVAILABLE／STORAGE_CAPACITY_EXCEEDED 稳定错误码并同步枚举断言。新增 tests/unit/local-storage-quota.test.ts（15 项：4 GiB 恰好通过／超 1B 拒绝、投影存储已知值、reason 组合、错误输入、Node 下 estimate 不可用稳定错误与 frozen estimate）。test:unit 全量 11 files/253 tests 通过，check:dependencies 主断言 2494→2513，AGENTS.md 同步。LOCAL-PROJECT-REPOSITORY 仍含 M0-027/052，保持 in_progress／partially_evidenced、不激活日常且 m0 退出不满足。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v27",
+      "title": "M0-051 配额阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T21:04:10+08:00",
+      "observedAt": "2026-08-06T21:04:10+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v26",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v27.json",
+          "immutable": true,
+          "sha256": "5f5ebfa68d07c4f334a8ca545f627f21d4daef1557e4fada2b94ad7ebce082b0"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-051 配额阶段：packages/local-storage 写入前双估算与稳定错误码落地，tests/unit/local-storage-quota.test.ts 15 项，test:unit 全量 11 files/253 tests、check:dependencies 2513/2513、14 workspace；证据记录 m0-local-storage-quota-v1 按 append-only 链取代 m0-local-storage-device-key-v2。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v26。"
     }
   ]
 }
