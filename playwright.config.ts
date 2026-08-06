@@ -50,16 +50,18 @@ export function createHttpPreviewConfig(
     webServer: [
       {
         command:
-          `corepack pnpm --filter @datapulse/creator exec vite preview ` +
+          `node ../../node_modules/vite/bin/vite.js preview ` +
           `--host ${PREVIEW_HOST} --port ${CREATOR_PREVIEW_PORT} --strictPort`,
+        cwd: "./apps/creator",
         url: `${creatorBaseUrl}/`,
         reuseExistingServer: false,
         timeout: 60_000,
       },
       {
         command:
-          `corepack pnpm --filter @datapulse/viewer exec vite preview ` +
+          `node ../../node_modules/vite/bin/vite.js preview ` +
           `--host ${PREVIEW_HOST} --port ${VIEWER_PREVIEW_PORT} --strictPort`,
+        cwd: "./apps/viewer",
         url: `${viewerBaseUrl}/`,
         reuseExistingServer: false,
         timeout: 60_000,

@@ -48,7 +48,7 @@ TEST-RUNNERS 的日常激活绑定：
 
 ## 3. 浏览器固定条件
 
-当前 Windows 运行固定 Playwright `1.62.1`、Chromium revision `1234`（Chrome for Testing `151.0.7922.34`）、`zh-CN`、`Asia/Shanghai`、light color scheme、`prefers-reduced-motion: reduce`、禁止 Service Worker、无权限、单 worker、零重试。Creator 使用 `127.0.0.1:4173`，Viewer 使用 `127.0.0.1:4174`；两个 preview 都启用 `--strictPort` 且 `reuseExistingServer=false`，端口占用必须显式失败。
+当前 Windows 运行固定 Playwright `1.62.1`、Chromium revision `1234`（Chrome for Testing `151.0.7922.34`）、`zh-CN`、`Asia/Shanghai`、light color scheme、`prefers-reduced-motion: reduce`、禁止 Service Worker、无权限、单 worker、零重试。Creator 使用 `127.0.0.1:4173`，Viewer 使用 `127.0.0.1:4174`；两个 preview 都启用 `--strictPort` 且 `reuseExistingServer=false`，端口占用必须显式失败。每个 preview 在对应 app cwd 中直接运行固定 Node／Vite CLI，不经过额外的 `corepack`／`pnpm` wrapper；这样 Playwright 在 Windows 上拥有实际监听进程树并能在 E2E 与 axe 连续运行之间同步释放端口。根 Vitest 合同固定该 launcher 边界，防止重新引入脱离清理树的孙进程。
 
 pnpm 安装固定 JavaScript 依赖，但不下载浏览器二进制。首次本地运行需显式执行：
 
