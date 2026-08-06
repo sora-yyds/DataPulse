@@ -36,4 +36,13 @@
 
 ## 5. 证明边界
 
+## 6. 首次真实 GitHub 运行发现与修复
+
+`main` 首次推送触发 `m0 / main-review`（run 31080835495，Ubuntu 24.04）后，`verify:pr` 暴露两类跨平台问题并已修复：
+
+- **pnpm shim 缺失**：checkout／merge-base／Node 24.19.0／frozen install／Playwright 安装均成功，但 `check:toolchain` 的 `pnpm --version` 与 turbo 都报 `ENOENT`／`Unable to find package manager binary`。原因：GitHub runner 上 Node 自带 corepack 但未启用 shim，裸 `pnpm` 不在 PATH。修复：所有 job 在 setup-node 后显式 `corepack enable`。
+- **designmd 版本输出平台差异**：`designmd --version` 在 Linux 输出 `[log] 0.4.0`（自带日志前缀），Windows 输出 `0.4.0`；`check:design` 的 `DESIGN_CLI_BIN_VERSION` 断言要求精确 `0.4.0`。修复：`scripts/check-design.mjs` 对 CLI 版本输出归一化剥离 `[log] ` 前缀，仍强制固定版本 `0.4.0`。
+
+其余已激活 gate（DEPENDENCY-BOUNDARIES 2068/2068、CI-ACTIVATION）在首次 Linux 运行即通过；`DATAPULSE_MERGE_BASE` 由 `github.event.before` 正确解析，`check:evidence` bootstrap 通过。修复后的复跑与 Windows 本地 `check:design` 356/356 均通过。
+
 本切片证明 workflow 文件语法与治理契约有效（PyYAML、`check:governance` 95/95+7/7、actionlint v1.7.12 且二进制 SHA-256 已核对）。它不证明：真实 GitHub 运行、merge queue required check、保护分支、失败 PR／merge-group 否定验证、公开 Fork 复现或干净 Ubuntu 矩阵通过；这些由 M0-046 与退出阶段闭合。远端 `origin` 当前为空仓库，首次推送前 CI 无法运行。

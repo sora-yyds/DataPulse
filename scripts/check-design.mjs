@@ -760,7 +760,7 @@ function readDesignCliVersion() {
   return {
     command: "designmd --version",
     status: execution.status,
-    stdout: removeSingleTrailingNewline(execution.stdout ?? ""),
+    stdout: removeSingleTrailingNewline(execution.stdout ?? "").replace(/^\[log\] /u, ""),
     stderr: removeSingleTrailingNewline(execution.stderr ?? ""),
     error: execution.error instanceof Error ? execution.error.message : null,
   };
