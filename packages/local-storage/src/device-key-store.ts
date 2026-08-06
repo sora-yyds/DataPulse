@@ -72,7 +72,18 @@ function openDeviceDatabase(): Promise<IDBDatabase> {
         db.createObjectStore(DEVICE_KEY_STORE_NAME);
       }
     };
-    request.onsuccess = () => resolve(request.result);
+    request.onsuccess = () => {
+      const db = request.result;
+      // Drop the cached connection when the database is deleted or upgraded
+      // (e.g. site data is cleared) so the next call reopens a fresh one.
+      db.onversionchange = () => {
+        db.close();
+      };
+      db.onclose = () => {
+        databasePromise = undefined;
+      };
+      resolve(db);
+    };
     request.onerror = () => {
       databasePromise = undefined;
       reject(createStorageUnavailableError("open-failed"));
@@ -95,10 +106,14 @@ function runRequest<T>(
   db: IDBDatabase,
 ): Promise<T> {
   return new Promise<T>((resolve, reject) => {
-    const transaction = db.transaction(DEVICE_KEY_STORE_NAME, mode);
-    const request = operation(transaction.objectStore(DEVICE_KEY_STORE_NAME));
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(createStorageUnavailableError("read-failed"));
+    try {
+      const transaction = db.transaction(DEVICE_KEY_STORE_NAME, mode);
+      const request = operation(transaction.objectStore(DEVICE_KEY_STORE_NAME));
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(createStorageUnavailableError("read-failed"));
+    } catch {
+      reject(createStorageUnavailableError("read-failed"));
+    }
   });
 }
 

@@ -11,6 +11,12 @@
   },
   "packageManager": "pnpm@11.20.0+sha512.9a6f330a95b66446ea088faf1521405a8a01f07fde7124cc9958dfed52d4bb436737e65b08f85f37b46fcba375092558ac51262b816844b22f63406ed166bfee",
   "scripts": {
+    "test:unit": "turbo run build && vitest run --config vitest.config.mts",
+    "test:component": "turbo run build && vitest run --config vitest.component.config.mts",
+    "test:storybook": "turbo run build && storybook build --output-dir storybook-static --test && vitest run --config vitest.storybook.config.mts",
+    "test:e2e": "turbo run build && playwright test --config playwright.config.ts",
+    "test:a11y": "turbo run build && playwright test --config playwright.a11y.config.ts",
+    "test:visual": "turbo run build && playwright test --config playwright.visual.config.ts",
     "build": "turbo run build",
     "changeset": "changeset",
     "check:aggregators": "node ./scripts/check-aggregators.mjs --self-test",
@@ -24,16 +30,11 @@
     "check:workspace": "turbo run build && node ./tests/architecture/check-workspace.mjs",
     "check:toolchain": "turbo run check:toolchain:root",
     "check:toolchain:root": "node ./scripts/check-toolchain.mjs",
-    "test:a11y": "turbo run build && playwright test --config playwright.a11y.config.ts",
-    "test:component": "turbo run build && vitest run --config vitest.component.config.mts",
-    "test:e2e": "turbo run build && playwright test --config playwright.config.ts",
-    "test:storybook": "turbo run build && storybook build --output-dir storybook-static --test && vitest run --config vitest.storybook.config.mts",
-    "test:unit": "turbo run build && vitest run --config vitest.config.mts",
-    "test:visual": "turbo run build && playwright test --config playwright.visual.config.ts",
     "verify:m0": "node ./scripts/verify.mjs m0",
     "verify:pr": "node ./scripts/verify.mjs pr",
     "check:release-dryrun": "node ./scripts/check-release-dry-run.mjs --self-test",
-    "release:dry-run": "node ./scripts/release-dry-run.mjs"
+    "release:dry-run": "node ./scripts/release-dry-run.mjs",
+    "test:storage": "turbo run build && playwright test --config playwright.storage.config.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",

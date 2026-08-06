@@ -8,6 +8,7 @@ const testScripts = [
   "test:unit",
   "test:component",
   "test:storybook",
+  "test:storage",
   "test:e2e",
   "test:a11y",
   "test:visual",

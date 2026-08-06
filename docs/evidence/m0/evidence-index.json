@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T19:52:17+08:00",
+  "updatedAt": "2026-08-06T20:27:47+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v25",
+      "latestRecordId": "m0-wave0-evidence-contract-v26",
       "blockerRefs": []
     },
     {
@@ -767,7 +767,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-local-storage-device-key-v1",
+      "latestRecordId": "m0-local-storage-device-key-v2",
       "blockerRefs": []
     },
     {
@@ -8500,6 +8500,215 @@
       ],
       "blockerRefs": [],
       "notes": "M0-026 阶段：packages/local-storage 独立 workspace（不可导出设备密钥句柄、设备绑定 seal/open、持久存储请求与稳定错误）落地，证据记录 m0-local-storage-device-key-v1 按 append-only 链追加；AGENTS.md 与 release/check 脚本同步为最新计数（14 workspace、check:workspace 479/479、check:dependencies 2492/2492、test:unit 10 files/238 tests、release SBOM 469 依赖包）。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v24。"
+    },
+    {
+      "id": "m0-local-storage-device-key-v2",
+      "title": "M0-026 真实 Chromium 否定验证：密钥不外泄、清除站点数据后不可恢复",
+      "gateIds": [
+        "LOCAL-PROJECT-REPOSITORY"
+      ],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-026",
+        "M0-027",
+        "M0-051",
+        "M0-052"
+      ],
+      "requirementIds": [
+        "FR-PROJ-003",
+        "FR-PROJ-004",
+        "FR-PROJ-005",
+        "FR-PROJ-007",
+        "FR-PROJ-009"
+      ],
+      "adrIds": [
+        "ADR-0017",
+        "ADR-0019",
+        "ADR-0033"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-development",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T20:27:47+08:00",
+      "observedAt": "2026-08-06T20:27:47+08:00",
+      "supersedesRecordId": "m0-local-storage-device-key-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "test-result",
+          "path": "tests/storage-e2e/device-key.spec.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tests/storage-fixture/index.html",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tests/storage-fixture/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "playwright.storage.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "scripts/check-test-runners.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/device-key-store.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/device-key.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-026 真实浏览器否定验证完成：新增 test:storage 第 7 类 runner，spec 自持 Vite dev server 在 http://127.0.0.1（安全上下文）真实 Chromium 运行 5/5 通过——不可导出密钥（extractable=false、crypto.subtle.exportKey 拒绝）、seal/open 往返与篡改拒绝（CRYPTO_AES_GCM_AUTHENTICATION_FAILED）、句柄跨 reload 持久（同一密钥解包）、IndexedDB 仅存不可导出句柄（type=secret、AES-GCM 256、无 Uint8Array/ArrayBuffer/hex 字符串等原始字节字段）、Storage.clearDataForOrigin 后 requireStoredDeviceKey 抛 STORAGE_DEVICE_KEY_MISSING 且旧密文用新密钥永不可开、持久存储请求返回布尔或 STORAGE_PERSISTENCE_UNAVAILABLE 且 handle.persisted 与 isPersisted() 一致不虚报。修复 device-key-store 缓存连接在站点数据清除后的 onclose/onversionchange 失效问题。check:test-runners 7 runner 中 unit/component/storybook/storage 通过；e2e/a11y/visual 因本机 4173 端口被外部 node scripts/start-web.mjs 占用未跑，CI 干净 runner 上由 m0 / main-review 权威执行。LOCAL-PROJECT-REPOSITORY 仍含 M0-027/051/052，保持 in_progress／partially_evidenced、不激活日常且 m0 退出不满足。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v26",
+      "title": "M0-026 浏览器验证阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T20:27:47+08:00",
+      "observedAt": "2026-08-06T20:27:47+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v25",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v26.json",
+          "immutable": true,
+          "sha256": "6485c2e5d3776e6bda5452ce6d69f5e13c2f936cca7da1e2b67a5d17c62e1ce8"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-026 浏览器否定验证阶段：test:storage 第 7 类 runner 与 tests/storage-e2e／tests/storage-fixture 落地（真实 Chromium 5/5），证据记录 m0-local-storage-device-key-v2 按 append-only 链取代 v1；AGENTS.md 同步为最新计数（14 workspace、check:test-runners 7 runner、check:dependencies 2494/2494、test:unit 10 files/238 tests、release SBOM 469 依赖包）。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v25。"
     }
   ]
 }
