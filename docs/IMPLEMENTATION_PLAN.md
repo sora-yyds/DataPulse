@@ -201,7 +201,7 @@ services/*       -/> import-engine / analysis-engine / local-storage
 | M0-020 | release dry-run 生成构建物、校验和与 SBOM；只证明供应链骨架，不创建或宣传公开 MVP | M0-019 | S |
 | M0-046 | 在真实 GitHub 远端配置并回读 protected `main`、merge queue、squash merge 和**日常已激活聚合** required check；用一次失败 PR/merge-group 与直接推送否定验证证明日常门槛无法绕过。`verify:m0` 保持独立退出检查，不在 Wave 3 设成每个 PR 都必须通过；把 ruleset 与测试 PR 证据写入索引 | M0-019；仓库所有者权限 | M |
 
-当前 M0-016 Windows 阶段已让 Vitest、RTL、Storybook、Playwright 与 axe 各含真实产品断言，并以 `check:test-runners` 原子激活 TEST-RUNNERS 日常 gate；激活不等于任务或 M0 完成。规划顺序上的下一项仍是 M0-017，随后才进入 M0-018 固定视觉／键盘／缩放矩阵和 M0-019 CI。
+当前 M0-016 Windows 阶段已让 Vitest、RTL、Storybook、Playwright 与 axe 各含真实产品断言，并以 `check:test-runners` 原子激活 TEST-RUNNERS 日常 gate；激活不等于任务或 M0 完成。M0-017 Windows 阶段又建立统一 fixture manifest、原始字节 hash／库存校验和 generated 固定 seed 合同，但尚未执行 M0-047 的大型语料生成、导入／分析闭环、干净 Ubuntu、GitHub Actions 或公开 Fork，因此 M0-CORPUS 只进入 `in_progress / partially_evidenced` 且保持未激活。规划顺序上的下一项是 M0-018 固定视觉／键盘／缩放矩阵，随后才进入 M0-019 CI。
 
 ### Wave 4：项目加密与本地存储
 

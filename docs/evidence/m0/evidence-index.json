@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T03:27:29+08:00",
+  "updatedAt": "2026-08-06T10:13:47+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -259,7 +259,7 @@
       "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": false, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v13",
+      "latestRecordId": "m0-wave0-evidence-contract-v14",
       "blockerRefs": []
     },
     {
@@ -669,11 +669,11 @@
       "scopeStatement": "固定种子/hash 生成当前小型、常见、窄/宽边界及攻击夹具并实际运行。",
       "environmentKind": "public-fork",
       "executionKind": "automated",
-      "currentEvidenceStatus": "planned",
-      "currentRequirementStatus": "not_started",
+      "currentEvidenceStatus": "in_progress",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {"eligible": true, "activated": false},
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-corpus-m0-017-windows-v1",
       "blockerRefs": []
     },
     {
@@ -5255,6 +5255,308 @@
       ],
       "blockerRefs": [],
       "notes": "M0-016 Windows 五类真实 runner、固定 production HTTP preview、独立 axe 扫描与 nonce 绑定的 check:test-runners 落地并原子激活 TEST-RUNNERS 后，已按最终工作树复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界、人工／外部凭证语义、AGENTS.md 命令矩阵和实施计划顺序；结果未扩张为 M0-016 完成、Ubuntu／GitHub Actions／公开 Fork、HTTPS／四 Origin、固定视觉／完整 WCAG、真实设备或 M0 退出认证。"
+    },
+    {
+      "id": "m0-corpus-m0-017-windows-v1",
+      "title": "M0-017 Windows 统一合成 fixture manifest 阶段证据",
+      "gateIds": [
+        "M0-CORPUS"
+      ],
+      "epicIds": [
+        "M0-E4",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-017",
+        "M0-047"
+      ],
+      "requirementIds": [
+        "NFR-QA-005"
+      ],
+      "adrIds": [
+        "ADR-0038",
+        "ADR-0039",
+        "ADR-0052"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "public-fork",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T10:04:01+08:00",
+      "observedAt": "2026-08-06T10:03:16+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [
+        {
+          "id": "m0-013-development-0-0-1-target-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.target-invalid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "216c25c3a5429cf0216809e8af200cadf2b84e58eb60280cca5b3fd63cbd4b51",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-0-1-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.valid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "7490b239a99dee566cbbd691df1c3d300c33f2dd8dc0fb7d040e3385781d49ea",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-1-0-final-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.final-invalid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "4a2cdfc776dd40e848e885cf9199e4d26744263097dd023409a3c21c7361873a",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-0-1-0-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.valid.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "8f668b0949df54b29f9eaaecad80fc4cd9cc23577aaaea90f2afe717de50fbd2",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-malicious-source",
+          "path": "tests/fixtures/story-artifacts/development/malicious-source.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "22e52fe289f4489d71744de1da8d25656976f3a750eab657c5ec2fae5ef2b407",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-013-development-unknown-version",
+          "path": "tests/fixtures/story-artifacts/development/unknown-version.json",
+          "manifestPath": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+          "manifestSha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "sha256": "bf95b0049e77eed033064fa9f3c160985fa168ffc41aeeb5a3dcc78a73c5f259",
+          "generatorVersion": "hand-authored-m0-013-v1"
+        },
+        {
+          "id": "m0-048-formal-canonical-creator-viewer-1-0-0",
+          "path": "tests/fixtures/story-artifacts/formal/1.0.0/canonical.creator-viewer.json",
+          "manifestPath": "tests/fixtures/story-artifacts/formal/manifest.v1.json",
+          "manifestSha256": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da",
+          "sha256": "e4e1d43507b455f145f73858c028fc0bd06882e20a44b3c1c9d5285772a74c06",
+          "generatorVersion": "hand-authored-m0-048-v1"
+        },
+        {
+          "id": "m0-049-formal-canonical-creator-viewer-metric-runtime-1-0-0",
+          "path": "tests/fixtures/metric-runtime/formal/1.0.0/canonical.creator-viewer.json",
+          "manifestPath": "tests/fixtures/metric-runtime/formal/manifest.v1.json",
+          "manifestSha256": "a2e2f07c093fac3d15c6fdae3ab011909602c2dd4e527e5b0fa5a7ea6067c140",
+          "sha256": "825f05e15adaab0f843a6e30b30ea94748d6de9869592fb8b5f2c15d579f5673",
+          "generatorVersion": "hand-authored-m0-049-v1"
+        },
+        {
+          "id": "m0-015-creator-story-artifact",
+          "path": "apps/creator/src/fixtures/story-artifact.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        },
+        {
+          "id": "m0-015-creator-metric-runtime",
+          "path": "apps/creator/src/fixtures/metric-runtime.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        },
+        {
+          "id": "m0-015-viewer-story-artifact",
+          "path": "apps/viewer/src/fixtures/story-artifact.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        },
+        {
+          "id": "m0-015-viewer-metric-runtime",
+          "path": "apps/viewer/src/fixtures/metric-runtime.json",
+          "manifestPath": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+          "manifestSha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374",
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872",
+          "generatorVersion": "hand-authored-m0-015-v1"
+        }
+      ],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/fixtures/fixture-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "fixture-manifest",
+          "path": "tests/fixtures/manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/fixture-manifest.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-fixtures.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/unit/fixture-manifest.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-fixture-manifest.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-017-windows-fixture-manifest.v1.json",
+          "immutable": true,
+          "sha256": "cb4d689bf69323f0921c03c559d0912470cd2726a0870ae3da5b223a7588367b"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "environmentKind=public-fork 继承冻结 M0-CORPUS gate 合同；实际执行仅发生在 Windows x64 本地含空格工作树。统一 catalog 覆盖四个逻辑集与十二个现有合成 artifact，固定具体 primitive／errorCode oracle，并以双向库存、canonical realpath 唯一性、Windows 8.3／COM-LPT 上标设备名拒绝、原始字节 hash 和有界读取 fail-closed；check:fixtures 312/312、恶意 self-test 26/26、Vitest 6 files／172 tests 通过，未执行生成器。用户所有的未跟踪 package-lock.json（4157 bytes；SHA-256 4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4）保持排除且未索引。M0-047 test:corpus、大型 CSV／XLSX 生成、导入／分析闭环、干净 Ubuntu、GitHub Actions 与公开 Fork 均未运行，因此 M0-CORPUS 保持进行中、部分取证且不激活日常 gate，M0-017／M0-047 不得标记完成。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v14",
+      "title": "M0 证据索引 v2 与 M0-017 统一 fixture manifest 复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T10:13:47+08:00",
+      "observedAt": "2026-08-06T10:13:27+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v13",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v14.json",
+          "immutable": true,
+          "sha256": "0dbfa036ad3f84483b762c9b31a6cb4de83f334589b3f60315f3293b6c169154"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-017 Windows 统一合成 fixture manifest、有界只读校验 seam 与 M0-CORPUS 阶段证据落地后，已按最终工作树复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界、人工／外部凭证语义、AGENTS.md 命令矩阵和实施计划顺序；M0-CORPUS 保持 in_progress / partially_evidenced 且未激活，本复核不扩张为 M0-017／M0-047 完成，也不冒充大型语料执行、干净 Ubuntu、GitHub Actions 或公开 Fork 复现。"
     }
   ]
 }

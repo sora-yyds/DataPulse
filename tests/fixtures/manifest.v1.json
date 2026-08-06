@@ -1,0 +1,254 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-fixture-manifest",
+  "hashAlgorithm": "SHA-256",
+  "catalog": {
+    "logicalFixtureSets": 4,
+    "artifacts": 12,
+    "generatedFixtureSets": 0
+  },
+  "fixtureSets": [
+    {
+      "id": "story-development",
+      "purpose": "验证未发布 Story Artifact 的有界读取、逐步复制迁移与恶意输入拒绝。",
+      "dataOrigin": "synthetic",
+      "generation": {
+        "mode": "hand-authored",
+        "generator": {
+          "id": "story-development-fixture-authoring",
+          "version": "m0-013-v1"
+        },
+        "seed": {
+          "kind": "not-applicable"
+        }
+      },
+      "expectedAssertions": [
+        {
+          "id": "current-version",
+          "outcome": "equals",
+          "value": "0.1.0"
+        },
+        {
+          "id": "migrated-version",
+          "outcome": "equals",
+          "value": "0.1.0"
+        },
+        {
+          "id": "target-invalid",
+          "outcome": "rejected",
+          "errorCode": "STORY_ARTIFACT_MIGRATED_STRUCTURE_INVALID"
+        },
+        {
+          "id": "final-invalid",
+          "outcome": "rejected",
+          "errorCode": "STORY_ARTIFACT_FINAL_VALIDATION_FAILED"
+        },
+        {
+          "id": "malicious-source",
+          "outcome": "rejected",
+          "errorCode": "STORY_ARTIFACT_SOURCE_STRUCTURE_INVALID"
+        },
+        {
+          "id": "unknown-version",
+          "outcome": "rejected",
+          "errorCode": "STORY_ARTIFACT_VERSION_UNSUPPORTED"
+        }
+      ],
+      "subManifestKind": "datapulse-story-artifact-development-fixture-manifest",
+      "subManifest": {
+        "path": "tests/fixtures/story-artifacts/development/manifest.v1.json",
+        "bytes": 1187,
+        "sha256": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de"
+      },
+      "artifacts": [
+        {
+          "id": "story-development-0.0.1-target-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.target-invalid.json",
+          "bytes": 981,
+          "sha256": "216c25c3a5429cf0216809e8af200cadf2b84e58eb60280cca5b3fd63cbd4b51"
+        },
+        {
+          "id": "story-development-0.0.1-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.0.1.valid.json",
+          "bytes": 987,
+          "sha256": "7490b239a99dee566cbbd691df1c3d300c33f2dd8dc0fb7d040e3385781d49ea"
+        },
+        {
+          "id": "story-development-0.1.0-final-invalid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.final-invalid.json",
+          "bytes": 1015,
+          "sha256": "4a2cdfc776dd40e848e885cf9199e4d26744263097dd023409a3c21c7361873a"
+        },
+        {
+          "id": "story-development-0.1.0-valid",
+          "path": "tests/fixtures/story-artifacts/development/0.1.0.valid.json",
+          "bytes": 987,
+          "sha256": "8f668b0949df54b29f9eaaecad80fc4cd9cc23577aaaea90f2afe717de50fbd2"
+        },
+        {
+          "id": "story-development-malicious-source",
+          "path": "tests/fixtures/story-artifacts/development/malicious-source.json",
+          "bytes": 1071,
+          "sha256": "22e52fe289f4489d71744de1da8d25656976f3a750eab657c5ec2fae5ef2b407"
+        },
+        {
+          "id": "story-development-unknown-version",
+          "path": "tests/fixtures/story-artifacts/development/unknown-version.json",
+          "bytes": 93,
+          "sha256": "bf95b0049e77eed033064fa9f3c160985fa168ffc41aeeb5a3dcc78a73c5f259"
+        }
+      ]
+    },
+    {
+      "id": "story-formal",
+      "purpose": "冻结正式 Story Artifact 1.0.0 在 Creator 与 Viewer 共享读取边界中的黄金身份。",
+      "dataOrigin": "synthetic",
+      "generation": {
+        "mode": "hand-authored",
+        "generator": {
+          "id": "story-formal-fixture-authoring",
+          "version": "m0-048-v1"
+        },
+        "seed": {
+          "kind": "not-applicable"
+        }
+      },
+      "expectedAssertions": [
+        {
+          "id": "schema-version",
+          "outcome": "equals",
+          "value": "1.0.0"
+        },
+        {
+          "id": "creator-viewer-readable",
+          "outcome": "equals",
+          "value": true
+        }
+      ],
+      "subManifestKind": "datapulse-formal-story-artifact-fixture-manifest",
+      "subManifest": {
+        "path": "tests/fixtures/story-artifacts/formal/manifest.v1.json",
+        "bytes": 859,
+        "sha256": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da"
+      },
+      "artifacts": [
+        {
+          "id": "story-formal-canonical-creator-viewer-1.0.0",
+          "path": "tests/fixtures/story-artifacts/formal/1.0.0/canonical.creator-viewer.json",
+          "bytes": 1025,
+          "sha256": "e4e1d43507b455f145f73858c028fc0bd06882e20a44b3c1c9d5285772a74c06"
+        }
+      ]
+    },
+    {
+      "id": "metric-runtime-formal",
+      "purpose": "冻结正式 Metric Runtime 1.0.0 的确定性累加器、求值计划与黄金结果身份。",
+      "dataOrigin": "synthetic",
+      "generation": {
+        "mode": "hand-authored",
+        "generator": {
+          "id": "metric-runtime-formal-fixture-authoring",
+          "version": "m0-049-v1"
+        },
+        "seed": {
+          "kind": "not-applicable"
+        }
+      },
+      "expectedAssertions": [
+        {
+          "id": "count-rows-merge",
+          "outcome": "equals",
+          "value": 23
+        },
+        {
+          "id": "sum-fixed-order-f64",
+          "outcome": "equals",
+          "value": "3ff0000000000000"
+        },
+        {
+          "id": "sum-rounding-f64",
+          "outcome": "equals",
+          "value": "3fd3333333333334"
+        }
+      ],
+      "subManifestKind": "datapulse-formal-metric-runtime-fixture-manifest",
+      "subManifest": {
+        "path": "tests/fixtures/metric-runtime/formal/manifest.v1.json",
+        "bytes": 1244,
+        "sha256": "a2e2f07c093fac3d15c6fdae3ab011909602c2dd4e527e5b0fa5a7ea6067c140"
+      },
+      "artifacts": [
+        {
+          "id": "metric-runtime-formal-canonical-creator-viewer-1.0.0",
+          "path": "tests/fixtures/metric-runtime/formal/1.0.0/canonical.creator-viewer.json",
+          "bytes": 3398,
+          "sha256": "825f05e15adaab0f843a6e30b30ea94748d6de9869592fb8b5f2c15d579f5673"
+        }
+      ]
+    },
+    {
+      "id": "creator-viewer-composition",
+      "purpose": "验证 Creator 与 Viewer 使用独立合成副本形成一致的 Story、Metric Runtime 与二维 Renderer 组合。",
+      "dataOrigin": "synthetic",
+      "generation": {
+        "mode": "hand-authored",
+        "generator": {
+          "id": "creator-viewer-composition-authoring",
+          "version": "m0-015-v1"
+        },
+        "seed": {
+          "kind": "not-applicable"
+        }
+      },
+      "expectedAssertions": [
+        {
+          "id": "metric-value",
+          "outcome": "equals",
+          "value": 23
+        },
+        {
+          "id": "render-mode",
+          "outcome": "equals",
+          "value": "2d"
+        },
+        {
+          "id": "creator-viewer-parity",
+          "outcome": "equals",
+          "value": true
+        }
+      ],
+      "subManifestKind": "datapulse-creator-viewer-composition-fixture-manifest",
+      "subManifest": {
+        "path": "tests/fixtures/creator-viewer-composition/manifest.v1.json",
+        "bytes": 2991,
+        "sha256": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374"
+      },
+      "artifacts": [
+        {
+          "id": "creator-composition-story-artifact",
+          "path": "apps/creator/src/fixtures/story-artifact.json",
+          "bytes": 1555,
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386"
+        },
+        {
+          "id": "creator-composition-metric-runtime",
+          "path": "apps/creator/src/fixtures/metric-runtime.json",
+          "bytes": 1033,
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+        },
+        {
+          "id": "viewer-composition-story-artifact",
+          "path": "apps/viewer/src/fixtures/story-artifact.json",
+          "bytes": 1555,
+          "sha256": "c199eaf2125a8ea1c74446708d80727343d903fd215049f13213a33bb4265386"
+        },
+        {
+          "id": "viewer-composition-metric-runtime",
+          "path": "apps/viewer/src/fixtures/metric-runtime.json",
+          "bytes": 1033,
+          "sha256": "a480e13e60802d6d068d69cbc72bc933a54ada4cdfb605516ebc07b56727b872"
+        }
+      ]
+    }
+  ]
+}

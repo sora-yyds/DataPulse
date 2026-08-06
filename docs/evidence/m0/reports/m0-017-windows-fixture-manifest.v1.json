@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-017-windows-fixture-manifest-v1",
+  "milestone": "M0",
+  "taskId": "M0-017",
+  "gateId": "M0-CORPUS",
+  "observedAt": "2026-08-06T10:03:16+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows 11 专业版",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "cleanProjectDirectory": false,
+      "sourceState": "当前 Windows 本地工作树；不是干净公开 Fork。用户所有的未跟踪 package-lock.json 排除在任务、提交和证据索引范围外。",
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "bytes": 4157,
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "modifiedByTask": false
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "vitest": "4.1.10"
+      },
+      "commands": [
+        {
+          "command": "node --check scripts/fixture-manifest.mjs",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "node --check scripts/check-fixtures.mjs",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run check:fixtures",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": {
+            "executed": 312,
+            "passed": 312,
+            "failed": 0,
+            "skipped": 0
+          },
+          "selfTestAssertions": {
+            "executed": 26,
+            "passed": 26,
+            "failed": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 6,
+          "tests": 172,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "fixtureManifestResult": {
+        "result": "passed",
+        "schemaPath": "tests/fixtures/fixture-manifest.schema.v1.json",
+        "schemaBytes": 7347,
+        "schemaSha256": "3eba79ed81a25273892ae9ad41501c081109337c7547e1e219046ff436a8bcea",
+        "manifestPath": "tests/fixtures/manifest.v1.json",
+        "manifestBytes": 8464,
+        "manifestSha256": "7f2370f52551842bfbc7ac2af17d332632c393404f313bb56e890772c8b41f30",
+        "hashInput": "raw-file-bytes",
+        "logicalFixtureSets": 4,
+        "artifacts": 12,
+        "generatedFixtureSets": 0,
+        "dataOrigin": "synthetic",
+        "handAuthoredSeedKind": "not-applicable",
+        "generatorExecuted": false,
+        "expectedResultsRecordedAs": [
+          "primitive-value",
+          "stable-error-code"
+        ],
+        "requiredLogicalFixtureSets": [
+          "story-development",
+          "story-formal",
+          "metric-runtime-formal",
+          "creator-viewer-composition"
+        ],
+        "subManifestSha256": {
+          "storyDevelopment": "dbb79ace5356c331d7fb6351a811d18583956f97f8a30adabc8e48f4087258de",
+          "storyFormal": "d3bf802f2305874063f8320b0080bf8b64406654c19e80a89a7f0cc17a5b25da",
+          "metricRuntimeFormal": "a2e2f07c093fac3d15c6fdae3ab011909602c2dd4e527e5b0fa5a7ea6067c140",
+          "creatorViewerComposition": "3a987693b2edfe5f511882da4671c2699547c6de6c283a3853dac337c014c374"
+        }
+      },
+      "verificationPolicy": {
+        "readOnly": true,
+        "networkAccess": false,
+        "childProcessExecution": false,
+        "repositoryWrites": false,
+        "generatorExecution": false,
+        "unknownFixtureSetRejected": true,
+        "unknownGeneratorRejected": true,
+        "unknownOracleRejected": true,
+        "duplicateIdentityRejected": true,
+        "reverseInventoryComplete": true,
+        "canonicalRealpathUnique": true,
+        "posixAndWindowsPathRulesChecked": true,
+        "windowsEightDotThreeAliasesRejected": true,
+        "windowsComLptSuperscriptDeviceNamesRejected": true,
+        "symlinkAndJunctionRejected": true,
+        "realpathEscapeRejected": true,
+        "rawBytesAndSha256Checked": true,
+        "unregisteredInventoryRejected": true,
+        "boundedReads": true,
+        "maximumManifestBytes": 8388608,
+        "maximumCommittedArtifactBytes": 16777216,
+        "maximumArtifacts": 65536,
+        "maximumFailures": 256
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代干净 Ubuntu 的冻结安装、大小写路径、完整 Git 历史与 fixture 校验复现。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 尚未建立 workflow；本地结构化检查不冒充 GitHub required check 或 merge queue。"
+    },
+    {
+      "environment": "public-fork",
+      "status": "not_run",
+      "reason": "M0-CORPUS 的冻结环境合同是 public-fork；本轮实际仅在 Windows 本地工作树执行，尚未在无 secrets、无付费 SaaS 的公开 Fork 复现。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "m0-047-test-corpus",
+      "status": "not_run",
+      "reason": "M0-047 才建立并实际运行 test:corpus；M0-017 只建立统一 manifest 与有界只读校验 seam。"
+    },
+    {
+      "validation": "large-csv-xlsx-generation",
+      "status": "not_run",
+      "reason": "本轮 generated fixture set 数量为 0，不执行大型 CSV／XLSX 生成器，也不提交 generated 输出。"
+    },
+    {
+      "validation": "import-analysis-corpus-loop",
+      "status": "not_run",
+      "reason": "导入、字段画像、质量分析、指标求值和完整语料闭环尚未建立，现有 12 个 artifact 不能冒充该闭环。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-017 Windows 阶段统一合成 fixture Schema／catalog、四个逻辑集与十二个现有物理 artifact 的身份聚合、具体 primitive／errorCode oracle、固定 generator／seed policy、原始字节 hash、双向库存完整性、canonical realpath 唯一性、Windows 8.3／COM-LPT 上标设备名拒绝和有界只读校验 seam。",
+    "notImplemented": "M0-047 test:corpus、大型 CSV／XLSX 生成、导入／分析闭环、干净 Ubuntu、GitHub Actions 与公开 Fork 复现。",
+    "realUserDataCommitted": false,
+    "generatorExecuted": false,
+    "gateState": "M0-CORPUS 保持 in_progress / partially_evidenced，daily gate 未激活。"
+  },
+  "conclusion": "Windows x64 本地工作树中，统一 fixture manifest 校验 312/312、恶意 self-test 26/26 与 Vitest 6 files／172 tests 通过；当前只证明 M0-017 的小型合成 fixture 清单和只读校验阶段实现。public-fork、M0-047 test:corpus、大型生成及导入／分析仍未运行，因此报告总体为 partial，M0-CORPUS 保持进行中、部分取证且不激活。"
+}
