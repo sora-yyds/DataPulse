@@ -18,6 +18,7 @@
     { "path": "./apps/device-probe" },
     { "path": "./services/share-api" },
     { "path": "./packages/crypto" },
-    { "path": "./packages/local-storage" }
+    { "path": "./packages/local-storage" },
+    { "path": "./packages/import-engine" }
   ]
 }

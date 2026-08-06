@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-import-admission-fixture-manifest",
+  "hashAlgorithm": "SHA-256",
+  "fixtures": [
+    { "path": "small.csv", "bytes": 81, "sha256": "9e229620eec3b08ca080e65feecb4dd64d07808cf5be6f3ad2effdb51afa5e30" },
+    { "path": "common.csv", "bytes": 2227, "sha256": "a0bdb666fc12c4c25367eb258a8c091c150a28c4fafd1ffdc96d2fb94ac39164" },
+    { "path": "attack.unsupported-format.xls", "bytes": 35, "sha256": "36d79dab6ab163401b902171ca37b7d887b6e97f26ef7ab757e0ebb22f9d50f2" },
+    { "path": "attack.unsupported-format.ods", "bytes": 27, "sha256": "d913460106e9cc06ca408e204b5343a369c96dcfd5cdffa1302a0fdc073f4e07" },
+    { "path": "attack.invalid-utf8.csv", "bytes": 27, "sha256": "d8cc45a53c604a51d6dacaefa268b6134369dab0d5a805f7887f1ad1b5f0dd1f" },
+    { "path": "attack.oversized-columns.csv", "bytes": 812, "sha256": "3fec53853374ccee7e3f0bc0f31b86a5f8bab4199056d9beaad569c5be66f1ff" }
+  ]
+}

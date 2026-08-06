@@ -81,6 +81,15 @@ const requiredWorkspaces = [
   },
   {
     kind: "package",
+    path: "packages/import-engine",
+    name: "@datapulse/import-engine",
+    dependencies: { "@datapulse/domain": "workspace:*" },
+    devDependencies: { "@types/node": "24.13.3" },
+    references: ["../domain"],
+    entries: { ".": "index" },
+  },
+  {
+    kind: "package",
     path: "packages/api-contracts",
     name: "@datapulse/api-contracts",
     dependencies: { "@datapulse/domain": "workspace:*" },
@@ -218,6 +227,7 @@ const rootReferences = [
   "./services/share-api",
   "./packages/crypto",
   "./packages/local-storage",
+  "./packages/import-engine",
 ];
 
 const deferredWorkspacePaths = [

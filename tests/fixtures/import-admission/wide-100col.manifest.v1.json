@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-import-admission-wide-fixture-manifest",
+  "hashAlgorithm": "SHA-256",
+  "fixtures": [
+    { "path": "wide-100col.csv", "bytes": 50000601, "sha256": "585ca92ef0badd058f3f43e1b72883b1e0e373f38ffc5ca1917d16627f7e772f" }
+  ]
+}
