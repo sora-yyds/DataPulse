@@ -1,0 +1,30 @@
+{
+    "base":  "main",
+    "outcome":  "merge correctly blocked by required_status_checks rule",
+    "headSha":  "4c8d4a4e22f804786be7e67b86eb0cc0932f6ab7",
+    "prNumber":  2,
+    "checkRuns":  [
+                      {
+                          "status":  "in_progress",
+                          "name":  "copilot-pull-request-reviewer",
+                          "conclusion":  null
+                      },
+                      {
+                          "status":  "completed",
+                          "name":  "governance / conventional-pr-title",
+                          "conclusion":  "success"
+                      },
+                      {
+                          "status":  "completed",
+                          "name":  "m0 / daily-required",
+                          "conclusion":  "skipped"
+                      },
+                      {
+                          "status":  "completed",
+                          "name":  "m0 / pr-quick",
+                          "conclusion":  "failure"
+                      }
+                  ],
+    "mergeAttempt":  "HTTP 405: Repository rule violations found. Required status check \"m0 / pr-quick\" is failing.",
+    "prTitle":  "chore(m0): pr-quick 否定测试探针（预期失败，勿合）"
+}

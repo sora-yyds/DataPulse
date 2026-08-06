@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T16:37:14+08:00",
+  "updatedAt": "2026-08-06T17:02:00+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v20",
+      "latestRecordId": "m0-wave0-evidence-contract-v21",
       "blockerRefs": []
     },
     {
@@ -308,7 +308,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-ownership-and-resource-registry",
+      "latestRecordId": "m0-wave0-ownership-and-resource-registry-v2",
       "blockerRefs": []
     },
     {
@@ -451,13 +451,13 @@
       "environmentKind": "github-remote",
       "executionKind": "external_environment",
       "currentEvidenceStatus": "external_blocked",
-      "currentRequirementStatus": "not_started",
+      "currentRequirementStatus": "partially_evidenced",
       "dailyGate": {
         "eligible": false,
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": null,
+      "latestRecordId": "m0-github-governance-ruleset-v1",
       "blockerRefs": [
         "docs/governance/m0-ownership-and-resources.md#github-与仓库治理"
       ]
@@ -7293,6 +7293,282 @@
       ],
       "blockerRefs": [],
       "notes": "实现 validate-evidence-index.mjs 的 external_environment／passed 真实校验分支并同步 README 契约说明后复核 evidence-index v2、append-only 链、冻结 gate 静态定义与 attestation 绑定；GITHUB-GOVERNANCE 仍保持 external_blocked，真实 ruleset 否定验证完成前不得标为 passed，本复核不扩张为 M0-046 完成。"
+    },
+    {
+      "id": "m0-github-governance-ruleset-v1",
+      "title": "M0-046 GitHub ruleset 真实验证部分证据（merge queue 外部阻塞）",
+      "gateIds": [
+        "GITHUB-GOVERNANCE"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-008",
+        "M0-019",
+        "M0-046"
+      ],
+      "requirementIds": [
+        "NFR-REL-002",
+        "NFR-REL-003",
+        "NFR-REL-004",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "external_blocked",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "github-remote",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T16:53:02+08:00",
+      "observedAt": "2026-08-06T16:53:02+08:00",
+      "supersedesRecordId": null,
+      "executionKind": "external_environment",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "external-record",
+          "path": "docs/evidence/m0/external/github-ruleset-readback.v1.json",
+          "immutable": true,
+          "sha256": "4aadb2d0f842660da23122623cfa06da0174a40e158c629106aa83ac948e00ab"
+        },
+        {
+          "kind": "external-record",
+          "path": "docs/evidence/m0/external/negative-direct-push-result.txt",
+          "immutable": true,
+          "sha256": "9de48ebd938258770f064132bd26046d9891dbd34057bb4c1ffe771506dfe9e1"
+        },
+        {
+          "kind": "external-record",
+          "path": "docs/evidence/m0/external/negative-failing-pr-summary.json",
+          "immutable": true,
+          "sha256": "3babfd6151099e55751f3036634f09fb4290140e94f233b9f0a7185361c3217a"
+        },
+        {
+          "kind": "external-record",
+          "path": "docs/evidence/m0/external/negative-failing-pr-merge-blocked.json",
+          "immutable": true,
+          "sha256": "edcd496fa3d6c24595195d9e1cd4725159d220163d07dfaa0a245f005aabdf96"
+        },
+        {
+          "kind": "external-record",
+          "path": "docs/evidence/m0/external/github-remote-environment-profile.v1.json",
+          "immutable": true,
+          "sha256": "5e703f95a172cc7130b35000879acab0496f033a0bb833971a1e6277639f4c5a"
+        },
+        {
+          "kind": "external-record",
+          "path": "docs/evidence/m0/external/m0-046-github-ruleset-validation.v1.json",
+          "immutable": true,
+          "sha256": "541e8711f85a1f6afaabf41db7cd45ab04ac7020fc36971f97326091d7d2ba5c"
+        },
+        {
+          "kind": "contract",
+          "path": ".github/workflows/ci.yml",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/governance/github-workflow-policy.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/governance/m0-ownership-and-resources.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [
+        "docs/governance/m0-ownership-and-resources.md#github-与仓库治理"
+      ],
+      "notes": "真实 GitHub ruleset 阶段证据：m0 / main-protection（id 20499963）已在 main 生效并回读——pull_request（squash-only、零审批单管理员）、required_status_checks（m0 / pr-quick，do_not_enforce_on_create）、non_fast_forward，bypass_actors 为空。否定测试：直接推送 main 被 GH013 拒绝（Changes must be made through a pull request；Required status check m0 / pr-quick is expected）；PR #2 携带必失败单元测试使 m0 / pr-quick conclusion=failure，合并尝试返回 HTTP 405（Required status check \"m0 / pr-quick\" is failing）。正例由本证据 PR 自身完成：m0 / pr-quick 通过后经 ruleset squash 合并。外部阻塞：GitHub merge queue 仅对 organization 公共仓库（或 Enterprise Cloud 组织私有仓库）可用，个人账户 sora-yyds（account type User）下 REST 创建 merge_queue 规则返回 422（空错误），因此 merge queue 聚合与 merge_group 日常完整矩阵必查、失败 merge-group 否定验证无法执行；GITHUB-GOVERNANCE 保持 external_blocked / partially_evidenced，verify:m0 继续非零是正确结果。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v21",
+      "title": "M0 证据索引 v2、外部环境证据校验分支阶段复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T17:08:29+08:00",
+      "observedAt": "2026-08-06T17:08:29+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v20",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v21.json",
+          "immutable": true,
+          "sha256": "f175cb522de9d1182fc7d830d846fa93f24302bede6e8501b68f2e8034a968e0"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-046 阶段复核：真实 GitHub ruleset 已配置并回读（m0 / main-protection：squash-only、m0 / pr-quick 必查、non-fast-forward、无 bypass），直接推送 main 被 GH013 拒绝、必查失败 PR 合并被 HTTP 405 拒绝；GITHUB-GOVERNANCE 更新为 external_blocked / partially_evidenced 并追加 m0-github-governance-ruleset-v1；docs/IMPLEMENTATION_PLAN.md 同步 M0-046 部分完成与 merge queue 个人账户外部阻塞。本凭证按 append-only 链取代 v20。"
+    },
+    {
+      "id": "m0-wave0-ownership-and-resource-registry-v2",
+      "title": "M0 责任人与外部资源登记",
+      "gateIds": [
+        "WAVE0-OWNERSHIP-REGISTRY"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E3",
+        "M0-E4",
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-002"
+      ],
+      "requirementIds": [
+        "NFR-REL-002",
+        "NFR-REL-003"
+      ],
+      "adrIds": [
+        "ADR-0029",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T17:08:29+08:00",
+      "observedAt": "2026-08-06T17:08:29+08:00",
+      "supersedesRecordId": "m0-wave0-ownership-and-resource-registry",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "configuration",
+          "path": "docs/governance/m0-ownership-and-resources.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-ownership-review.v2.json",
+          "immutable": true,
+          "sha256": "6eff0669aa8d0300db6a3ebf90146417ec9d00e92a9a3e8a02b3de262b8f5231"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-046 阶段复核：GitHub ruleset / merge queue 管理责任登记更新——ruleset 已配置并回读（m0 / main-protection：squash-only、m0 / pr-quick 必查、non-fast-forward、无 bypass），直接推送与失败 PR 否定测试通过；merge queue 对个人账户不可用（GitHub 官方文档 + REST 422），保持外部阻塞。本凭证按 append-only 链取代 v1。"
     }
   ]
 }

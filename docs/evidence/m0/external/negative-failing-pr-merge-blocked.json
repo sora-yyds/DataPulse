@@ -1,0 +1,5 @@
+{
+    "expected":  "merge blocked because m0 / pr-quick failed",
+    "status":  "405",
+    "message":  "{\"message\":\"Repository rule violations found\\n\\nRequired status check \\\"m0 / pr-quick\\\" is failing.\\n\\n\",\"documentation_url\":\"https://docs.github.com/rest/pulls/pulls#merge-a-pull-request\",\"status\":\"405\"}"
+}

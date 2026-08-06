@@ -1,0 +1,62 @@
+{
+  "summary": "M0-046 GitHub ruleset 真实验证阶段证据（部分完成，merge queue 外部阻塞）",
+  "gateId": "GITHUB-GOVERNANCE",
+  "environmentKind": "github-remote",
+  "verificationMethod": "github_ruleset_test_pr",
+  "capturedAt": "2026-08-06T16:53:02+08:00",
+  "ruleset": {
+    "id": 20499963,
+    "name": "m0 / main-protection",
+    "target": "branch",
+    "enforcement": "active",
+    "conditions": {
+      "refNameInclude": ["refs/heads/main"]
+    },
+    "rules": [
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": false,
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": false,
+          "allowed_merge_methods": ["squash"]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "required_status_checks": [
+            { "context": "m0 / pr-quick" }
+          ],
+          "strict_required_status_checks_policy": false,
+          "do_not_enforce_on_create": true
+        }
+      },
+      {
+        "type": "non_fast_forward"
+      }
+    ],
+    "bypassActors": []
+  },
+  "verifiedChecks": [
+    "ruleset 创建并回读成功（GET /repos/sora-yyds/DataPulse/rulesets/20499963）",
+    "直接推送 main 被拒绝：GH013 Repository rule violations found（Changes must be made through a pull request; Required status check \"m0 / pr-quick\" is expected）",
+    "必查项失败的 PR 合并被阻止：HTTP 405 Repository rule violations found. Required status check \"m0 / pr-quick\" is failing.（PR #2，m0 / pr-quick conclusion=failure）"
+  ],
+  "pendingVerification": [
+    "正例 PR 经 ruleset 合并（M0-046 证据 PR 自身，m0 / pr-quick 通过后 squash 合并）",
+    "merge queue 聚合与 merge_group 日常完整矩阵必查（无法执行）"
+  ],
+  "externalBlocker": {
+    "component": "merge queue / merge_group daily-required",
+    "reason": "GitHub 官方文档明确 merge queue 仅对 organization 拥有的公共仓库（或 Enterprise Cloud 组织私有仓库）可用；本仓库由个人账户 sora-yyds（account type User）拥有。REST 创建 ruleset 传 merge_queue 规则返回 422 'Invalid rule \"merge_queue\": '（空错误），与文档一致。",
+    "evidence": [
+      "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue",
+      "422 merge_queue 探测请求（本阶段实测，未创建任何资源）"
+    ],
+    "impact": "M0-046 的 merge queue 配置/回读与 merge-group 否定测试在个人账户上不可执行；GITHUB-GOVERNANCE 不能标为 passed，verify:m0 继续非零是正确结果。"
+  },
+  "redactionStatement": "No credentials, stable device identifiers, user content, or personal data are included."
+}
