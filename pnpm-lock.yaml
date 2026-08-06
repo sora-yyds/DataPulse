@@ -89,6 +89,9 @@ importers:
       '@datapulse/domain':
         specifier: workspace:*
         version: link:../../packages/domain
+      '@datapulse/local-storage':
+        specifier: workspace:*
+        version: link:../../packages/local-storage
       '@datapulse/metric-runtime':
         specifier: workspace:*
         version: link:../../packages/metric-runtime
@@ -188,6 +191,9 @@ importers:
       '@datapulse/crypto':
         specifier: workspace:*
         version: link:../crypto
+      '@datapulse/story-migrations':
+        specifier: workspace:*
+        version: link:../story-migrations
     devDependencies:
       '@types/node':
         specifier: 24.13.3

@@ -15,6 +15,7 @@
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [
     { "path": "../../packages/domain" },
+    { "path": "../../packages/local-storage" },
     { "path": "../../packages/metric-runtime" },
     { "path": "../../packages/renderer" },
     { "path": "../../packages/story-migrations" }

@@ -123,6 +123,7 @@ const workspacePolicies = new Map([
     "apps/creator",
     policy("@datapulse/creator", [
       names.domain,
+      names.localStorage,
       names.metricRuntime,
       names.renderer,
       names.storyMigrations,
@@ -201,6 +202,7 @@ const consumerManifestDependencyPolicies = new Map([
     "@datapulse/creator",
     new Set([
       names.domain,
+      names.localStorage,
       names.metricRuntime,
       names.renderer,
       names.storyMigrations,

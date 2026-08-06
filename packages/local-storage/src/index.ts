@@ -1,5 +1,7 @@
 export {
   LOCAL_STORAGE_ERROR_CODES,
+  createStoryInvalidError,
+  isLocalStorageError,
   createCapacityExceededError,
   createDeviceKeyMissingError,
   createInvalidArgumentError,
@@ -16,6 +18,8 @@ export {
   type InvalidArgumentReason,
   type InvalidDeviceKeyError,
   type LocalStorageError,
+  type StoryInvalidError,
+  type StoryInvalidReason,
   type LocalStorageErrorCode,
   type ObjectNotFoundError,
   type ObjectNotFoundReason,
@@ -108,3 +112,19 @@ export {
   type ProjectObjectStore,
   type RecoveryResult,
 } from "./project-object-store.js";
+
+export {
+  PROJECT_REPOSITORY_OBJECT_IDS,
+  commitProject,
+  createProjectRepository,
+  openProject,
+  recoverProject,
+  type CommitProjectInput,
+  type ProjectRepository,
+  type ProjectRepositoryCommitResult,
+  type ProjectRepositoryContent,
+  type ProjectRepositoryDeps,
+  type ProjectRepositoryOpenResult,
+  type ProjectRepositoryRecoverResult,
+  type ProjectRepositoryStoredReadFailure,
+} from "./project-repository.js";

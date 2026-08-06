@@ -1,5 +1,7 @@
 /** Stable, closed-enum error DTOs for the local-storage package. */
 
+import type { StoryArtifactReadErrorCode } from "@datapulse/story-migrations";
+
 export const LOCAL_STORAGE_ERROR_CODES = Object.freeze({
   unavailable: "STORAGE_UNAVAILABLE",
   persistenceUnavailable: "STORAGE_PERSISTENCE_UNAVAILABLE",
@@ -10,6 +12,7 @@ export const LOCAL_STORAGE_ERROR_CODES = Object.freeze({
   objectNotFound: "STORAGE_OBJECT_NOT_FOUND",
   quotaUnavailable: "STORAGE_QUOTA_UNAVAILABLE",
   capacityExceeded: "STORAGE_CAPACITY_EXCEEDED",
+  storyInvalid: "STORAGE_STORY_INVALID",
 } as const);
 
 export type LocalStorageErrorCode =
@@ -56,6 +59,9 @@ export type CapacityExceededReason =
   | "backup-payload-exceeded"
   | "quota-and-payload-exceeded";
 
+/** Stable story-reader rejection reason: the public Artifact Reader error code. */
+export type StoryInvalidReason = StoryArtifactReadErrorCode;
+
 type FrozenError<Code extends LocalStorageErrorCode, Reason extends string> = Readonly<{
   code: Code;
   details: Readonly<{ reason: Reason }>;
@@ -97,6 +103,10 @@ export type ObjectNotFoundError = FrozenError<
   typeof LOCAL_STORAGE_ERROR_CODES.objectNotFound,
   ObjectNotFoundReason
 >;
+export type StoryInvalidError = FrozenError<
+  typeof LOCAL_STORAGE_ERROR_CODES.storyInvalid,
+  StoryInvalidReason
+>;
 
 export type LocalStorageError =
   | StorageUnavailableError
@@ -107,7 +117,8 @@ export type LocalStorageError =
   | InvalidArgumentError
   | QuotaUnavailableError
   | CapacityExceededError
-  | ObjectNotFoundError;
+  | ObjectNotFoundError
+  | StoryInvalidError;
 
 function freezeError<Code extends LocalStorageErrorCode, Reason extends string>(
   code: Code,
@@ -160,4 +171,17 @@ export function createCapacityExceededError(
 
 export function createObjectNotFoundError(): ObjectNotFoundError {
   return freezeError(LOCAL_STORAGE_ERROR_CODES.objectNotFound, "not-found");
+}
+
+export function createStoryInvalidError(reason: StoryInvalidReason): StoryInvalidError {
+  return freezeError(LOCAL_STORAGE_ERROR_CODES.storyInvalid, reason);
+}
+/** Narrowing guard for the stable local-storage error family. */
+export function isLocalStorageError(error: unknown): error is LocalStorageError {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    typeof (error as { code?: unknown }).code === "string" &&
+    String((error as { code: unknown }).code).startsWith("STORAGE_")
+  );
 }
