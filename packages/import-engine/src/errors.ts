@@ -17,6 +17,7 @@ export const IMPORT_ERROR_CODES = Object.freeze({
   compressionRatioExceeded: "IMPORT_COMPRESSION_RATIO_EXCEEDED",
   memoryEstimateExceeded: "IMPORT_MEMORY_ESTIMATE_EXCEEDED",
   csvDecodeFailed: "IMPORT_CSV_DECODE_FAILED",
+  archiveInvalid: "IMPORT_ARCHIVE_INVALID",
   cancelled: "IMPORT_CANCELLED",
 } as const);
 
@@ -37,6 +38,11 @@ export type CsvDecodeFailedReason =
   | "fatal-utf8"
   | "bom-conflict"
   | "invalid-byte-sequence";
+
+export type ArchiveInvalidReason =
+  | "missing-eocd"
+  | "truncated-central-directory"
+  | "encrypted-entry";
 
 export type ImportCancelledReason = "abort-signal";
 
@@ -102,6 +108,11 @@ export type CsvDecodeFailedError = FrozenImportError<
   { reason: CsvDecodeFailedReason }
 >;
 
+export type ArchiveInvalidError = FrozenImportError<
+  typeof IMPORT_ERROR_CODES.archiveInvalid,
+  { reason: ArchiveInvalidReason }
+>;
+
 export type ImportCancelledError = FrozenImportError<
   typeof IMPORT_ERROR_CODES.cancelled,
   { reason: ImportCancelledReason }
@@ -118,6 +129,7 @@ export type ImportError =
   | CompressionRatioExceededError
   | MemoryEstimateExceededError
   | CsvDecodeFailedError
+  | ArchiveInvalidError
   | ImportCancelledError;
 
 function freezeError<Code extends ImportErrorCode, Details extends object>(
@@ -256,6 +268,12 @@ export function createCsvDecodeFailedError(
   reason: CsvDecodeFailedReason,
 ): CsvDecodeFailedError {
   return freezeError(IMPORT_ERROR_CODES.csvDecodeFailed, { reason });
+}
+
+export function createArchiveInvalidError(
+  reason: ArchiveInvalidReason,
+): ArchiveInvalidError {
+  return freezeError(IMPORT_ERROR_CODES.archiveInvalid, { reason });
 }
 
 export function createImportCancelledError(): ImportCancelledError {
