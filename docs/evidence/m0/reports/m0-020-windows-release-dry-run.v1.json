@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-020-windows-release-dry-run-v1",
+  "milestone": "M0",
+  "taskId": "M0-020",
+  "gateIds": [
+    "RELEASE-DRYRUN"
+  ],
+  "observedAt": "2026-08-06T15:57:54+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows 11 专业版",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "cleanProjectDirectory": false,
+      "sourceState": "当前 Windows 本地工作树；不是干净公开 Fork。用户所有的未跟踪 package-lock.json 排除在任务、提交和证据索引范围外。",
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "bytes": 4157,
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "modifiedByTask": false
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "actionlint": "1.7.12"
+      },
+      "commands": [
+        {
+          "command": "corepack pnpm run build（11 个 workspace 真实 tsc/Vite 构建）",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 11
+        },
+        {
+          "command": "node scripts/release-dry-run.mjs",
+          "exitCode": 0,
+          "result": "passed",
+          "version": "0.0.0-m0-dry-run",
+          "workspaceCount": 11,
+          "fileCount": 243,
+          "dependencyCount": 453,
+          "stagedBytes": 2150796,
+          "checksumLines": 245,
+          "sbomPackages": 465
+        },
+        {
+          "command": "node scripts/check-release-dry-run.mjs --self-test",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": 5,
+          "selfTestAssertions": 5,
+          "verification": "workspace 契约 11、违禁条目、SHA256SUMS 覆盖与值、SBOM 形状/workspace 与依赖覆盖、NOASSERTION 许可证基线 2 个、文件校验和与再生成确定性"
+        },
+        {
+          "command": "actionlint v1.7.12（SHA-256 6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9 已核对）release-dry-run.yml",
+          "exitCode": 0,
+          "result": "passed",
+          "files": 1
+        }
+      ]
+    }
+  ]
+}

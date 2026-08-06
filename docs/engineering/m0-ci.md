@@ -10,10 +10,10 @@
 | 文件 | 触发 | 稳定 check 名 | 内容 |
 |---|---|---|---|
 | `.github/workflows/ci.yml` | `pull_request` | `m0 / ci / m0 / pr-quick` | 快检：`check:toolchain`、`check:foundation`、`check:dependencies`、`check:design`、`check:fixtures`、`test:unit`、`test:component` |
-| `.github/workflows/ci.yml` | `merge_group` | `m0 / ci / m0 / daily-required` | 已激活日常聚合 `verify:pr`（evidence bootstrap + 5 个已激活 gate，含六类 runner） |
+| `.github/workflows/ci.yml` | `merge_group` | `m0 / ci / m0 / daily-required` | 已激活日常聚合 `verify:pr`（evidence bootstrap + 6 个已激活 gate，含六类 runner） |
 | `.github/workflows/main-review.yml` | `push` main | `m0 / main-review / m0 / main-review` | main 复核：`verify:pr` 完整聚合 |
 | `.github/workflows/m0-exit.yml` | `workflow_dispatch` | `m0 / exit-candidate / m0 / verify-m0-exit` | 独立退出聚合 `verify:m0`，M0 未完成期间非零为正确结果，不加入 required set |
-| `.github/workflows/release-dry-run.yml` | `push` tag `v*` | `m0 / release-dry-run / m0 / release-dry-run` | 标签 dry-run：`build` + `verify:pr`，不发布、不建 Release；构建物/校验和/SBOM 由 M0-020 补齐 |
+| `.github/workflows/release-dry-run.yml` | `push` tag `v*` | `m0 / release-dry-run / m0 / release-dry-run` | 标签 dry-run：`build` + `verify:pr` + `release:dry-run`（构建物/SHA256SUMS/SPDX 2.3 SBOM 上传 workflow artifact），不发布、不建 GitHub Release |
 
 ## 2. 与本地聚合器合同对齐
 
@@ -27,7 +27,7 @@
 
 - 所有 workflow 顶层 `permissions: {}`，不使用 GITHUB_TOKEN、secrets 或付费 SaaS；
 - 无 `pull_request_target`；Fork 的 `pull_request` 以只读 token 运行同一路径；
-- 远程 Action 全部固定完整 40 位 SHA：checkout v7.0.1（`3d3c42e5…`）、setup-node v7.0.0（`82076278…`）；
+- 远程 Action 全部固定完整 40 位 SHA：checkout v7.0.1（`3d3c42e5…`）、setup-node v7.0.0（`82076278…`）、upload-artifact v7.0.1（`043fb46d…`）；
 - concurrency 键只使用仓库与数字／Git 派生 ID：PR 用 `pull_request.number`，merge_group 用队列 `head_sha`（merge_group 事件无数字 ID，SHA 由 Git 校验且不会进入 shell），push／tag／dispatch 用固定键或 `github.sha`。
 
 ## 4. 视觉基线平台策略
@@ -46,3 +46,13 @@
 其余已激活 gate（DEPENDENCY-BOUNDARIES 2068/2068、CI-ACTIVATION）在首次 Linux 运行即通过；`DATAPULSE_MERGE_BASE` 由 `github.event.before` 正确解析，`check:evidence` bootstrap 通过。修复后的复跑与 Windows 本地 `check:design` 356/356 均通过。
 
 本切片证明 workflow 文件语法与治理契约有效（PyYAML、`check:governance` 95/95+7/7、actionlint v1.7.12 且二进制 SHA-256 已核对），且 main 推送的真实 `m0 / main-review`（Ubuntu 24.04）已复跑通过（`verify:pr` 6/6）。它不证明：merge queue required check、保护分支、失败 PR／merge-group 否定验证、公开 Fork 复现或干净 Ubuntu 矩阵通过；这些由 M0-046 与退出阶段闭合。
+
+## 7. M0-020 release dry-run 供应链骨架
+
+`release-dry-run` 标签 job 在 `build` + `verify:pr` 后执行 `release:dry-run`，把 11 个 workspace 的 `dist` 产物（排除 `node_modules`、`.turbo`、`*.tsbuildinfo`）以冻结结构暂存到 `release/dry-run/<version>/`，并生成：
+
+- `manifest.json`：版本、workspace 相对路径、包名、文件数与字节数；
+- `SHA256SUMS.txt`：暂存文件 + `manifest.json` + `sbom.spdx.json` 的 SHA-256（排序、确定性）；
+- `sbom.spdx.json`：SPDX 2.3 文档，含 1 个根包、11 个 workspace 包（AGPL-3.0-only）与 `pnpm licenses list` 派生的全部依赖包（purl 外部引用）；许可证缺失（`Unknown`）归一化为 `NOASSERTION`。
+
+`check:release-dryrun` 已激活为 RELEASE-DRYRUN 日常 gate，先真实构建再重新生成并验证：workspace 契约（当前 11 个）、违禁条目、校验和覆盖与值、SBOM 形状/workspace 与依赖覆盖、NOASSERTION 许可证基线（当前仅 `@google/design.md@0.4.0`、`spawndamnit@3.0.1`）、文件校验和与再生成确定性；`--self-test` 以篡改/删除/违禁/许可证缺失四类变异证明 fail-closed。当前 Windows 本地 5/5 通过；标签触发与公开 Fork 复现（M0-044）未执行，因此 RELEASE-DRYRUN 保持 `in_progress / partially_evidenced`，不冒充正式发布。

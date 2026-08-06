@@ -1,6 +1,6 @@
-# M0-019: tag-triggered release dry-run: build plus the full activated
-# aggregate, with no publishing, no GitHub release, no checksum/SBOM upload.
-# M0-020 adds build artifacts, checksums and SBOM to this surface.
+# M0-020: tag-triggered release dry-run: build, full activated aggregate,
+# staged build artifacts, SHA256SUMS and an SPDX 2.3 SBOM. No publishing,
+# no GitHub release; uploads only workflow artifacts named release-dry-run-*.
 name: m0 / release-dry-run
 
 on:
@@ -49,3 +49,11 @@ jobs:
         run: corepack pnpm run build
       - name: Run full activated aggregate (dry run, no publish)
         run: corepack pnpm run verify:pr
+      - name: Generate release dry-run artifacts, checksums and SBOM
+        run: corepack pnpm run release:dry-run
+      - name: Upload release dry-run artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-dry-run-${{ github.ref_name }}
+          path: release/dry-run/
+          if-no-files-found: error

@@ -31,7 +31,9 @@
     "test:unit": "turbo run build && vitest run --config vitest.config.mts",
     "test:visual": "turbo run build && playwright test --config playwright.visual.config.ts",
     "verify:m0": "node ./scripts/verify.mjs m0",
-    "verify:pr": "node ./scripts/verify.mjs pr"
+    "verify:pr": "node ./scripts/verify.mjs pr",
+    "check:release-dryrun": "node ./scripts/check-release-dry-run.mjs --self-test",
+    "release:dry-run": "node ./scripts/release-dry-run.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",
