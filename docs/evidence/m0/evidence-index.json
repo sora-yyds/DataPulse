@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T10:13:47+08:00",
+  "updatedAt": "2026-08-06T14:47:30+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -247,35 +247,66 @@
     {
       "id": "WAVE0-EVIDENCE-CONTRACT",
       "title": "Wave 0 证据索引契约",
-      "epicIds": ["M0-E1", "M0-E5"],
-      "taskIds": ["M0-001"],
-      "requirementIds": ["NFR-QA-001", "NFR-REL-006"],
-      "governingAdrIds": ["ADR-0037", "ADR-0038", "ADR-0040"],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "governingAdrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "冻结 M0 原子 gate catalog、证据状态与日常/退出聚合语义，不代表产品质量门槛已经实现。",
       "environmentKind": "documentation",
       "executionKind": "manual_review",
       "currentEvidenceStatus": "passed",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v14",
+      "latestRecordId": "m0-wave0-evidence-contract-v15",
       "blockerRefs": []
     },
     {
       "id": "WAVE0-OWNERSHIP-REGISTRY",
       "title": "Wave 0 责任与资源登记",
-      "epicIds": ["M0-E1", "M0-E3", "M0-E4", "M0-E6"],
-      "taskIds": ["M0-002"],
-      "requirementIds": ["NFR-REL-002", "NFR-REL-003"],
-      "governingAdrIds": ["ADR-0029", "ADR-0040"],
+      "epicIds": [
+        "M0-E1",
+        "M0-E3",
+        "M0-E4",
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-002"
+      ],
+      "requirementIds": [
+        "NFR-REL-002",
+        "NFR-REL-003"
+      ],
+      "governingAdrIds": [
+        "ADR-0029",
+        "ADR-0040"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "登记仓库治理责任、真实设备、阿里云资源与官方域阻塞；资源本身仍需后续真实验证。",
       "environmentKind": "documentation",
       "executionKind": "manual_review",
       "currentEvidenceStatus": "passed",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-wave0-ownership-and-resource-registry",
       "blockerRefs": []
@@ -283,17 +314,36 @@
     {
       "id": "WAVE0-TOOLCHAIN-BASELINE",
       "title": "Wave 0 工具链与基础设施基线",
-      "epicIds": ["M0-E1", "M0-E3", "M0-E4", "M0-E6"],
-      "taskIds": ["M0-003"],
-      "requirementIds": ["NFR-REL-001", "NFR-SCHEMA-001", "NFR-SCHEMA-002"],
-      "governingAdrIds": ["ADR-0028", "ADR-0029", "ADR-0034", "ADR-0038"],
+      "epicIds": [
+        "M0-E1",
+        "M0-E3",
+        "M0-E4",
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-003"
+      ],
+      "requirementIds": [
+        "NFR-REL-001",
+        "NFR-SCHEMA-001",
+        "NFR-SCHEMA-002"
+      ],
+      "governingAdrIds": [
+        "ADR-0028",
+        "ADR-0029",
+        "ADR-0034",
+        "ADR-0038"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "按一手资料冻结 Node、pnpm、包命名、Schema 策略、IaC 与社区对象存储候选。",
       "environmentKind": "documentation",
       "executionKind": "manual_review",
       "currentEvidenceStatus": "passed",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-wave0-toolchain-and-infrastructure-baseline-v2",
       "blockerRefs": []
@@ -301,17 +351,39 @@
     {
       "id": "REPO-FOUNDATION",
       "title": "公开仓库与 workspace 基础",
-      "epicIds": ["M0-E1"],
-      "taskIds": ["M0-004", "M0-005", "M0-006"],
-      "requirementIds": ["NFR-REL-001", "NFR-REL-002", "NFR-REL-003", "NFR-REL-004"],
-      "governingAdrIds": ["ADR-0028", "ADR-0029", "ADR-0030"],
+      "epicIds": [
+        "M0-E1"
+      ],
+      "taskIds": [
+        "M0-004",
+        "M0-005",
+        "M0-006"
+      ],
+      "requirementIds": [
+        "NFR-REL-001",
+        "NFR-REL-002",
+        "NFR-REL-003",
+        "NFR-REL-004"
+      ],
+      "governingAdrIds": [
+        "ADR-0028",
+        "ADR-0029",
+        "ADR-0030"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "AGPL 仓库、冻结 workspace、严格 TypeScript 与真实消费者目录可在干净环境安装。",
       "environmentKind": "local-development",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / repository-foundation", "summaryCheck": "repository-foundation", "rootScript": "check:foundation", "rootScriptCommandSha256": "236deb3ec304da239ebe851de8cdf3ea07743e3f602eab80cfc9006c1b79fcec"},
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / repository-foundation",
+        "summaryCheck": "repository-foundation",
+        "rootScript": "check:foundation",
+        "rootScriptCommandSha256": "236deb3ec304da239ebe851de8cdf3ea07743e3f602eab80cfc9006c1b79fcec"
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-repo-foundation-pr-c-windows-v2",
       "blockerRefs": []
@@ -319,17 +391,35 @@
     {
       "id": "DEPENDENCY-BOUNDARIES",
       "title": "模块依赖边界",
-      "epicIds": ["M0-E1"],
-      "taskIds": ["M0-007", "M0-010"],
-      "requirementIds": ["NFR-REL-001"],
-      "governingAdrIds": ["ADR-0029", "ADR-0030", "ADR-0035"],
+      "epicIds": [
+        "M0-E1"
+      ],
+      "taskIds": [
+        "M0-007",
+        "M0-010"
+      ],
+      "requirementIds": [
+        "NFR-REL-001"
+      ],
+      "governingAdrIds": [
+        "ADR-0029",
+        "ADR-0030",
+        "ADR-0035"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "目标包方向、循环和 Creator/Viewer/Connector/服务越界引用以稳定错误阻断。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / dependency-boundaries", "summaryCheck": "dependency-boundaries", "rootScript": "check:dependencies", "rootScriptCommandSha256": "bdfe99482628147f8923057a47850dbedb7d1810f74e43c82d9f1b1f25dd45c2"},
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / dependency-boundaries",
+        "summaryCheck": "dependency-boundaries",
+        "rootScript": "check:dependencies",
+        "rootScriptCommandSha256": "bdfe99482628147f8923057a47850dbedb7d1810f74e43c82d9f1b1f25dd45c2"
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-dependency-boundaries-m0-010-windows-v2",
       "blockerRefs": []
@@ -337,35 +427,71 @@
     {
       "id": "GITHUB-GOVERNANCE",
       "title": "GitHub 主干治理",
-      "epicIds": ["M0-E1", "M0-E5"],
-      "taskIds": ["M0-008", "M0-019", "M0-046"],
-      "requirementIds": ["NFR-REL-002", "NFR-REL-003", "NFR-REL-004", "NFR-REL-006"],
-      "governingAdrIds": ["ADR-0038", "ADR-0040"],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-008",
+        "M0-019",
+        "M0-046"
+      ],
+      "requirementIds": [
+        "NFR-REL-002",
+        "NFR-REL-003",
+        "NFR-REL-004",
+        "NFR-REL-006"
+      ],
+      "governingAdrIds": [
+        "ADR-0038",
+        "ADR-0040"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "真实 protected main、merge queue、squash、required checks 与失败/直接推送否定验证。",
       "environmentKind": "github-remote",
       "executionKind": "external_environment",
       "currentEvidenceStatus": "external_blocked",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
-      "blockerRefs": ["docs/governance/m0-ownership-and-resources.md#github-与仓库治理"]
+      "blockerRefs": [
+        "docs/governance/m0-ownership-and-resources.md#github-与仓库治理"
+      ]
     },
     {
       "id": "RELEASE-DRYRUN",
       "title": "发布 dry-run 与 SBOM",
-      "epicIds": ["M0-E1", "M0-E5"],
-      "taskIds": ["M0-020", "M0-044"],
-      "requirementIds": ["NFR-REL-005", "NFR-QA-002", "NFR-QA-005"],
-      "governingAdrIds": ["ADR-0038", "ADR-0040"],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-020",
+        "M0-044"
+      ],
+      "requirementIds": [
+        "NFR-REL-005",
+        "NFR-QA-002",
+        "NFR-QA-005"
+      ],
+      "governingAdrIds": [
+        "ADR-0038",
+        "ADR-0040"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "生成构建物、校验和与 SBOM，并在干净公开 Fork 复现；不冒充正式发布。",
       "environmentKind": "public-fork",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -373,17 +499,37 @@
     {
       "id": "FORMAL-STORY-SCHEMA",
       "title": "首个正式 Story Schema",
-      "epicIds": ["M0-E2"],
-      "taskIds": ["M0-011", "M0-012", "M0-048"],
-      "requirementIds": ["NFR-SCHEMA-001", "NFR-SCHEMA-002", "NFR-SCHEMA-003", "NFR-SCHEMA-004", "FR-ANA-009"],
-      "governingAdrIds": ["ADR-0002", "ADR-0036", "ADR-0048", "ADR-0051"],
+      "epicIds": [
+        "M0-E2"
+      ],
+      "taskIds": [
+        "M0-011",
+        "M0-012",
+        "M0-048"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-001",
+        "NFR-SCHEMA-002",
+        "NFR-SCHEMA-003",
+        "NFR-SCHEMA-004",
+        "FR-ANA-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0002",
+        "ADR-0036",
+        "ADR-0048",
+        "ADR-0051"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "正式版本、生成类型、hash、结构/语义校验和受控字段边界冻结。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-formal-story-schema-m0-048-windows-v3",
       "blockerRefs": []
@@ -391,17 +537,30 @@
     {
       "id": "BOUNDED-READER-MIGRATION",
       "title": "有界 Story Reader 与迁移",
-      "epicIds": ["M0-E2"],
-      "taskIds": ["M0-013"],
-      "requirementIds": ["NFR-SCHEMA-002", "NFR-SCHEMA-003"],
-      "governingAdrIds": ["ADR-0036", "ADR-0048"],
+      "epicIds": [
+        "M0-E2"
+      ],
+      "taskIds": [
+        "M0-013"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-002",
+        "NFR-SCHEMA-003"
+      ],
+      "governingAdrIds": [
+        "ADR-0036",
+        "ADR-0048"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "解析前字节限尺寸、复制迁移、逐步校验与失败保留原副本。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-bounded-reader-migration-m0-048-windows-v2",
       "blockerRefs": []
@@ -409,17 +568,29 @@
     {
       "id": "METRIC-RUNTIME",
       "title": "最小共享指标运行时",
-      "epicIds": ["M0-E2", "M0-E4"],
-      "taskIds": ["M0-049"],
-      "requirementIds": ["FR-MET-009"],
-      "governingAdrIds": ["ADR-0051"],
+      "epicIds": [
+        "M0-E2",
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-049"
+      ],
+      "requirementIds": [
+        "FR-MET-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0051"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "COUNT_ROWS、SUM、稳定 merge/finalize 和 Creator/Viewer 黄金一致。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-metric-runtime-m0-049-windows-v1",
       "blockerRefs": []
@@ -427,17 +598,35 @@
     {
       "id": "CREATOR-VIEWER-CONTRACT",
       "title": "Creator 与 Viewer 独立契约",
-      "epicIds": ["M0-E2", "M0-E5"],
-      "taskIds": ["M0-014", "M0-015", "M0-067"],
-      "requirementIds": ["NFR-SCHEMA-004", "FR-MET-009", "SEC-008"],
-      "governingAdrIds": ["ADR-0002", "ADR-0030", "ADR-0036"],
+      "epicIds": [
+        "M0-E2",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-014",
+        "M0-015",
+        "M0-067"
+      ],
+      "requirementIds": [
+        "NFR-SCHEMA-004",
+        "FR-MET-009",
+        "SEC-008"
+      ],
+      "governingAdrIds": [
+        "ADR-0002",
+        "ADR-0030",
+        "ADR-0036"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "两端只以正式 fixture/hash 对齐并共享纯求值/渲染契约，不跨 Origin 读取存储。",
       "environmentKind": "local-https",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-creator-viewer-contract-m0-015-windows-v2",
       "blockerRefs": []
@@ -445,17 +634,30 @@
     {
       "id": "CRYPTO-PRIMITIVES",
       "title": "本地加密原语",
-      "epicIds": ["M0-E3"],
-      "taskIds": ["M0-021"],
-      "requirementIds": ["FR-PROJ-006", "SEC-007"],
-      "governingAdrIds": ["ADR-0019", "ADR-0047"],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-021"
+      ],
+      "requirementIds": [
+        "FR-PROJ-006",
+        "SEC-007"
+      ],
+      "governingAdrIds": [
+        "ADR-0019",
+        "ADR-0047"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "JCS、base64url、purpose 隔离、CSPRNG 生命周期和固定互操作向量。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -463,35 +665,65 @@
     {
       "id": "KDF-DEVICE-MATRIX",
       "title": "KDF 真实设备矩阵",
-      "epicIds": ["M0-E3"],
-      "taskIds": ["M0-022", "M0-023"],
-      "requirementIds": ["FR-PROJ-006", "SEC-007"],
-      "governingAdrIds": ["ADR-0047"],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-022",
+        "M0-023"
+      ],
+      "requirementIds": [
+        "FR-PROJ-006",
+        "SEC-007"
+      ],
+      "governingAdrIds": [
+        "ADR-0047"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "Chrome、Edge、iOS Safari、Android 微信与 iOS 微信固定向量、耗时和内存终止探针。",
       "environmentKind": "representative-mobile-device",
       "executionKind": "external_environment",
       "currentEvidenceStatus": "external_blocked",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
-      "blockerRefs": ["docs/governance/m0-ownership-and-resources.md#真实设备与性能资源"]
+      "blockerRefs": [
+        "docs/governance/m0-ownership-and-resources.md#真实设备与性能资源"
+      ]
     },
     {
       "id": "PROJECT-ENVELOPE",
       "title": "project-envelope-v1",
-      "epicIds": ["M0-E3"],
-      "taskIds": ["M0-024", "M0-025"],
-      "requirementIds": ["FR-PROJ-006", "FR-PROJ-008", "SEC-007"],
-      "governingAdrIds": ["ADR-0019", "ADR-0047"],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-024",
+        "M0-025"
+      ],
+      "requirementIds": [
+        "FR-PROJ-006",
+        "FR-PROJ-008",
+        "SEC-007"
+      ],
+      "governingAdrIds": [
+        "ADR-0019",
+        "ADR-0047"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "固定头、流式分块、先验限制、认证顺序与恶意输入向量。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -499,17 +731,37 @@
     {
       "id": "LOCAL-PROJECT-REPOSITORY",
       "title": "本地 Project Repository",
-      "epicIds": ["M0-E3"],
-      "taskIds": ["M0-026", "M0-027", "M0-051", "M0-052"],
-      "requirementIds": ["FR-PROJ-003", "FR-PROJ-004", "FR-PROJ-005", "FR-PROJ-007", "FR-PROJ-009"],
-      "governingAdrIds": ["ADR-0017", "ADR-0019", "ADR-0033"],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-026",
+        "M0-027",
+        "M0-051",
+        "M0-052"
+      ],
+      "requirementIds": [
+        "FR-PROJ-003",
+        "FR-PROJ-004",
+        "FR-PROJ-005",
+        "FR-PROJ-007",
+        "FR-PROJ-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0017",
+        "ADR-0019",
+        "ADR-0033"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "设备密钥、双估算、OPFS/IDB 提交协议、恢复和最后可读副本。",
       "environmentKind": "local-development",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -517,17 +769,34 @@
     {
       "id": "PROJECT-ROUNDTRIP",
       "title": "项目包往返",
-      "epicIds": ["M0-E3", "M0-E5"],
-      "taskIds": ["M0-053", "M0-044"],
-      "requirementIds": ["FR-PROJ-006", "FR-PROJ-008", "FR-PROJ-009"],
-      "governingAdrIds": ["ADR-0019", "ADR-0038", "ADR-0047"],
+      "epicIds": [
+        "M0-E3",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-053",
+        "M0-044"
+      ],
+      "requirementIds": [
+        "FR-PROJ-006",
+        "FR-PROJ-008",
+        "FR-PROJ-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0019",
+        "ADR-0038",
+        "ADR-0047"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "流式导出、加密暂存导入、完整认证后提交并在公开 Fork 往返。",
       "environmentKind": "public-fork",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -535,17 +804,40 @@
     {
       "id": "IMPORT-ADMISSION",
       "title": "导入准入与受控解析",
-      "epicIds": ["M0-E4"],
-      "taskIds": ["M0-028", "M0-029", "M0-054", "M0-055"],
-      "requirementIds": ["FR-IMP-001", "FR-IMP-002", "FR-IMP-003", "FR-IMP-004", "FR-IMP-006", "FR-IMP-007", "FR-IMP-008", "FR-IMP-009", "FR-IMP-010"],
-      "governingAdrIds": ["ADR-0020", "ADR-0050"],
+      "epicIds": [
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-028",
+        "M0-029",
+        "M0-054",
+        "M0-055"
+      ],
+      "requirementIds": [
+        "FR-IMP-001",
+        "FR-IMP-002",
+        "FR-IMP-003",
+        "FR-IMP-004",
+        "FR-IMP-006",
+        "FR-IMP-007",
+        "FR-IMP-008",
+        "FR-IMP-009",
+        "FR-IMP-010"
+      ],
+      "governingAdrIds": [
+        "ADR-0020",
+        "ADR-0050"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "资源先验拒绝、CSV/XLSX 到 Arrow、公式/宏/链接不执行和稳定错误。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -553,17 +845,32 @@
     {
       "id": "LOCAL-ANALYSIS-CONTRACT",
       "title": "LocalAnalysis 与确定性分析",
-      "epicIds": ["M0-E4"],
-      "taskIds": ["M0-030", "M0-033", "M0-056"],
-      "requirementIds": ["FR-ANA-011", "FR-MET-009"],
-      "governingAdrIds": ["ADR-0020", "ADR-0031"],
+      "epicIds": [
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-030",
+        "M0-033",
+        "M0-056"
+      ],
+      "requirementIds": [
+        "FR-ANA-011",
+        "FR-MET-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0020",
+        "ADR-0031"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "唯一 Worker 消息契约、两个 adapter 与 ImportResult 到 AnalysisResult 组合。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -571,17 +878,33 @@
     {
       "id": "WORKER-ISOLATION",
       "title": "Worker 隔离与禁网",
-      "epicIds": ["M0-E4", "M0-E6"],
-      "taskIds": ["M0-031", "M0-032", "M0-059"],
-      "requirementIds": ["FR-IMP-005", "SEC-009"],
-      "governingAdrIds": ["ADR-0020", "ADR-0031"],
+      "epicIds": [
+        "M0-E4",
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-031",
+        "M0-032",
+        "M0-059"
+      ],
+      "requirementIds": [
+        "FR-IMP-005",
+        "SEC-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0020",
+        "ADR-0031"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "单文件 Worker、预取验证 WASM、网络通道否定和取消/失败释放。",
       "environmentKind": "local-https",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -589,17 +912,29 @@
     {
       "id": "MINIMAL-EVIDENCE-GENERATION",
       "title": "最小 Evidence 与 generation",
-      "epicIds": ["M0-E4"],
-      "taskIds": ["M0-050"],
-      "requirementIds": ["FR-ANA-009"],
-      "governingAdrIds": ["ADR-0002", "ADR-0051"],
+      "epicIds": [
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-050"
+      ],
+      "requirementIds": [
+        "FR-ANA-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0002",
+        "ADR-0051"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "分析结果经共享 metric-runtime 形成安全 Evidence，generation 只读取 Evidence/受控上下文。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -607,17 +942,32 @@
     {
       "id": "RAW-FILE-RESIDENCY",
       "title": "原文件驻留否定验证",
-      "epicIds": ["M0-E3", "M0-E4"],
-      "taskIds": ["M0-057"],
-      "requirementIds": ["FR-IMP-005", "SEC-001", "SEC-009"],
-      "governingAdrIds": ["ADR-0020", "ADR-0033"],
+      "epicIds": [
+        "M0-E3",
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-057"
+      ],
+      "requirementIds": [
+        "FR-IMP-005",
+        "SEC-001",
+        "SEC-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0020",
+        "ADR-0033"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "成功、取消和失败后原 Blob/标记不进入存储、日志或网络且引用释放。",
       "environmentKind": "local-https",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -625,17 +975,30 @@
     {
       "id": "PERFORMANCE-RELATIVE",
       "title": "相对性能回归",
-      "epicIds": ["M0-E4", "M0-E5"],
-      "taskIds": ["M0-034"],
-      "requirementIds": ["NFR-PERF-007"],
-      "governingAdrIds": ["ADR-0039", "ADR-0050"],
+      "epicIds": [
+        "M0-E4",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-034"
+      ],
+      "requirementIds": [
+        "NFR-PERF-007"
+      ],
+      "governingAdrIds": [
+        "ADR-0039",
+        "ADR-0050"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "固定环境中位数相对 main 退化超过 15% 时阻止合并。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -643,35 +1006,65 @@
     {
       "id": "PERFORMANCE-ABSOLUTE",
       "title": "参考设备绝对性能",
-      "epicIds": ["M0-E4"],
-      "taskIds": ["M0-035"],
-      "requirementIds": ["NFR-PERF-001", "NFR-PERF-002"],
-      "governingAdrIds": ["ADR-0039", "ADR-0050"],
+      "epicIds": [
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-035"
+      ],
+      "requirementIds": [
+        "NFR-PERF-001",
+        "NFR-PERF-002"
+      ],
+      "governingAdrIds": [
+        "ADR-0039",
+        "ADR-0050"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "真实 4 核/8 GB/集显设备运行技术链；通过后仍只构成完整草稿需求的部分证据。",
       "environmentKind": "reference-device",
       "executionKind": "external_environment",
       "currentEvidenceStatus": "external_blocked",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
-      "blockerRefs": ["docs/governance/m0-ownership-and-resources.md#真实设备与性能资源"]
+      "blockerRefs": [
+        "docs/governance/m0-ownership-and-resources.md#真实设备与性能资源"
+      ]
     },
     {
       "id": "M0-CORPUS",
       "title": "M0 合成语料",
-      "epicIds": ["M0-E4", "M0-E5"],
-      "taskIds": ["M0-017", "M0-047"],
-      "requirementIds": ["NFR-QA-005"],
-      "governingAdrIds": ["ADR-0038", "ADR-0039", "ADR-0052"],
+      "epicIds": [
+        "M0-E4",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-017",
+        "M0-047"
+      ],
+      "requirementIds": [
+        "NFR-QA-005"
+      ],
+      "governingAdrIds": [
+        "ADR-0038",
+        "ADR-0039",
+        "ADR-0052"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "固定种子/hash 生成当前小型、常见、窄/宽边界及攻击夹具并实际运行。",
       "environmentKind": "public-fork",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-corpus-m0-017-windows-v1",
       "blockerRefs": []
@@ -679,10 +1072,20 @@
     {
       "id": "TEST-RUNNERS",
       "title": "真实测试 runners",
-      "epicIds": ["M0-E5"],
-      "taskIds": ["M0-016"],
-      "requirementIds": ["NFR-QA-001", "NFR-QA-002"],
-      "governingAdrIds": ["ADR-0037", "ADR-0038"],
+      "epicIds": [
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-016"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002"
+      ],
+      "governingAdrIds": [
+        "ADR-0037",
+        "ADR-0038"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "Vitest、RTL、Storybook、Playwright 与 axe 各含至少一个真实产品断言。",
       "environmentKind": "ci",
@@ -704,35 +1107,79 @@
     {
       "id": "DETERMINISTIC-UI-A11Y",
       "title": "确定性 UI 与无障碍冒烟",
-      "epicIds": ["M0-E2", "M0-E5"],
-      "taskIds": ["M0-014", "M0-017", "M0-018"],
-      "requirementIds": ["NFR-QA-003", "NFR-QA-004"],
-      "governingAdrIds": ["ADR-0013", "ADR-0039"],
+      "epicIds": [
+        "M0-E2",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-014",
+        "M0-017",
+        "M0-018"
+      ],
+      "requirementIds": [
+        "NFR-QA-003",
+        "NFR-QA-004"
+      ],
+      "governingAdrIds": [
+        "ADR-0013",
+        "ADR-0039"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "固定语言、时区、字体、浏览器、视口、种子和弱动效的视觉/键盘/焦点/缩放冒烟。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / deterministic-ui-a11y", "summaryCheck": "design-system", "rootScript": "check:design", "rootScriptCommandSha256": "7e1ed57c9580f3f4af42984199e218deb843212ab8c316b035f407e56811a350"},
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / deterministic-ui-a11y",
+        "summaryCheck": "design-system",
+        "rootScript": "check:design",
+        "rootScriptCommandSha256": "7e1ed57c9580f3f4af42984199e218deb843212ab8c316b035f407e56811a350"
+      },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-deterministic-ui-a11y-m0-014-windows-v1",
+      "latestRecordId": "m0-deterministic-ui-a11y-m0-018-windows-v1",
       "blockerRefs": []
     },
     {
       "id": "CI-ACTIVATION",
       "title": "CI 激活与 M0 退出聚合",
-      "epicIds": ["M0-E1", "M0-E5"],
-      "taskIds": ["M0-009", "M0-019", "M0-045"],
-      "requirementIds": ["NFR-QA-001", "NFR-QA-002", "NFR-QA-005", "NFR-REL-005", "NFR-REL-006"],
-      "governingAdrIds": ["ADR-0037", "ADR-0038", "ADR-0040"],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-009",
+        "M0-019",
+        "M0-045"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002",
+        "NFR-QA-005",
+        "NFR-REL-005",
+        "NFR-REL-006"
+      ],
+      "governingAdrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "日常 active gate 与独立 verify:m0 分离，禁止降级、漏登和假绿色。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "in_progress",
       "currentRequirementStatus": "partially_evidenced",
-      "dailyGate": {"eligible": true, "activated": true, "checkName": "m0 / quality-aggregators", "summaryCheck": "m0-quality-aggregators", "rootScript": "check:aggregators", "rootScriptCommandSha256": "a94b1bd0a39db3246230d218b9fa265c8c9b85ea9a0004d13214ec8036be1fcb"},
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / quality-aggregators",
+        "summaryCheck": "m0-quality-aggregators",
+        "rootScript": "check:aggregators",
+        "rootScriptCommandSha256": "a94b1bd0a39db3246230d218b9fa265c8c9b85ea9a0004d13214ec8036be1fcb"
+      },
       "m0ExitRequired": true,
       "latestRecordId": "m0-ci-activation-m0-009-windows-v1",
       "blockerRefs": []
@@ -740,17 +1187,34 @@
     {
       "id": "CREATOR-E2E",
       "title": "Creator 纵向 E2E",
-      "epicIds": ["M0-E3", "M0-E4", "M0-E5"],
-      "taskIds": ["M0-043"],
-      "requirementIds": ["NFR-QA-005", "FR-IMP-005", "FR-PROJ-009"],
-      "governingAdrIds": ["ADR-0020", "ADR-0033", "ADR-0043"],
+      "epicIds": [
+        "M0-E3",
+        "M0-E4",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-043"
+      ],
+      "requirementIds": [
+        "NFR-QA-005",
+        "FR-IMP-005",
+        "FR-PROJ-009"
+      ],
+      "governingAdrIds": [
+        "ADR-0020",
+        "ADR-0033",
+        "ADR-0043"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "准入至刷新恢复与 Creator 渲染的真实浏览器链及失败一致性。",
       "environmentKind": "local-https",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -758,17 +1222,34 @@
     {
       "id": "CLEAN-FORK",
       "title": "干净公开 Fork 复现",
-      "epicIds": ["M0-E1", "M0-E5", "M0-E6"],
-      "taskIds": ["M0-044", "M0-047"],
-      "requirementIds": ["NFR-REL-005", "NFR-QA-002", "NFR-QA-005"],
-      "governingAdrIds": ["ADR-0038", "ADR-0040"],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5",
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-044",
+        "M0-047"
+      ],
+      "requirementIds": [
+        "NFR-REL-005",
+        "NFR-QA-002",
+        "NFR-QA-005"
+      ],
+      "governingAdrIds": [
+        "ADR-0038",
+        "ADR-0040"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "无维护方 secret/付费 SaaS 的冻结安装、全部当前测试、test:corpus、自部署和 dry-run。",
       "environmentKind": "public-fork",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -776,17 +1257,33 @@
     {
       "id": "ORIGIN-POLICY",
       "title": "四 Origin Policy",
-      "epicIds": ["M0-E6"],
-      "taskIds": ["M0-036", "M0-037"],
-      "requirementIds": ["SEC-002", "SEC-005", "SEC-008", "SEC-010"],
-      "governingAdrIds": ["ADR-0030", "ADR-0035"],
+      "epicIds": [
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-036",
+        "M0-037"
+      ],
+      "requirementIds": [
+        "SEC-002",
+        "SEC-005",
+        "SEC-008",
+        "SEC-010"
+      ],
+      "governingAdrIds": [
+        "ADR-0030",
+        "ADR-0035"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "单一声明源生成四 Origin、逐路由 CORS/CSP、无 Cookie 与无内容日志策略。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -794,17 +1291,34 @@
     {
       "id": "HTTPS-NEGATIVE-MATRIX",
       "title": "本地 HTTPS 否定矩阵",
-      "epicIds": ["M0-E6"],
-      "taskIds": ["M0-038", "M0-039", "M0-058", "M0-059"],
-      "requirementIds": ["SEC-008", "SEC-009", "SEC-010"],
-      "governingAdrIds": ["ADR-0030", "ADR-0038"],
+      "epicIds": [
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-038",
+        "M0-039",
+        "M0-058",
+        "M0-059"
+      ],
+      "requirementIds": [
+        "SEC-008",
+        "SEC-009",
+        "SEC-010"
+      ],
+      "governingAdrIds": [
+        "ADR-0030",
+        "ADR-0038"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "公开 Fork 可复现的多 .test 可注册域、清理/隔离、伪造消息与宽松 CORS 否定验证。",
       "environmentKind": "local-https",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -812,17 +1326,31 @@
     {
       "id": "EPHEMERAL-PORTS",
       "title": "临时状态与密文对象 ports",
-      "epicIds": ["M0-E6"],
-      "taskIds": ["M0-060", "M0-061", "M0-062"],
-      "requirementIds": ["SEC-003", "SEC-005"],
-      "governingAdrIds": ["ADR-0046"],
+      "epicIds": [
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-060",
+        "M0-061",
+        "M0-062"
+      ],
+      "requirementIds": [
+        "SEC-003",
+        "SEC-005"
+      ],
+      "governingAdrIds": [
+        "ADR-0046"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "强制 TTL 状态、不透明密文对象和生命周期/定时清理双路径核心。",
       "environmentKind": "ci",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -830,17 +1358,35 @@
     {
       "id": "COMMUNITY-CLEANUP",
       "title": "社区部署与清理",
-      "epicIds": ["M0-E6"],
-      "taskIds": ["M0-040", "M0-065", "M0-066"],
-      "requirementIds": ["SEC-002", "SEC-003", "SEC-005", "SEC-008", "SEC-010"],
-      "governingAdrIds": ["ADR-0038", "ADR-0046"],
+      "epicIds": [
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-040",
+        "M0-065",
+        "M0-066"
+      ],
+      "requirementIds": [
+        "SEC-002",
+        "SEC-003",
+        "SEC-005",
+        "SEC-008",
+        "SEC-010"
+      ],
+      "governingAdrIds": [
+        "ADR-0038",
+        "ADR-0046"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "社区四 Origin、S3-compatible/Valkey、双删除路径、孤儿恢复与无内容日志。",
       "environmentKind": "community-deployment",
       "executionKind": "automated",
       "currentEvidenceStatus": "planned",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": true, "activated": false},
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": []
@@ -848,17 +1394,36 @@
     {
       "id": "ALIYUN-IAC",
       "title": "阿里云北京 IaC",
-      "epicIds": ["M0-E6"],
-      "taskIds": ["M0-041", "M0-063", "M0-064"],
-      "requirementIds": ["SEC-002", "SEC-003", "SEC-005", "SEC-008", "SEC-010"],
-      "governingAdrIds": ["ADR-0034", "ADR-0035", "ADR-0046"],
+      "epicIds": [
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-041",
+        "M0-063",
+        "M0-064"
+      ],
+      "requirementIds": [
+        "SEC-002",
+        "SEC-003",
+        "SEC-005",
+        "SEC-008",
+        "SEC-010"
+      ],
+      "governingAdrIds": [
+        "ADR-0034",
+        "ADR-0035",
+        "ADR-0046"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "北京地域静态 Origin/CDN、无状态 API、密文 OSS 与 Tair 的公开 IaC apply 证据。",
       "environmentKind": "official-alicloud",
       "executionKind": "external_environment",
       "currentEvidenceStatus": "external_blocked",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
       "blockerRefs": [
@@ -869,20 +1434,35 @@
     {
       "id": "ALIYUN-TTL",
       "title": "阿里云真实 TTL 与删除",
-      "epicIds": ["M0-E6"],
-      "taskIds": ["M0-042"],
-      "requirementIds": ["SEC-003", "SEC-005"],
-      "governingAdrIds": ["ADR-0034", "ADR-0046"],
+      "epicIds": [
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-042"
+      ],
+      "requirementIds": [
+        "SEC-003",
+        "SEC-005"
+      ],
+      "governingAdrIds": [
+        "ADR-0034",
+        "ADR-0046"
+      ],
       "coverageKind": "milestone_slice",
       "scopeStatement": "真实 OSS 生命周期/定时处理器删除、Tair 强制 TTL 与禁止内容日志验证。",
       "environmentKind": "official-alicloud",
       "executionKind": "external_environment",
       "currentEvidenceStatus": "external_blocked",
       "currentRequirementStatus": "not_started",
-      "dailyGate": {"eligible": false, "activated": false},
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
       "m0ExitRequired": true,
       "latestRecordId": null,
-      "blockerRefs": ["docs/governance/m0-ownership-and-resources.md#阿里云北京与官方托管域"]
+      "blockerRefs": [
+        "docs/governance/m0-ownership-and-resources.md#阿里云北京与官方托管域"
+      ]
     }
   ],
   "records": [
@@ -5557,6 +6137,216 @@
       ],
       "blockerRefs": [],
       "notes": "M0-017 Windows 统一合成 fixture manifest、有界只读校验 seam 与 M0-CORPUS 阶段证据落地后，已按最终工作树复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界、人工／外部凭证语义、AGENTS.md 命令矩阵和实施计划顺序；M0-CORPUS 保持 in_progress / partially_evidenced 且未激活，本复核不扩张为 M0-017／M0-047 完成，也不冒充大型语料执行、干净 Ubuntu、GitHub Actions 或公开 Fork 复现。"
+    },
+    {
+      "id": "m0-deterministic-ui-a11y-m0-018-windows-v1",
+      "title": "M0-018 Windows 固定视觉／键盘／缩放冒烟与四主题视觉基线阶段证据",
+      "gateIds": [
+        "DETERMINISTIC-UI-A11Y"
+      ],
+      "epicIds": [
+        "M0-E2",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-014",
+        "M0-017",
+        "M0-018"
+      ],
+      "requirementIds": [
+        "NFR-QA-003",
+        "NFR-QA-004"
+      ],
+      "adrIds": [
+        "ADR-0013",
+        "ADR-0039"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T14:45:00+08:00",
+      "observedAt": "2026-08-06T14:42:00+08:00",
+      "supersedesRecordId": "m0-deterministic-ui-a11y-m0-014-windows-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / deterministic-ui-a11y",
+        "summaryCheck": "design-system",
+        "rootScript": "check:design",
+        "rootScriptCommandSha256": "7e1ed57c9580f3f4af42984199e218deb843212ab8c316b035f407e56811a350"
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "DESIGN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/renderer/src/story-renderer.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "playwright.visual.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/visual/deterministic-ui-smoke.spec.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-test-runners.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-deterministic-ui-a11y.md",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-018-windows-deterministic-ui-a11y.v1.json",
+          "immutable": true,
+          "sha256": "35d0799b767d0902997cadd548ce58082d5639b2601e2a50488870566d790e74"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "已激活的日常检查继续绑定 check:design（designmd 0.4.0 与 4×35 Token 基线）；本轮新增 test:visual，固定 zh-CN／Asia/Shanghai／字体回退链／四主题 Token／弱动效与 Creator／Viewer 桌面、Viewer 平板／手机视口，覆盖键盘焦点与 :focus-visible 焦点环、200% 缩放无水平溢出且核心内容不重叠、响应式不溢出和四主题视觉基线；24 run／18 passed／6 designed skips／0 failed，check:test-runners 扩展为六类 6/6。Playwright runner 级 use.reducedMotion 不生效，spec 内显式 page.emulateMedia 兜底。完整 WCAG 2.2 AA 人工签署、固定视觉人工审查、HTTPS、四 Origin、真实设备、Ubuntu、GitHub Actions 与公开 Fork 均未运行，因此 DETERMINISTIC-UI-A11Y 保持 in_progress / partially_evidenced，M0-018 不得标记完成。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v15",
+      "title": "M0 证据索引 v2、M0-018 固定视觉阶段证据与六类 runner 复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T14:47:00+08:00",
+      "observedAt": "2026-08-06T14:46:30+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v14",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v15.json",
+          "immutable": true,
+          "sha256": "6d816f5e6bce014e95e30eb5a2bf51844f4073bd3607b4b6aee229ddacf46073"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-018 Windows 阶段固定视觉／键盘／缩放冒烟、四主题视觉基线、Renderer :focus-visible 焦点环与 check:test-runners 六类 6/6 落地后，已按最终工作树复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界、人工／外部凭证语义、AGENTS.md 命令矩阵（新增 test:visual 与六类 runner）和实施计划顺序；DETERMINISTIC-UI-A11Y 保持 in_progress / partially_evidenced，本复核不扩张为 M0-018 完成，也不冒充完整 WCAG 2.2 AA 人工签署、固定视觉人工审查、HTTPS、四 Origin、真实设备、Ubuntu、GitHub Actions 或公开 Fork 复现。"
     }
   ]
 }

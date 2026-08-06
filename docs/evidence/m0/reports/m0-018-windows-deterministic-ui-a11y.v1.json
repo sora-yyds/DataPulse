@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "1.0.0",
+  "reportId": "m0-018-windows-deterministic-ui-a11y-v1",
+  "milestone": "M0",
+  "taskId": "M0-018",
+  "gateIds": ["DETERMINISTIC-UI-A11Y"],
+  "observedAt": "2026-08-06T14:42:00+08:00",
+  "evidenceStatus": "in_progress",
+  "result": "partial",
+  "environmentResults": [
+    {
+      "environment": "windows-local-working-tree",
+      "status": "passed",
+      "platform": "win32",
+      "architecture": "x64",
+      "operatingSystem": "Microsoft Windows 11 专业版",
+      "powershell": "5.1.26100.8972",
+      "workspacePath": "E:\\DataPulse AI",
+      "workspacePathContainsSpaces": true,
+      "cleanProjectDirectory": false,
+      "sourceState": "当前 Windows 本地工作树；不是干净公开 Fork。用户所有的未跟踪 package-lock.json 排除在任务、提交和证据索引范围外。",
+      "excludedUserFiles": [
+        {
+          "path": "package-lock.json",
+          "bytes": 4157,
+          "sha256": "4db7629c743654140a72c0c20be13d51695d35a1384952dc38bd834c0a2e48b4",
+          "modifiedByTask": false
+        }
+      ],
+      "versions": {
+        "node": "24.19.0",
+        "corepack": "0.35.0",
+        "pnpm": "11.20.0",
+        "playwright": "1.62.1",
+        "vitest": "4.1.10",
+        "chromium": "Chrome for Testing 151.0.7922.34"
+      },
+      "commands": [
+        {
+          "command": "node --check playwright.visual.config.ts",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "node --check tests/visual/deterministic-ui-smoke.spec.ts",
+          "exitCode": 0,
+          "result": "passed"
+        },
+        {
+          "command": "corepack pnpm run build",
+          "exitCode": 0,
+          "result": "passed",
+          "workspaces": 11
+        },
+        {
+          "command": "corepack pnpm exec playwright test --config playwright.visual.config.ts --update-snapshots",
+          "exitCode": 0,
+          "result": "passed",
+          "tests": {
+            "run": 24,
+            "passed": 18,
+            "failed": 0,
+            "skipped": 6,
+            "skippedByDesign": true
+          }
+        },
+        {
+          "command": "corepack pnpm exec playwright test --config playwright.visual.config.ts",
+          "exitCode": 0,
+          "result": "passed",
+          "tests": {
+            "run": 24,
+            "passed": 18,
+            "failed": 0,
+            "skipped": 6,
+            "skippedByDesign": true
+          }
+        },
+        {
+          "command": "corepack pnpm run test:unit",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 7,
+          "tests": 173,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "command": "corepack pnpm run test:component",
+          "exitCode": 0,
+          "result": "passed",
+          "testFiles": 1,
+          "tests": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "command": "corepack pnpm run test:e2e",
+          "exitCode": 0,
+          "result": "passed",
+          "tests": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "command": "corepack pnpm run test:a11y",
+          "exitCode": 0,
+          "result": "passed",
+          "tests": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "command": "corepack pnpm run check:test-runners",
+          "exitCode": 0,
+          "result": "passed",
+          "assertions": {
+            "executed": 6,
+            "passed": 6,
+            "failed": 0,
+            "skipped": 0
+          }
+        }
+      ],
+      "visualMatrix": {
+        "projects": [
+          "creator-desktop",
+          "viewer-desktop",
+          "viewer-tablet",
+          "viewer-mobile"
+        ],
+        "viewports": {
+          "creatorDesktop": "1280x720",
+          "viewerDesktop": "1280x720",
+          "viewerTablet": "834x1112",
+          "viewerMobile": "390x844"
+        },
+        "testsPerProject": 6,
+        "run": 24,
+        "passed": 18,
+        "failed": 0,
+        "designedSkips": 6,
+        "themes": [
+          "deep-space-neon",
+          "soft-glass",
+          "data-editorial",
+          "enterprise-minimal"
+        ],
+        "screenshotBaselines": 8,
+        "preview": {
+          "host": "127.0.0.1",
+          "ports": [4173, 4174],
+          "strictPort": true,
+          "reuseExistingServer": false,
+          "launcher": "direct node ../../node_modules/vite/bin/vite.js preview per app cwd"
+        },
+        "reducedMotion": {
+          "runnerUseReducedMotion": "ineffective-in-current-playwright",
+          "emulateMedia": "reduce",
+          "asserted": true
+        }
+      },
+      "rendererFocusContract": {
+        "focusVisibleRule": true,
+        "outline": "2px solid var(--dp-focus)",
+        "offset": "2px",
+        "radius": "var(--dp-radius-control)"
+      },
+      "verificationPolicy": {
+        "readOnly": true,
+        "networkAccess": false,
+        "childProcessExecution": false,
+        "repositoryWrites": false,
+        "generatorExecution": false,
+        "fixedLocale": "zh-CN",
+        "fixedTimezone": "Asia/Shanghai",
+        "reducedMotion": true,
+        "runningAnimationsZero": true,
+        "noHorizontalOverflowAt200PercentZoom": true,
+        "noOverlapAt200PercentZoom": true,
+        "noHorizontalOverflowOnTabletAndMobile": true,
+        "keyboardFocusTargetExists": true,
+        "fourThemeScreenshotBaselines": true,
+        "screenshotMaxDiffPixelRatio": 0.001
+      }
+    },
+    {
+      "environment": "ubuntu-24.04-clean",
+      "status": "not_run",
+      "reason": "Windows 本地工作树结果不替代干净 Ubuntu 的冻结安装、Chromium 安装、字体渲染与视觉基线复现。"
+    },
+    {
+      "environment": "github-actions",
+      "status": "not_run",
+      "reason": "M0-019 尚未建立 workflow；本地结构化检查不冒充 GitHub required check 或 merge queue。"
+    },
+    {
+      "environment": "public-fork",
+      "status": "not_run",
+      "reason": "DETERMINISTIC-UI-A11Y 的冻结环境合同是 ci；本轮实际仅在 Windows 本地工作树执行，尚未在无 secrets、无付费 SaaS 的公开 Fork 复现。"
+    }
+  ],
+  "deferredValidations": [
+    {
+      "validation": "wcag-2-2-aa-manual-signoff",
+      "status": "not_run",
+      "reason": "axe 自动扫描与焦点环规则不等同于键盘、焦点、缩放、对比度的人工签署与真实设备认证。"
+    },
+    {
+      "validation": "visual-baseline-human-review",
+      "status": "not_run",
+      "reason": "PNG 基线只冻结当前固定 Chromium 像素，仍需同一 PR 人工审查桌面／平板／手机与四主题。"
+    },
+    {
+      "validation": "real-device-and-browser-matrix",
+      "status": "not_run",
+      "reason": "Playwright Chromium 不等同真实 Chrome／Edge、Safari、微信或真实设备；HTTPS 与四 Origin 不在本轮范围。"
+    }
+  ],
+  "scope": {
+    "implemented": "M0-018 Windows 阶段固定 zh-CN／Asia/Shanghai／字体回退链／四主题 Token／弱动效与桌面／平板／手机视口的 test:visual 六项冒烟、Renderer :focus-visible 焦点环、200% 缩放与响应式无溢出断言、八张四主题视觉基线，并把 check:test-runners 扩展为六类 runner 6/6。",
+    "notImplemented": "完整 WCAG 2.2 AA 人工签署、固定视觉人工审查、HTTPS、四 Origin、Safari／微信、真实设备、干净 Ubuntu、GitHub Actions 与公开 Fork 复现。",
+    "realUserDataCommitted": false,
+    "generatorExecuted": false,
+    "gateState": "DETERMINISTIC-UI-A11Y 保持 in_progress / partially_evidenced，daily gate 已激活且继续绑定 check:design，不把视觉冒烟写成新的日常根脚本。"
+  },
+  "conclusion": "Windows x64 本地含空格工作树中，构建 11/11、test:visual 24 run／18 passed／6 designed skips／0 failed（首跑生成基线后固跑一致）、test:unit 7 files／173 tests、component 2/2、e2e 2/2、a11y 2/2 与 check:test-runners 6/6 全部通过；当前只证明固定 Chromium 的确定性视觉／键盘／焦点／缩放冒烟阶段实现。完整 WCAG 2.2 AA 人工签署、固定视觉人工审查、真实设备、Ubuntu、GitHub Actions 与公开 Fork 仍未运行，因此报告总体为 partial，M0-018 与 DETERMINISTIC-UI-A11Y 保持进行中、部分取证。"
+}

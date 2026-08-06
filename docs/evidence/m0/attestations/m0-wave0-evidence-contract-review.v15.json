@@ -1,0 +1,73 @@
+{
+  "$schema": "./manual-review-attestation.schema.v1.json",
+  "schemaVersion": "1.0.0",
+  "kind": "m0-manual-review-attestation",
+  "gateId": "WAVE0-EVIDENCE-CONTRACT",
+  "recordId": "m0-wave0-evidence-contract-v15",
+  "reviewedAt": "2026-08-06T14:46:30+08:00",
+  "reviewerRefs": [
+    "codex-agent:E:\\DataPulse AI"
+  ],
+  "repositoryState": "working_tree_hashes",
+  "subjectArtifacts": [
+    {
+      "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+      "sha256": "f56b3de06f4509f6ef38573b786bc86f11afa5fbf12104204fac82fd8ab0b80e"
+    },
+    {
+      "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+      "sha256": "9e2dc84b4c98022678a4da6af9f211b0ac8fe5dc706fb8d6430e835489d022ab"
+    },
+    {
+      "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+      "sha256": "702c20d917a7c52f0612d727931f454d3929c388f074d8bbfed841a4e0dc3e82"
+    },
+    {
+      "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+      "sha256": "7ae8d89577907af1bbaa0e8c27632d1e196d339369d65c14525908504584300e"
+    },
+    {
+      "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+      "sha256": "bb15a3659b4d2d5306e0933fc8a07b71b6c8250936f95aa4819a52c7f120ed3f"
+    },
+    {
+      "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+      "sha256": "8ced3f368804710bf089ec8de340ff41519b5c8d750fa926ff377f13c887fbb4"
+    },
+    {
+      "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+      "sha256": "cdf959c523c97c59ff5b7ea7dc7e851394231d2f9d30c42d65da55ae10650c0e"
+    },
+    {
+      "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+      "sha256": "14f771af8e2f64ac0e6a1f6bb80cd9d2477ef9d2c1bee36e04be9ced458dbbdc"
+    },
+    {
+      "path": "docs/evidence/m0/validate-evidence-index.mjs",
+      "sha256": "4ed880bddf0ae11b1925fe398658bafff0ba0b013032e5d0d8dc292119f66b78"
+    },
+    {
+      "path": "docs/evidence/m0/README.md",
+      "sha256": "5f0801312b4bee72784ef9545dabaf31c9baf387d7023ab635a9327944233028"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "c2acfbc1b7d47aa462a9b2946a5410cdb8ebecc9a829aa818c619b41f305712b"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PLAN.md",
+      "sha256": "cf21d3718325bbb2c6a6686e2b5534092fb156c6ed9b730befcbc77df7fd3125"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "sha256": "3f0232d6c3db5233310a1c8d51c2fc5b4641bdb3a0229b8341fec1b69816e97a"
+    }
+  ],
+  "result": "passed",
+  "assertions": {
+    "reviewed": 13,
+    "failed": 0,
+    "unresolvedHighSeverity": 0
+  },
+  "notes": "M0-018 Windows 阶段固定视觉／键盘／缩放冒烟、四主题视觉基线、Renderer :focus-visible 焦点环与 check:test-runners 六类 6/6 落地后，已按最终工作树复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界、人工／外部凭证语义、AGENTS.md 命令矩阵（新增 test:visual 与六类 runner）和实施计划顺序；DETERMINISTIC-UI-A11Y 保持 in_progress / partially_evidenced，本复核不扩张为 M0-018 完成，也不冒充完整 WCAG 2.2 AA 人工签署、固定视觉人工审查、HTTPS、四 Origin、真实设备、Ubuntu、GitHub Actions 或公开 Fork 复现。"
+}
