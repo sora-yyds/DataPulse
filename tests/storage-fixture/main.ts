@@ -3,7 +3,9 @@ import {
   DEVICE_KEY_RECORD_ID,
   DEVICE_KEY_STORE_NAME,
   LOCAL_STORAGE_ERROR_CODES,
+  PROJECT_REPOSITORY_OBJECT_IDS,
   clearDeviceKey,
+  createProjectRepository,
   ensureDeviceKey,
   generateDeviceKey,
   hasDeviceKey,
@@ -25,6 +27,7 @@ declare global {
 
 const api = Object.freeze({
   clearDeviceKey,
+  createProjectRepository,
   ensureDeviceKey,
   generateDeviceKey,
   hasDeviceKey,
@@ -40,6 +43,7 @@ const api = Object.freeze({
   DEVICE_KEY_RECORD_ID,
   DEVICE_KEY_STORE_NAME,
   LOCAL_STORAGE_ERROR_CODES,
+  PROJECT_REPOSITORY_OBJECT_IDS,
 });
 
 window.__dpStorage = api;

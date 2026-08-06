@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { CRYPTO_ERROR_CODES } from "../../packages/crypto/dist/index.js";
 import {
   LOCAL_STORAGE_ERROR_CODES,
   PROJECT_OBJECT_AAD_KIND,
@@ -389,7 +388,7 @@ describe("local-storage project object transaction core", () => {
     });
   });
 
-  it("rejects tampered OPFS ciphertext with an authentication failure", async () => {
+  it("rejects tampered OPFS ciphertext with a stable integrity failure", async () => {
     const { deps, opfs } = await makeDeps();
     await commitProjectObjects(deps, {
       transactionId: "tx-1",
@@ -399,7 +398,8 @@ describe("local-storage project object transaction core", () => {
     tampered[0] = tampered[0] ^ 0xff;
     opfs.setFile("tx-1", "a", tampered);
     await expect(openProjectObject(deps, "a")).rejects.toMatchObject({
-      code: CRYPTO_ERROR_CODES.authenticationFailed,
+      code: LOCAL_STORAGE_ERROR_CODES.unavailable,
+      details: { reason: "integrity-mismatch" },
     });
   });
 

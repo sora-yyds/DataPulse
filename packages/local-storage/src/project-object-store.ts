@@ -10,6 +10,7 @@ import {
   createInvalidArgumentError,
   createObjectNotFoundError,
   createStorageUnavailableError,
+  isLocalStorageError,
 } from "./errors.js";
 import {
   openOpfsObjectStore,
@@ -230,13 +231,23 @@ export async function openProjectObject(
   if (ciphertext === undefined || ciphertext.byteLength !== record.ciphertextLength) {
     throw createStorageUnavailableError("object-file-missing");
   }
-  const plaintext = await openDeviceBound({
-    key: deps.key,
-    nonce: record.nonce,
-    ciphertext,
-    tag: record.tag,
-    fields: { kind: PROJECT_OBJECT_AAD_KIND, objectId: record.objectId },
-  });
+  let plaintext: Uint8Array;
+  try {
+    plaintext = await openDeviceBound({
+      key: deps.key,
+      nonce: record.nonce,
+      ciphertext,
+      tag: record.tag,
+      fields: { kind: PROJECT_OBJECT_AAD_KIND, objectId: record.objectId },
+    });
+  } catch (error) {
+    // Tampered ciphertext or a stale device key surfaces as a stable
+    // integrity failure instead of leaking a crypto-internal error.
+    if (isLocalStorageError(error)) {
+      throw error;
+    }
+    throw createStorageUnavailableError("integrity-mismatch");
+  }
   const digest = await sha256Hex(plaintext);
   if (digest !== record.plaintextSha256) {
     throw createStorageUnavailableError("integrity-mismatch");

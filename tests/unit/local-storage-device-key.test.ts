@@ -7,6 +7,7 @@ import {
 } from "../../packages/crypto/dist/index.js";
 import {
   LOCAL_STORAGE_ERROR_CODES,
+  createStoryInvalidError,
   clearDeviceKey,
   createDeviceKeyMissingError,
   createInvalidDeviceKeyError,
@@ -153,6 +154,7 @@ describe("local-storage device key", () => {
       "STORAGE_OBJECT_NOT_FOUND",
       "STORAGE_PERSISTENCE_UNAVAILABLE",
       "STORAGE_QUOTA_UNAVAILABLE",
+      "STORAGE_STORY_INVALID",
       "STORAGE_UNAVAILABLE",
       "STORAGE_WRITE_FAILED",
     ]);
@@ -171,6 +173,10 @@ describe("local-storage device key", () => {
     expect(createStorageWriteFailedError()).toMatchObject({
       code: "STORAGE_WRITE_FAILED",
       details: { reason: "indexeddb-write" },
+    });
+    expect(createStoryInvalidError("STORY_ARTIFACT_VERSION_UNSUPPORTED")).toMatchObject({
+      code: "STORAGE_STORY_INVALID",
+      details: { reason: "STORY_ARTIFACT_VERSION_UNSUPPORTED" },
     });
     expect(createInvalidDeviceKeyError("usages")).toMatchObject({
       code: "STORAGE_INVALID_DEVICE_KEY",

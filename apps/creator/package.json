@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@datapulse/domain": "workspace:*",
+    "@datapulse/local-storage": "workspace:*",
     "@datapulse/metric-runtime": "workspace:*",
     "@datapulse/renderer": "workspace:*",
     "@datapulse/story-migrations": "workspace:*",

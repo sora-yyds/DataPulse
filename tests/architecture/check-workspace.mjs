@@ -71,9 +71,12 @@ const requiredWorkspaces = [
     kind: "package",
     path: "packages/local-storage",
     name: "@datapulse/local-storage",
-    dependencies: { "@datapulse/crypto": "workspace:*" },
+    dependencies: {
+      "@datapulse/crypto": "workspace:*",
+      "@datapulse/story-migrations": "workspace:*",
+    },
     devDependencies: { "@types/node": "24.13.3" },
-    references: ["../crypto"],
+    references: ["../crypto", "../story-migrations"],
     entries: { ".": "index" },
   },
   {
@@ -118,6 +121,7 @@ const requiredWorkspaces = [
     name: "@datapulse/creator",
     dependencies: {
       "@datapulse/domain": "workspace:*",
+      "@datapulse/local-storage": "workspace:*",
       "@datapulse/metric-runtime": "workspace:*",
       "@datapulse/renderer": "workspace:*",
       "@datapulse/story-migrations": "workspace:*",
@@ -131,6 +135,7 @@ const requiredWorkspaces = [
     },
     references: [
       "../../packages/domain",
+      "../../packages/local-storage",
       "../../packages/metric-runtime",
       "../../packages/renderer",
       "../../packages/story-migrations",
@@ -515,6 +520,11 @@ await validateResolution(
   "packages/themes",
 );
 await validateResolution("apps/creator", "@datapulse/domain", "packages/domain");
+await validateResolution(
+  "apps/creator",
+  "@datapulse/local-storage",
+  "packages/local-storage",
+);
 await validateResolution(
   "apps/creator",
   "@datapulse/metric-runtime",

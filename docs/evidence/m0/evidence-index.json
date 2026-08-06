@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v28",
+      "latestRecordId": "m0-wave0-evidence-contract-v29",
       "blockerRefs": []
     },
     {
@@ -767,7 +767,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-local-storage-project-object-transaction-v1",
+      "latestRecordId": "m0-local-storage-project-repository-v1",
       "blockerRefs": []
     },
     {
@@ -9107,6 +9107,235 @@
       ],
       "blockerRefs": [],
       "notes": "M0-052 事务核心阶段：packages/local-storage OPFS 加密对象先写／IndexedDB 索引后写事务核心与稳定错误码落地，tests/unit 12 files/272 tests、test:storage 2 files/9 tests、check:dependencies 2598/2598、14 workspace；证据记录 m0-local-storage-project-object-transaction-v1 按 append-only 链取代 m0-local-storage-quota-v1。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v27。"
+    },
+    {
+      "id": "m0-local-storage-project-repository-v1",
+      "title": "M0-027 Project Repository open/commit/recover 与 Creator 保存/恢复",
+      "gateIds": [
+        "LOCAL-PROJECT-REPOSITORY"
+      ],
+      "epicIds": [
+        "M0-E3"
+      ],
+      "taskIds": [
+        "M0-026",
+        "M0-027",
+        "M0-051",
+        "M0-052"
+      ],
+      "requirementIds": [
+        "FR-PROJ-003",
+        "FR-PROJ-004",
+        "FR-PROJ-005",
+        "FR-PROJ-007",
+        "FR-PROJ-009"
+      ],
+      "adrIds": [
+        "ADR-0017",
+        "ADR-0019",
+        "ADR-0033"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-development",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T23:05:00+08:00",
+      "observedAt": "2026-08-06T23:05:00+08:00",
+      "supersedesRecordId": "m0-local-storage-project-object-transaction-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/project-repository.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/errors.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/local-storage/src/project-object-store.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/story-migrations/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "tests/unit/local-storage-project-repository.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "tests/unit/local-storage-project-object-store.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "tests/storage-e2e/project-repository.spec.ts",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "tests/storage-fixture/main.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/dependency-boundaries.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "apps/creator/src/app.tsx",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-027 阶段实现：packages/local-storage 新增 project-repository.ts——ProjectRepository 编排状态机：commitProject 在写入前以 Story Artifact Reader 预校验（失败返回 STORAGE_STORY_INVALID 且零存储写入），委托 M0-052 事务核心执行 M0-051 双估算与原子提交，成功后才提升最后可读副本；openProject 的 Story 一律经 Artifact Reader，解密/完整性/迁移/校验失败回退最后可读副本（重新经 Reader 校验）并携带 storedFailure 原因；recoverProject 先幂等恢复事务核心再重开项目。errors.ts 新增 STORAGE_STORY_INVALID 稳定错误码与共享 isLocalStorageError；openProjectObject 将密文解密认证失败映射为稳定 STORAGE_UNAVAILABLE(integrity-mismatch)。新增 tests/unit/local-storage-project-repository.test.ts 9 项（commit 预校验拒绝且零写入、往返、提交失败保留、未提交 not-found、解密失败回退、reader 失败回退、recover 重开、recover 存储失败、非字节拒绝）；test:unit 全量 13 files/281 tests。新增真实 Chromium 验证 tests/storage-e2e/project-repository.spec.ts 4 项（commit→open 往返、reload 后恢复、密文篡改回退最后可读副本、OPFS 只存密文），test:storage 3 files/13 tests。Creator 集成保存（fixture 就绪后自动 commit）与刷新恢复（open 优先），jsdom 下回退只读 fixture，tests/component 2/2。check:dependencies 主断言 2598→2667、check:workspace 479→481、check:storybook 1/1；AGENTS.md 同步。LOCAL-PROJECT-REPOSITORY 四任务（M0-026/027/051/052）均已阶段落地，gate 保持 in_progress／partially_evidenced、不激活日常且 m0 退出不满足。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v29",
+      "title": "M0-027 Project Repository 阶段证据与 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T23:05:00+08:00",
+      "observedAt": "2026-08-06T23:05:00+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v28",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v29.json",
+          "immutable": true,
+          "sha256": "b0bd1f264489ba4ad242a8a4feeeffb1d5b234af91bdb76b8a6690fe3a6695ea"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-027 Project Repository 阶段：packages/local-storage 新增 project-repository.ts 编排（open/commit/recover 状态机、Story 经 Artifact Reader 预校验、迁移/解密/提交失败保留最后可读副本、Creator 保存与刷新恢复集成），errors.ts 新增 STORAGE_STORY_INVALID 与共享 isLocalStorageError，openProjectObject 解密认证失败映射稳定 integrity-mismatch；tests/unit 13 files/281 tests、test:storage 3 files/13 tests、check:dependencies 2667/2667、check:workspace 481/481、14 workspace；证据记录 m0-local-storage-project-repository-v1 按 append-only 链取代 m0-local-storage-project-object-transaction-v1。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v28。"
     }
   ]
 }
