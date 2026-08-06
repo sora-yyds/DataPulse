@@ -7,6 +7,7 @@ export const LOCAL_STORAGE_ERROR_CODES = Object.freeze({
   writeFailed: "STORAGE_WRITE_FAILED",
   invalidDeviceKey: "STORAGE_INVALID_DEVICE_KEY",
   invalidArgument: "STORAGE_INVALID_ARGUMENT",
+  objectNotFound: "STORAGE_OBJECT_NOT_FOUND",
   quotaUnavailable: "STORAGE_QUOTA_UNAVAILABLE",
   capacityExceeded: "STORAGE_CAPACITY_EXCEEDED",
 } as const);
@@ -16,15 +17,21 @@ export type LocalStorageErrorCode =
 
 export type StorageUnavailableReason =
   | "indexeddb-missing"
+  | "opfs-missing"
   | "open-failed"
   | "read-failed"
-  | "delete-failed";
+  | "delete-failed"
+  | "object-file-missing"
+  | "integrity-mismatch";
 
 export type PersistenceUnavailableReason = "persist-unsupported" | "persist-denied";
 
 export type DeviceKeyMissingReason = "not-found";
 
-export type WriteFailedReason = "indexeddb-write";
+export type WriteFailedReason =
+  | "indexeddb-write"
+  | "indexeddb-commit"
+  | "opfs-write";
 
 export type InvalidDeviceKeyReason =
   | "type"
@@ -33,9 +40,16 @@ export type InvalidDeviceKeyReason =
   | "usages"
   | "extractable";
 
-export type InvalidArgumentReason = "type" | "negative-length";
+export type InvalidArgumentReason =
+  | "type"
+  | "negative-length"
+  | "invalid-identifier"
+  | "duplicate-object-id"
+  | "duplicate-transaction-id";
 
 export type QuotaUnavailableReason = "estimate-unsupported" | "estimate-failed";
+
+export type ObjectNotFoundReason = "not-found";
 
 export type CapacityExceededReason =
   | "quota-exceeded"
@@ -79,6 +93,10 @@ export type CapacityExceededError = FrozenError<
   typeof LOCAL_STORAGE_ERROR_CODES.capacityExceeded,
   CapacityExceededReason
 >;
+export type ObjectNotFoundError = FrozenError<
+  typeof LOCAL_STORAGE_ERROR_CODES.objectNotFound,
+  ObjectNotFoundReason
+>;
 
 export type LocalStorageError =
   | StorageUnavailableError
@@ -88,7 +106,8 @@ export type LocalStorageError =
   | InvalidDeviceKeyError
   | InvalidArgumentError
   | QuotaUnavailableError
-  | CapacityExceededError;
+  | CapacityExceededError
+  | ObjectNotFoundError;
 
 function freezeError<Code extends LocalStorageErrorCode, Reason extends string>(
   code: Code,
@@ -113,8 +132,10 @@ export function createDeviceKeyMissingError(): DeviceKeyMissingError {
   return freezeError(LOCAL_STORAGE_ERROR_CODES.deviceKeyMissing, "not-found");
 }
 
-export function createStorageWriteFailedError(): StorageWriteFailedError {
-  return freezeError(LOCAL_STORAGE_ERROR_CODES.writeFailed, "indexeddb-write");
+export function createStorageWriteFailedError(
+  reason: WriteFailedReason = "indexeddb-write",
+): StorageWriteFailedError {
+  return freezeError(LOCAL_STORAGE_ERROR_CODES.writeFailed, reason);
 }
 
 export function createInvalidDeviceKeyError(reason: InvalidDeviceKeyReason): InvalidDeviceKeyError {
@@ -135,4 +156,8 @@ export function createCapacityExceededError(
   reason: CapacityExceededReason,
 ): CapacityExceededError {
   return freezeError(LOCAL_STORAGE_ERROR_CODES.capacityExceeded, reason);
+}
+
+export function createObjectNotFoundError(): ObjectNotFoundError {
+  return freezeError(LOCAL_STORAGE_ERROR_CODES.objectNotFound, "not-found");
 }
