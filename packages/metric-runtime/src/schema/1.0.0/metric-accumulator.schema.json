@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:datapulse:metric-accumulator:1.0.0",
+  "title": "DataPulse MetricAccumulator 1.0.0",
+  "description": "COUNT_ROWS and SUM sufficient states consumed by the shared deterministic metric runtime.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "metricId",
+        "aggregate",
+        "mergeKind",
+        "interactionCapability",
+        "mergeOrdinal",
+        "state"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "metricId": {
+          "type": "string",
+          "pattern": "^(?=.{8,71}$)metric_[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "aggregate": {
+          "const": "COUNT_ROWS"
+        },
+        "mergeKind": {
+          "const": "count"
+        },
+        "interactionCapability": {
+          "const": "exact"
+        },
+        "mergeOrdinal": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "count"
+          ],
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "metricId",
+        "aggregate",
+        "mergeKind",
+        "interactionCapability",
+        "mergeOrdinal",
+        "state"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "metricId": {
+          "type": "string",
+          "pattern": "^(?=.{8,71}$)metric_[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "aggregate": {
+          "const": "SUM"
+        },
+        "mergeKind": {
+          "const": "sum-f64-v1"
+        },
+        "interactionCapability": {
+          "const": "exact"
+        },
+        "mergeOrdinal": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sumF64"
+          ],
+          "properties": {
+            "sumF64": {
+              "type": "string",
+              "pattern": "^(?!(?:7ff|fff|8000000000000000$))[0-9a-f]{16}$"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

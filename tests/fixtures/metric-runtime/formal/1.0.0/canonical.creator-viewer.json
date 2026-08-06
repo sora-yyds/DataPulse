@@ -1,0 +1,133 @@
+{
+  "fixtureVersion": "1.0.0",
+  "kind": "datapulse-metric-runtime-golden-fixture",
+  "cases": [
+    {
+      "id": "count-rows-merge",
+      "plan": {
+        "schemaVersion": "1.0.0",
+        "metricId": "metric_order-count",
+        "aggregate": "COUNT_ROWS"
+      },
+      "accumulators": [
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_order-count",
+          "aggregate": "COUNT_ROWS",
+          "mergeKind": "count",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 2,
+          "state": {
+            "count": 5
+          }
+        },
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_order-count",
+          "aggregate": "COUNT_ROWS",
+          "mergeKind": "count",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 0,
+          "state": {
+            "count": 7
+          }
+        },
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_order-count",
+          "aggregate": "COUNT_ROWS",
+          "mergeKind": "count",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 1,
+          "state": {
+            "count": 11
+          }
+        }
+      ],
+      "expected": {
+        "value": 23
+      }
+    },
+    {
+      "id": "sum-fixed-order-non-associative",
+      "plan": {
+        "schemaVersion": "1.0.0",
+        "metricId": "metric_revenue",
+        "aggregate": "SUM"
+      },
+      "accumulators": [
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_revenue",
+          "aggregate": "SUM",
+          "mergeKind": "sum-f64-v1",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 2,
+          "state": {
+            "sumF64": "3ff0000000000000"
+          }
+        },
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_revenue",
+          "aggregate": "SUM",
+          "mergeKind": "sum-f64-v1",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 0,
+          "state": {
+            "sumF64": "4341c37937e08000"
+          }
+        },
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_revenue",
+          "aggregate": "SUM",
+          "mergeKind": "sum-f64-v1",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 1,
+          "state": {
+            "sumF64": "c341c37937e08000"
+          }
+        }
+      ],
+      "expected": {
+        "valueF64": "3ff0000000000000"
+      }
+    },
+    {
+      "id": "sum-binary64-rounding",
+      "plan": {
+        "schemaVersion": "1.0.0",
+        "metricId": "metric_fractional-total",
+        "aggregate": "SUM"
+      },
+      "accumulators": [
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_fractional-total",
+          "aggregate": "SUM",
+          "mergeKind": "sum-f64-v1",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 1,
+          "state": {
+            "sumF64": "3fc999999999999a"
+          }
+        },
+        {
+          "schemaVersion": "1.0.0",
+          "metricId": "metric_fractional-total",
+          "aggregate": "SUM",
+          "mergeKind": "sum-f64-v1",
+          "interactionCapability": "exact",
+          "mergeOrdinal": 0,
+          "state": {
+            "sumF64": "3fb999999999999a"
+          }
+        }
+      ],
+      "expected": {
+        "valueF64": "3fd3333333333334"
+      }
+    }
+  ]
+}

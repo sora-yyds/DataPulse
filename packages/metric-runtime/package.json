@@ -1,0 +1,29 @@
+{
+  "name": "@datapulse/metric-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node ./scripts/generate-artifacts.mjs --check && tsc --build tsconfig.json",
+    "check:generated": "node ./scripts/generate-artifacts.mjs --check",
+    "generate": "node ./scripts/generate-artifacts.mjs --write"
+  },
+  "dependencies": {
+    "@datapulse/domain": "workspace:*"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "json-schema-to-typescript": "15.0.4"
+  }
+}

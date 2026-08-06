@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-metric-runtime-contract-history",
+  "currentVersion": "1.0.0",
+  "hashAlgorithm": "SHA-256",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "predecessor": null,
+      "changeKind": "initial",
+      "accumulatorSchema": {
+        "schemaId": "urn:datapulse:metric-accumulator:1.0.0",
+        "path": "src/schema/1.0.0/metric-accumulator.schema.json",
+        "bytes": 2592,
+        "sha256": "0e9fdf5c0925a388c5fcdf36a8bfedae8e198f28fa6feee1a15eb62792da00d4"
+      },
+      "evaluationPlanSchema": {
+        "schemaId": "urn:datapulse:metric-evaluation-plan:1.0.0",
+        "path": "src/schema/1.0.0/metric-evaluation-plan.schema.json",
+        "bytes": 677,
+        "sha256": "e3605377a5efef6de81b0b12c706e40e0d05a913f4a84d925ed1b13229e413d6"
+      },
+      "runtimeSemantics": {
+        "supportedAggregates": [
+          "COUNT_ROWS",
+          "SUM"
+        ],
+        "interactionCapabilities": [
+          "exact"
+        ],
+        "sumWireEncoding": "ieee754-binary64-big-endian-lowercase-hex",
+        "negativeZero": "canonicalize-to-positive-zero",
+        "mergeOrder": "mergeOrdinal-ascending",
+        "duplicateMergeOrdinal": "reject",
+        "failurePriority": [
+          "accumulator-shape",
+          "accumulator-version-invalid",
+          "accumulator-version-unsupported",
+          "metric-id-mismatch",
+          "aggregate-mismatch",
+          "merge-ordinal-duplicate"
+        ],
+        "emptyCountRows": "zero",
+        "emptySum": "unavailable",
+        "invalidInput": "whole-evaluation-failure",
+        "finiteOverflow": "unavailable",
+        "maxAccumulatorsPerEvaluation": 65536
+      }
+    }
+  ]
+}
