@@ -1,0 +1,29 @@
+{
+    "capturedAt":  "2026-08-06T17:44:53+08:00",
+    "subject":  {
+                    "rulesetId":  20499963,
+                    "pullRequest":  {
+                                        "number":  5,
+                                        "mergeMethod":  "squash",
+                                        "mergedSha":  "c9fc67b14889f00898f583aeb88ca6fa873e0e9c",
+                                        "baseRef":  "main",
+                                        "mergedBy":  "sora-yyds",
+                                        "mergedAt":  "2026-08-06T09:39:43Z",
+                                        "headRef":  "m0/m046-evidence",
+                                        "headSha":  "a8867d057ea01dd0b770f59459c4459192a9631d"
+                                    },
+                    "rulesetName":  "m0 / main-protection",
+                    "repository":  "sora-yyds/DataPulse"
+                },
+    "redactionStatement":  "No credentials, stable device identifiers, user content, or personal data are included.",
+    "verifiedChecks":  [
+                           "PR #5（head=m0/m046-evidence，base=main）触发 m0 / pr-quick，最终 conclusion=success（ruleset 必查通过）",
+                           "governance / conventional-pr-title conclusion=success",
+                           "PUT /repos/sora-yyds/DataPulse/pulls/5/merge（merge_method=squash）返回 merged=true，merged sha=c9fc67b14889f00898f583aeb88ca6fa873e0e9c",
+                           "合并后 main HEAD=c9fc67b14889f00898f583aeb88ca6fa873e0e9c，push 到 main 触发的 m0 / main-review conclusion=success"
+                       ],
+    "summary":  "M0-046 GitHub ruleset 正例合并验证：PR #5 经 m0 / pr-quick 通过后按 ruleset squash 合并，main 上 m0 / main-review 通过",
+    "environmentKind":  "github-remote",
+    "gateId":  "GITHUB-GOVERNANCE",
+    "verificationMethod":  "github_ruleset_positive_pr_merge"
+}
