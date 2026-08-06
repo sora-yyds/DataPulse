@@ -24,7 +24,7 @@
 | 仓库所有者账号 | `github:@sora-yyds`，account type `User` | GitHub REST 已确认账号归属；不能据此确认当前操作者身份 | M0-046 回读权限 |
 | 初始维护者 | 建议 `github:@sora-yyds` | 待角色确认；尚未验证 repository permission 或 review eligibility | 确认后记录生效时间；新增维护者时更新本表 |
 | 第二维护者 | 未登记 | 外部阻塞：不能声称敏感路径已经实现非作者复核 | M0-008/046 前确认治理方案 |
-| GitHub ruleset / merge queue 管理责任 | 建议 `github:@sora-yyds` | 管理能力、merge queue 可用性和 ruleset 权限均未验证 | M0-046，外部阻塞直到真实回读与否定测试 |
+| GitHub ruleset / merge queue 管理责任 | 建议 `github:@sora-yyds` | ruleset 已配置并回读（`m0 / main-protection`：squash-only、`m0 / pr-quick` 必查、non-fast-forward、无 bypass），直接推送与失败 PR 否定测试通过；merge queue 对个人账户不可用（GitHub 官方文档 + REST 422），保持外部阻塞 | M0-046 正例合并；merge queue 需 org 仓库或正式决策 |
 | Conventional Commit、Changeset 与 squash merge 维护责任 | 建议 `github:@sora-yyds` | 待角色确认，实现尚未到期 | M0-008、M0-046 |
 
 ## 计划中的 CODEOWNERS

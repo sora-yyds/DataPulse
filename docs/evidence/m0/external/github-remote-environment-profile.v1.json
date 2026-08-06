@@ -1,0 +1,22 @@
+{
+  "$schema": "./external-environment-profile.schema.v1.json",
+  "schemaVersion": "1.0.0",
+  "kind": "m0-external-environment-profile",
+  "gateId": "GITHUB-GOVERNANCE",
+  "environmentKind": "github-remote",
+  "profileId": "github-remote-sora-yyds-datapulse-v1",
+  "capturedAt": "2026-08-06T16:53:02+08:00",
+  "attributes": {
+    "account_type": "User",
+    "account_plan": "pro",
+    "repository": "sora-yyds/DataPulse",
+    "repository_visibility": "public",
+    "default_branch": "main",
+    "ruleset_id": 20499963,
+    "ruleset_name": "m0 / main-protection",
+    "ruleset_enforcement": "active",
+    "required_check_context": "m0 / pr-quick",
+    "merge_queue_rule_create_status": "422 not_supported_for_personal_account"
+  },
+  "redactionStatement": "No credentials, stable device identifiers, user content, or personal data are included."
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "./manual-review-attestation.schema.v1.json",
+  "schemaVersion": "1.0.0",
+  "kind": "m0-manual-review-attestation",
+  "gateId": "WAVE0-OWNERSHIP-REGISTRY",
+  "recordId": "m0-wave0-ownership-and-resource-registry-v2",
+  "reviewedAt": "2026-08-06T17:08:29+08:00",
+  "reviewerRefs": [
+    "codex-agent:E:\\DataPulse AI"
+  ],
+  "repositoryState": "working_tree_hashes",
+  "subjectArtifacts": [
+    {
+      "path": "docs/governance/m0-ownership-and-resources.md",
+      "sha256": "3e711cb7829e3fa446cf12f89bb0d8968938a90ae59d8feb0de85d109967aba8"
+    }
+  ],
+  "result": "passed",
+  "assertions": {
+    "reviewed": 1,
+    "failed": 0,
+    "unresolvedHighSeverity": 0
+  },
+  "notes": "M0-046 阶段复核：更新 GitHub ruleset / merge queue 管理责任登记——ruleset 已配置并回读（m0 / main-protection：squash-only、m0 / pr-quick 必查、non-fast-forward、无 bypass），直接推送与失败 PR 否定测试通过；merge queue 对个人账户不可用（GitHub 官方文档 + REST 422），保持外部阻塞。"
+}

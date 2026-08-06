@@ -1,10 +1,10 @@
 # GitHub Actions 最小权限约定
 
 > 任务：M0-008
-> 状态：仓库约定已建立；M0-019 已落地 PR 快检、merge_group 完整聚合、main 复核、退出候选与标签 dry-run 五个 workflow 表面；真实 required check、protected `main` 与 merge queue 仍由 M0-046 验证
+> 状态：仓库约定已建立；M0-019 已落地 PR 快检、merge_group 完整聚合、main 复核、退出候选与标签 dry-run 五个 workflow 表面；M0-046 已在真实远端配置并回读 `m0 / main-protection` ruleset（protected `main`、squash-only、`m0 / pr-quick` 必查、non-fast-forward、无 bypass），直接推送与失败 PR 否定测试通过；merge queue 在个人账户上不可用（GitHub 官方文档 + REST 422），merge-group 必查与失败 merge-group 否定测试保持外部阻塞
 > 适用范围：`.github/workflows/` 与被其调用的本地 Action／脚本
 
-本约定约束 GitHub Actions 的权限和不可信输入边界。它不表示远端 ruleset 已配置，也不能替代真实失败 PR、merge group 或直接推送否定测试。
+本约定约束 GitHub Actions 的权限和不可信输入边界。M0-046 已在真实远端配置 `m0 / main-protection` ruleset 并完成直接推送与失败 PR 否定测试；merge group 与 merge queue 相关验证在个人账户上仍受外部阻塞。
 
 ## 1. 权限与触发器
 
@@ -25,6 +25,6 @@
 - required check 使用稳定且唯一的 workflow／job 名；重命名必须与 ruleset 在同一治理变更中更新并回读，不能制造同名空 job。
 - 已激活 gate 失败、`executed=0`、`skipped>0`、过期报告或缺少 attestation 时必须非零；未实现 gate 不得以成功占位。
 - 日志只记录无内容状态、稳定错误码和必要环境版本；不得输出 secret、Authorization、真实用户数据或跨会话标识。
-- M0-019 已落地 PR 快检、merge_group 完整聚合、main 复核、M0 退出候选与标签 release dry-run 五个 workflow 表面（均 `permissions: {}`、无发布写权限）；Release/SBOM 构建物、真实写权限、merge queue 聚合与 required check 仍分别由 M0-020、045、046 落地。在这些任务完成前，本文件不授权发布或远端配置变更。
+- M0-019 已落地 PR 快检、merge_group 完整聚合、main 复核、M0 退出候选与标签 release dry-run 五个 workflow 表面（均 `permissions: {}`、无发布写权限）；Release/SBOM 构建物与真实写权限仍由 M0-020、045 落地；M0-046 已配置并回读 main ruleset（squash-only、`m0 / pr-quick` 必查、non-fast-forward、无 bypass），直接推送与失败 PR 否定测试通过，merge queue 聚合与失败 merge-group 否定验证在个人账户上外部阻塞。在这些任务完成前，本文件不授权发布或远端配置变更。
 
 当前 PR 标题 workflow 仅授予 `pull-requests: read`，通过固定 SHA 的语义标题 Action 读取 PR 元数据，不 checkout、不执行 Fork 代码，也不提供忽略 label 或 WIP 绕过入口。
