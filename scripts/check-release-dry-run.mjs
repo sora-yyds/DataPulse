@@ -17,7 +17,7 @@ import {
   workspaceDirectories,
 } from "./release-dry-run.mjs";
 
-const EXPECTED_WORKSPACE_COUNT = 15;
+const EXPECTED_WORKSPACE_COUNT = 16;
 const EXPECTED_NOASSERTION_DEPENDENCIES = new Set([
   "@google/design.md@0.4.0",
   "spawndamnit@3.0.1",
@@ -386,7 +386,7 @@ try {
   const failures = verifyInspection(inspection);
 
   record(
-    "release staging covers exactly 15 workspaces",
+    "release staging covers exactly 16 workspaces",
     inspection.manifest.workspaces.length === EXPECTED_WORKSPACE_COUNT,
     EXPECTED_WORKSPACE_COUNT,
     inspection.manifest.workspaces.length,

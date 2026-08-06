@@ -70,6 +70,7 @@ const names = Object.freeze({
   evidence: "@datapulse/evidence",
   generation: "@datapulse/generation",
   importEngine: "@datapulse/import-engine",
+  localAnalysis: "@datapulse/local-analysis",
   localStorage: "@datapulse/local-storage",
   metricRuntime: "@datapulse/metric-runtime",
   narrative: "@datapulse/narrative",
@@ -97,6 +98,7 @@ const workspacePolicies = new Map([
   ["packages/metric-runtime", policy(names.metricRuntime, [names.domain])],
   ["packages/crypto", policy(names.crypto, [names.domain])],
   ["packages/import-engine", policy(names.importEngine, [names.domain])],
+  ["packages/local-analysis", policy(names.localAnalysis, [names.domain])],
   ["packages/api-contracts", policy(names.apiContracts, [names.domain])],
   [
     "packages/analysis-engine",
@@ -178,6 +180,10 @@ const consumerSubpathPolicies = new Map([
 // denied to every consumer unless consumerSubpathPolicies explicitly grants
 // the exact target/subpath pair.
 const restrictedProducerSubpaths = new Map([
+  [
+    names.localAnalysis,
+    new Set(["./message"]),
+  ],
   [
     names.storySchema,
     new Set([
