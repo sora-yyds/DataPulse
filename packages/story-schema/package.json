@@ -1,0 +1,38 @@
+{
+  "name": "@datapulse/story-schema",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./development-migration-support": {
+      "types": "./dist/development-migration-support.d.ts",
+      "import": "./dist/development-migration-support.js",
+      "default": "./dist/development-migration-support.js"
+    },
+    "./formal-migration-support": {
+      "types": "./dist/formal-migration-support.d.ts",
+      "import": "./dist/formal-migration-support.js",
+      "default": "./dist/formal-migration-support.js"
+    }
+  },
+  "scripts": {
+    "build": "node ./scripts/generate-artifacts.mjs --check && tsc --build tsconfig.json",
+    "check:generated": "node ./scripts/generate-artifacts.mjs --check",
+    "generate": "node ./scripts/generate-artifacts.mjs --write"
+  },
+  "dependencies": {
+    "ajv": "8.17.1"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "15.0.4"
+  }
+}

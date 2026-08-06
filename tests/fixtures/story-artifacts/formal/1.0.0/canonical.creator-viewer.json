@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "storyId": "story_formal-contract",
+  "datasetVersionId": "dataset_version_formal-contract",
+  "reportGoal": "验证正式故事读取合同",
+  "storyTimezone": "Asia/Shanghai",
+  "references": {
+    "fieldIds": [],
+    "metricIds": [],
+    "evidenceIds": [],
+    "judgmentRuleIds": [],
+    "narrativeRuleIds": []
+  },
+  "conditions": [],
+  "globalConditionIds": [],
+  "theme": {
+    "themeId": "enterprise-minimal"
+  },
+  "visual": {
+    "renderMode": "2d",
+    "scenePreset": "none",
+    "motionPreset": "none"
+  },
+  "blocks": [
+    {
+      "blockId": "story_block_formal-contract",
+      "blockType": "title-summary",
+      "layout": {
+        "variant": "full-width"
+      },
+      "additionalConditionIds": [],
+      "evidenceIds": [],
+      "judgmentRuleIds": [],
+      "narrativeRuleIds": [],
+      "content": {
+        "title": "正式故事合同",
+        "summary": "内容只用于 Creator 与 Viewer 的正式读取合同。"
+      },
+      "visualVariant": "plain"
+    }
+  ]
+}

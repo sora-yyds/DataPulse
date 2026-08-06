@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "0.0.1",
+  "storyId": "story_reader-fixture",
+  "datasetVersionId": "dataset_version_reader-fixture",
+  "reportGoal": "验证迁移目标拒绝",
+  "storyTimeZone": "Mars",
+  "references": {
+    "fieldIds": [],
+    "metricIds": [],
+    "evidenceIds": [],
+    "judgmentRuleIds": [],
+    "narrativeRuleIds": []
+  },
+  "conditions": [],
+  "globalConditionIds": [],
+  "theme": {
+    "themeId": "enterprise-minimal"
+  },
+  "visual": {
+    "renderMode": "2d",
+    "scenePreset": "none",
+    "motionPreset": "none"
+  },
+  "blocks": [
+    {
+      "blockId": "story_block_reader-fixture",
+      "blockType": "title-summary",
+      "layout": {
+        "variant": "full-width"
+      },
+      "additionalConditionIds": [],
+      "evidenceIds": [],
+      "judgmentRuleIds": [],
+      "narrativeRuleIds": [],
+      "content": {
+        "title": "迁移拒绝样本",
+        "summary": "目标结构必须重新校验。"
+      },
+      "visualVariant": "plain"
+    }
+  ]
+}

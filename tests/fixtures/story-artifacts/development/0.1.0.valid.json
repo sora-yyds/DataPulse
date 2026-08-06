@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "0.1.0",
+  "storyId": "story_reader-fixture",
+  "datasetVersionId": "dataset_version_reader-fixture",
+  "reportGoal": "验证故事读取边界",
+  "storyTimezone": "Asia/Shanghai",
+  "references": {
+    "fieldIds": [],
+    "metricIds": [],
+    "evidenceIds": [],
+    "judgmentRuleIds": [],
+    "narrativeRuleIds": []
+  },
+  "conditions": [],
+  "globalConditionIds": [],
+  "theme": {
+    "themeId": "enterprise-minimal"
+  },
+  "visual": {
+    "renderMode": "2d",
+    "scenePreset": "none",
+    "motionPreset": "none"
+  },
+  "blocks": [
+    {
+      "blockId": "story_block_reader-fixture",
+      "blockType": "title-summary",
+      "layout": {
+        "variant": "full-width"
+      },
+      "additionalConditionIds": [],
+      "evidenceIds": [],
+      "judgmentRuleIds": [],
+      "narrativeRuleIds": [],
+      "content": {
+        "title": "安全读取样本",
+        "summary": "内容只用于边界验证。"
+      },
+      "visualVariant": "plain"
+    }
+  ]
+}

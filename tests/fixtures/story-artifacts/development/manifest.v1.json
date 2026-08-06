@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-story-artifact-development-fixture-manifest",
+  "releaseStatus": "unpublished-development-sample",
+  "formalHistory": false,
+  "compatibilityPromise": false,
+  "hashAlgorithm": "SHA-256",
+  "fixtures": [
+    {
+      "path": "0.0.1.target-invalid.json",
+      "bytes": 981,
+      "sha256": "216c25c3a5429cf0216809e8af200cadf2b84e58eb60280cca5b3fd63cbd4b51"
+    },
+    {
+      "path": "0.0.1.valid.json",
+      "bytes": 987,
+      "sha256": "7490b239a99dee566cbbd691df1c3d300c33f2dd8dc0fb7d040e3385781d49ea"
+    },
+    {
+      "path": "0.1.0.final-invalid.json",
+      "bytes": 1015,
+      "sha256": "4a2cdfc776dd40e848e885cf9199e4d26744263097dd023409a3c21c7361873a"
+    },
+    {
+      "path": "0.1.0.valid.json",
+      "bytes": 987,
+      "sha256": "8f668b0949df54b29f9eaaecad80fc4cd9cc23577aaaea90f2afe717de50fbd2"
+    },
+    {
+      "path": "malicious-source.json",
+      "bytes": 1071,
+      "sha256": "22e52fe289f4489d71744de1da8d25656976f3a750eab657c5ec2fae5ef2b407"
+    },
+    {
+      "path": "unknown-version.json",
+      "bytes": 93,
+      "sha256": "bf95b0049e77eed033064fa9f3c160985fa168ffc41aeeb5a3dcc78a73c5f259"
+    }
+  ]
+}

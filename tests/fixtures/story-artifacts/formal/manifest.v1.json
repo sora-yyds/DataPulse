@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-formal-story-artifact-fixture-manifest",
+  "releaseStatus": "formal-contract-fixture",
+  "formalHistory": true,
+  "compatibilityPromise": true,
+  "hashAlgorithm": "SHA-256",
+  "storySchema": {
+    "schemaVersion": "1.0.0",
+    "schemaId": "urn:datapulse:story-blueprint:formal:1.0.0",
+    "path": "packages/story-schema/src/formal/1.0.0/story-blueprint.schema.json",
+    "bytes": 11572,
+    "sha256": "e26a15938896c57844d75a6ee272d4920874f60586b981eadaae686e45090360"
+  },
+  "fixtures": [
+    {
+      "id": "canonical-creator-viewer-1.0.0",
+      "schemaVersion": "1.0.0",
+      "path": "1.0.0/canonical.creator-viewer.json",
+      "bytes": 1025,
+      "sha256": "e4e1d43507b455f145f73858c028fc0bd06882e20a44b3c1c9d5285772a74c06",
+      "consumers": [
+        "creator",
+        "viewer"
+      ]
+    }
+  ]
+}

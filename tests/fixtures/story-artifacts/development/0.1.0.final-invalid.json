@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "0.1.0",
+  "storyId": "story_reader-fixture",
+  "datasetVersionId": "dataset_version_reader-fixture",
+  "reportGoal": "验证最终语义拒绝",
+  "storyTimezone": "Asia/Shanghai",
+  "references": {
+    "fieldIds": [],
+    "metricIds": ["metric_fabricated"],
+    "evidenceIds": [],
+    "judgmentRuleIds": [],
+    "narrativeRuleIds": []
+  },
+  "conditions": [],
+  "globalConditionIds": [],
+  "theme": {
+    "themeId": "enterprise-minimal"
+  },
+  "visual": {
+    "renderMode": "2d",
+    "scenePreset": "none",
+    "motionPreset": "none"
+  },
+  "blocks": [
+    {
+      "blockId": "story_block_reader-fixture",
+      "blockType": "title-summary",
+      "layout": {
+        "variant": "full-width"
+      },
+      "additionalConditionIds": [],
+      "evidenceIds": [],
+      "judgmentRuleIds": [],
+      "narrativeRuleIds": [],
+      "content": {
+        "title": "语义拒绝样本",
+        "summary": "候选目录不能扩张可信引用。"
+      },
+      "visualVariant": "plain"
+    }
+  ]
+}

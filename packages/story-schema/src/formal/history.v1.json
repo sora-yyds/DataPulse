@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "datapulse-formal-story-schema-history",
+  "currentVersion": "1.0.0",
+  "hashAlgorithm": "SHA-256",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "predecessor": null,
+      "changeKind": "initial",
+      "schemaId": "urn:datapulse:story-blueprint:formal:1.0.0",
+      "schemaPath": "src/formal/1.0.0/story-blueprint.schema.json",
+      "schemaBytes": 11572,
+      "schemaSha256": "e26a15938896c57844d75a6ee272d4920874f60586b981eadaae686e45090360"
+    }
+  ]
+}

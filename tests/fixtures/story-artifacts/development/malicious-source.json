@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "0.1.0",
+  "storyId": "story_reader-fixture",
+  "datasetVersionId": "dataset_version_reader-fixture",
+  "reportGoal": "验证任意代码字段拒绝",
+  "storyTimezone": "Asia/Shanghai",
+  "references": {
+    "fieldIds": [],
+    "metricIds": [],
+    "evidenceIds": [],
+    "judgmentRuleIds": [],
+    "narrativeRuleIds": []
+  },
+  "conditions": [],
+  "globalConditionIds": [],
+  "theme": {
+    "themeId": "enterprise-minimal"
+  },
+  "visual": {
+    "renderMode": "2d",
+    "scenePreset": "none",
+    "motionPreset": "none"
+  },
+  "blocks": [
+    {
+      "blockId": "story_block_reader-fixture",
+      "blockType": "title-summary",
+      "layout": {
+        "variant": "full-width"
+      },
+      "additionalConditionIds": [],
+      "evidenceIds": [],
+      "judgmentRuleIds": [],
+      "narrativeRuleIds": [],
+      "content": {
+        "title": "恶意来源样本",
+        "summary": "任意代码字段必须由结构边界拒绝。"
+      },
+      "visualVariant": "plain"
+    }
+  ],
+  "html": "<script>globalThis.compromised = true</script>"
+}

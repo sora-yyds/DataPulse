@@ -1,0 +1,491 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:datapulse:story-blueprint:experimental:0.1.0",
+  "title": "DataPulse AI 实验 StoryBlueprint 0.1.0",
+  "description": "仅供 M0-011～M0-013 开发样本使用；M0-048 前不是正式兼容承诺。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "storyId",
+    "datasetVersionId",
+    "reportGoal",
+    "storyTimezone",
+    "references",
+    "conditions",
+    "globalConditionIds",
+    "theme",
+    "visual",
+    "blocks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1.0"
+    },
+    "storyId": {
+      "$ref": "#/$defs/storyId"
+    },
+    "datasetVersionId": {
+      "$ref": "#/$defs/datasetVersionId"
+    },
+    "reportGoal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "storyTimezone": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64,
+      "pattern": "^(?:UTC|[A-Za-z_]+(?:/[A-Za-z0-9_+.-]+)+)$"
+    },
+    "references": {
+      "$ref": "#/$defs/referenceCatalog"
+    },
+    "conditions": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/analysisCondition"
+      }
+    },
+    "globalConditionIds": {
+      "$ref": "#/$defs/analysisConditionIdList"
+    },
+    "theme": {
+      "$ref": "#/$defs/theme"
+    },
+    "visual": {
+      "$ref": "#/$defs/storyVisual"
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/storyBlock"
+      }
+    }
+  },
+  "$defs": {
+    "storyId": {
+      "type": "string",
+      "minLength": 7,
+      "maxLength": 70,
+      "pattern": "^story_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "datasetVersionId": {
+      "type": "string",
+      "minLength": 17,
+      "maxLength": 80,
+      "pattern": "^dataset_version_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "fieldId": {
+      "type": "string",
+      "minLength": 7,
+      "maxLength": 70,
+      "pattern": "^field_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "storyBlockId": {
+      "type": "string",
+      "minLength": 13,
+      "maxLength": 76,
+      "pattern": "^story_block_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "analysisConditionId": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 83,
+      "pattern": "^analysis_condition_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "metricId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 71,
+      "pattern": "^metric_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "evidenceId": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 73,
+      "pattern": "^evidence_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "judgmentRuleId": {
+      "type": "string",
+      "minLength": 15,
+      "maxLength": 78,
+      "pattern": "^judgment_rule_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "narrativeRuleId": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 79,
+      "pattern": "^narrative_rule_[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "fieldIdList": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/fieldId"
+      }
+    },
+    "metricIdList": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/metricId"
+      }
+    },
+    "evidenceIdList": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/evidenceId"
+      }
+    },
+    "judgmentRuleIdList": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/judgmentRuleId"
+      }
+    },
+    "narrativeRuleIdList": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/narrativeRuleId"
+      }
+    },
+    "analysisConditionIdList": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/analysisConditionId"
+      }
+    },
+    "referenceCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fieldIds",
+        "metricIds",
+        "evidenceIds",
+        "judgmentRuleIds",
+        "narrativeRuleIds"
+      ],
+      "properties": {
+        "fieldIds": {
+          "$ref": "#/$defs/fieldIdList"
+        },
+        "metricIds": {
+          "$ref": "#/$defs/metricIdList"
+        },
+        "evidenceIds": {
+          "$ref": "#/$defs/evidenceIdList"
+        },
+        "judgmentRuleIds": {
+          "$ref": "#/$defs/judgmentRuleIdList"
+        },
+        "narrativeRuleIds": {
+          "$ref": "#/$defs/narrativeRuleIdList"
+        }
+      }
+    },
+    "timeRangeCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conditionId", "kind", "fieldId", "start", "end"],
+      "properties": {
+        "conditionId": {
+          "$ref": "#/$defs/analysisConditionId"
+        },
+        "kind": {
+          "const": "time-range"
+        },
+        "fieldId": {
+          "$ref": "#/$defs/fieldId"
+        },
+        "start": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 64,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}(?:T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?(?:Z|[+-]\\d{2}:\\d{2}))?$"
+        },
+        "end": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 64,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}(?:T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?(?:Z|[+-]\\d{2}:\\d{2}))?$"
+        }
+      }
+    },
+    "categoryConditionValue": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "categoryCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conditionId", "kind", "fieldId", "values", "includeMissing"],
+      "properties": {
+        "conditionId": {
+          "$ref": "#/$defs/analysisConditionId"
+        },
+        "kind": {
+          "const": "category-in"
+        },
+        "fieldId": {
+          "$ref": "#/$defs/fieldId"
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/categoryConditionValue"
+          }
+        },
+        "includeMissing": {
+          "type": "boolean"
+        }
+      }
+    },
+    "numberRangeCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conditionId", "kind", "fieldId"],
+      "properties": {
+        "conditionId": {
+          "$ref": "#/$defs/analysisConditionId"
+        },
+        "kind": {
+          "const": "number-range"
+        },
+        "fieldId": {
+          "$ref": "#/$defs/fieldId"
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["minimum"],
+          "properties": {
+            "minimum": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "required": ["maximum"],
+          "properties": {
+            "maximum": {
+              "type": "number"
+            }
+          }
+        }
+      ]
+    },
+    "analysisCondition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/timeRangeCondition"
+        },
+        {
+          "$ref": "#/$defs/categoryCondition"
+        },
+        {
+          "$ref": "#/$defs/numberRangeCondition"
+        }
+      ]
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["themeId"],
+      "properties": {
+        "themeId": {
+          "enum": [
+            "deep-space-neon",
+            "soft-glass",
+            "data-editorial",
+            "enterprise-minimal"
+          ]
+        }
+      }
+    },
+    "storyVisual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["renderMode", "scenePreset", "motionPreset"],
+      "properties": {
+        "renderMode": {
+          "const": "2d"
+        },
+        "scenePreset": {
+          "const": "none"
+        },
+        "motionPreset": {
+          "const": "none"
+        }
+      }
+    },
+    "blockLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["variant"],
+      "properties": {
+        "variant": {
+          "enum": ["full-width", "split-left", "split-right", "emphasis"]
+        }
+      }
+    },
+    "titleSummaryBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blockId",
+        "blockType",
+        "layout",
+        "additionalConditionIds",
+        "evidenceIds",
+        "judgmentRuleIds",
+        "narrativeRuleIds",
+        "content",
+        "visualVariant"
+      ],
+      "properties": {
+        "blockId": {
+          "$ref": "#/$defs/storyBlockId"
+        },
+        "blockType": {
+          "const": "title-summary"
+        },
+        "layout": {
+          "$ref": "#/$defs/blockLayout"
+        },
+        "additionalConditionIds": {
+          "$ref": "#/$defs/analysisConditionIdList"
+        },
+        "evidenceIds": {
+          "$ref": "#/$defs/evidenceIdList"
+        },
+        "judgmentRuleIds": {
+          "$ref": "#/$defs/judgmentRuleIdList"
+        },
+        "narrativeRuleIds": {
+          "$ref": "#/$defs/narrativeRuleIdList"
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title", "summary"],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            }
+          }
+        },
+        "visualVariant": {
+          "enum": ["hero", "plain"]
+        }
+      }
+    },
+    "kpiBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blockId",
+        "blockType",
+        "layout",
+        "additionalConditionIds",
+        "metricId",
+        "evidenceIds",
+        "judgmentRuleIds",
+        "narrativeRuleIds",
+        "label",
+        "visualVariant"
+      ],
+      "properties": {
+        "blockId": {
+          "$ref": "#/$defs/storyBlockId"
+        },
+        "blockType": {
+          "const": "kpi"
+        },
+        "layout": {
+          "$ref": "#/$defs/blockLayout"
+        },
+        "additionalConditionIds": {
+          "$ref": "#/$defs/analysisConditionIdList"
+        },
+        "metricId": {
+          "$ref": "#/$defs/metricId"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/evidenceId"
+          }
+        },
+        "judgmentRuleIds": {
+          "$ref": "#/$defs/judgmentRuleIdList"
+        },
+        "narrativeRuleIds": {
+          "$ref": "#/$defs/narrativeRuleIdList"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "visualVariant": {
+          "enum": ["metric-card", "metric-feature"]
+        }
+      }
+    },
+    "storyBlock": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/titleSummaryBlock"
+        },
+        {
+          "$ref": "#/$defs/kpiBlock"
+        }
+      ]
+    }
+  }
+}
