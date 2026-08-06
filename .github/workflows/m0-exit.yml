@@ -1,0 +1,45 @@
+# M0-019: independent verify:m0 exit aggregate. Not a required check and
+# intentionally red (non-zero) until all 35 frozen M0 gates pass; it must never
+# be added to the merge-queue required set while M0 is incomplete.
+name: m0 / exit-candidate
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ci-m0-exit
+  cancel-in-progress: true
+
+jobs:
+  exit:
+    name: m0 / verify-m0-exit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      COREPACK_DEFAULT_TO_LATEST: "0"
+      COREPACK_ENABLE_AUTO_PIN: "0"
+      COREPACK_ENABLE_PROJECT_SPEC: "1"
+      COREPACK_ENABLE_STRICT: "1"
+      TURBO_TELEMETRY_DISABLED: "1"
+      TZ: Asia/Shanghai
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Compute merge base from previous commit
+        run: |
+          MERGE_BASE="$(git rev-parse HEAD^)"
+          echo "DATAPULSE_MERGE_BASE=${MERGE_BASE}" >> "${GITHUB_ENV}"
+      - name: Setup Node.js 24.19.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.19.0
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Install fixed Playwright Chromium
+        run: corepack pnpm exec playwright install --with-deps chromium
+      - name: Run M0 exit candidate
+        run: corepack pnpm run verify:m0

@@ -1,0 +1,99 @@
+# M0-019: PR quick feedback and the merge-group full activated aggregate.
+# Contract: docs/governance/github-workflow-policy.md -- least privilege
+# (permissions: {}), no pull-request-target trigger, every remote action pinned to a
+# full 40-char commit SHA, fork-safe without secrets or paid SaaS. The
+# merge-group concurrency key uses the queue head SHA (Git-validated hex)
+# because merge_group events carry no numeric ID.
+name: m0 / ci
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  merge_group:
+
+permissions: {}
+
+jobs:
+  pr-quick:
+    name: m0 / pr-quick
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      COREPACK_DEFAULT_TO_LATEST: "0"
+      COREPACK_ENABLE_AUTO_PIN: "0"
+      COREPACK_ENABLE_PROJECT_SPEC: "1"
+      COREPACK_ENABLE_STRICT: "1"
+      TURBO_TELEMETRY_DISABLED: "1"
+      TZ: Asia/Shanghai
+    concurrency:
+      group: ci-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Compute merge base from base branch
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          MERGE_BASE="$(git merge-base "origin/${BASE_REF}" HEAD)"
+          echo "DATAPULSE_MERGE_BASE=${MERGE_BASE}" >> "${GITHUB_ENV}"
+      - name: Setup Node.js 24.19.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.19.0
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Fixed toolchain gate
+        run: corepack pnpm run check:toolchain
+      - name: Repository foundation gates
+        run: corepack pnpm run check:foundation
+      - name: Dependency boundaries
+        run: corepack pnpm run check:dependencies
+      - name: Design tokens
+        run: corepack pnpm run check:design
+      - name: Fixture manifest
+        run: corepack pnpm run check:fixtures
+      - name: Unit tests
+        run: corepack pnpm run test:unit
+      - name: Component tests
+        run: corepack pnpm run test:component
+
+  merge-group-full:
+    name: m0 / daily-required
+    if: github.event_name == 'merge_group'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      COREPACK_DEFAULT_TO_LATEST: "0"
+      COREPACK_ENABLE_AUTO_PIN: "0"
+      COREPACK_ENABLE_PROJECT_SPEC: "1"
+      COREPACK_ENABLE_STRICT: "1"
+      TURBO_TELEMETRY_DISABLED: "1"
+      TZ: Asia/Shanghai
+    concurrency:
+      group: ci-merge-group-${{ github.event.merge_group.head_sha }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Compute merge base from base branch
+        env:
+          BASE_REF: ${{ github.event.merge_group.base_ref }}
+        run: |
+          MERGE_BASE="$(git merge-base "origin/${BASE_REF}" HEAD)"
+          echo "DATAPULSE_MERGE_BASE=${MERGE_BASE}" >> "${GITHUB_ENV}"
+      - name: Setup Node.js 24.19.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.19.0
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Install fixed Playwright Chromium
+        run: corepack pnpm exec playwright install --with-deps chromium
+      - name: Run activated daily aggregate
+        run: corepack pnpm run verify:pr

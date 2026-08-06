@@ -1,0 +1,52 @@
+# M0-019: post-merge re-verification on main (ADR-0038 "main review").
+# Uses github.event.before as the append-only evidence baseline; falls back to
+# HEAD^ for the initial push to an empty repository.
+name: m0 / main-review
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ci-main-review
+  cancel-in-progress: true
+
+jobs:
+  main-review:
+    name: m0 / main-review
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      COREPACK_DEFAULT_TO_LATEST: "0"
+      COREPACK_ENABLE_AUTO_PIN: "0"
+      COREPACK_ENABLE_PROJECT_SPEC: "1"
+      COREPACK_ENABLE_STRICT: "1"
+      TURBO_TELEMETRY_DISABLED: "1"
+      TZ: Asia/Shanghai
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Compute merge base from previous main
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ "${BEFORE_SHA}" = "0000000000000000000000000000000000000000" ]; then
+            MERGE_BASE="$(git rev-parse HEAD^)"
+          else
+            MERGE_BASE="$(git rev-parse "${BEFORE_SHA}")"
+          fi
+          echo "DATAPULSE_MERGE_BASE=${MERGE_BASE}" >> "${GITHUB_ENV}"
+      - name: Setup Node.js 24.19.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.19.0
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Install fixed Playwright Chromium
+        run: corepack pnpm exec playwright install --with-deps chromium
+      - name: Run full activated aggregate
+        run: corepack pnpm run verify:pr
