@@ -45,7 +45,8 @@ Windows 阶段结果证明固定 Chromium 下六项自动冒烟与八张主题�
 
 - 完整 WCAG 2.2 AA：axe 自动扫描与焦点环规则都不等于键盘／焦点／对比度的人工签署；
 - 固定视觉人工审查：PNG 基线只冻结当前像素，仍需同一 PR 人工审查；
+- CI／Linux 像素基线：四主题基线只在维护者固定 Windows 环境运行（`process.platform === "win32" && !CI`），CI 环境设计性跳过并记录原因，需按平台单独生成并人工审查后启用；
 - HTTPS、Creator／Viewer／API／Connector 四 Origin、Safari／微信或真实设备；
 - 干净 Ubuntu、GitHub Actions、merge queue、公开 Fork 复现。
 
-因此 M0-018 与 DETERMINISTIC-UI-A11Y 保持 `in_progress / partially_evidenced`；daily gate 继续绑定 `check:design`，不把视觉冒烟写成新的日常根脚本。规划顺序上的下一项是 M0-019 CI。
+因此 M0-018 与 DETERMINISTIC-UI-A11Y 保持 `in_progress / partially_evidenced`；daily gate 继续绑定 `check:design`，不把视觉冒烟写成新的日常根脚本。M0-019 已在 workflow 中显式安装 Playwright Chromium，并在 CI 环境按设计跳过像素基线（其余五项视觉冒烟继续真实执行）；Linux／CI 平台基线待按平台单独生成并人工审查。

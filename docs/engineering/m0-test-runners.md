@@ -58,7 +58,7 @@ pnpm 安装固定 JavaScript 依赖，但不下载浏览器二进制。首次本
 corepack pnpm exec playwright install chromium
 ```
 
-该外部缓存不能由锁文件或 Windows 阶段报告冒充干净 Ubuntu／CI 已具备。M0-019 必须在 workflow 中显式安装固定 Playwright Chromium，并在公开 Fork 路径复现。
+该外部缓存不能由锁文件或 Windows 阶段报告冒充干净 Ubuntu／CI 已具备。M0-019 已在 `ci.yml`／`main-review.yml`／`m0-exit.yml`／`release-dry-run.yml` 中显式执行 `corepack pnpm exec playwright install --with-deps chromium`，公开 Fork 以相同步骤复现；真实 GitHub 运行待推送远端。
 
 ## 4. 依赖和产品边界
 
