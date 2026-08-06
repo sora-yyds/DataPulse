@@ -195,6 +195,7 @@ describe("profiles and purposes", () => {
       "datapulse/project-key-wrap",
       "datapulse/project-package-chunk",
       "datapulse/share-key-wrap",
+      "datapulse/device-bound-seal",
     ]);
     for (const purpose of Object.values(CRYPTO_PURPOSES)) {
       expect(isCryptoPurpose(purpose)).toBe(true);
