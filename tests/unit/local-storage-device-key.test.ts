@@ -146,9 +146,12 @@ describe("local-storage device key", () => {
 
   it("defines stable closed-enum error DTOs", () => {
     expect(Object.values(LOCAL_STORAGE_ERROR_CODES).sort()).toEqual([
+      "STORAGE_CAPACITY_EXCEEDED",
       "STORAGE_DEVICE_KEY_MISSING",
+      "STORAGE_INVALID_ARGUMENT",
       "STORAGE_INVALID_DEVICE_KEY",
       "STORAGE_PERSISTENCE_UNAVAILABLE",
+      "STORAGE_QUOTA_UNAVAILABLE",
       "STORAGE_UNAVAILABLE",
       "STORAGE_WRITE_FAILED",
     ]);
