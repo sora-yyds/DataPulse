@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-06T15:15:27+08:00",
+  "updatedAt": "2026-08-06T15:36:46+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v16",
+      "latestRecordId": "m0-wave0-evidence-contract-v17",
       "blockerRefs": []
     },
     {
@@ -1181,7 +1181,7 @@
         "rootScriptCommandSha256": "a94b1bd0a39db3246230d218b9fa265c8c9b85ea9a0004d13214ec8036be1fcb"
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-ci-activation-m0-019-v1",
+      "latestRecordId": "m0-ci-activation-m0-019-v2",
       "blockerRefs": []
     },
     {
@@ -6571,6 +6571,210 @@
       ],
       "blockerRefs": [],
       "notes": "M0-019 CI 表面落地后，已按最终工作树复核 evidence-index v2、append-only 链、冻结 gate 静态定义、激活与未完成状态边界、人工／外部凭证语义、AGENTS.md 命令矩阵（新增 CI workflow 表面与视觉基线 CI 跳过策略）和实施计划顺序；CI-ACTIVATION 与 M0-019 保持 in_progress / partially_evidenced，本复核不扩张为 M0-019 完成，也不冒充真实 GitHub 运行、merge queue required check、保护分支、否定 PR、公开 Fork 复现或干净 Ubuntu 矩阵。"
+    },
+    {
+      "id": "m0-ci-activation-m0-019-v2",
+      "title": "M0-019 GitHub Actions ??????????????Ubuntu 24.04?",
+      "gateIds": [
+        "CI-ACTIVATION"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-009",
+        "M0-019",
+        "M0-045"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-QA-002",
+        "NFR-QA-005",
+        "NFR-REL-005",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T15:36:46+08:00",
+      "observedAt": "2026-08-06T15:36:46+08:00",
+      "supersedesRecordId": "m0-ci-activation-m0-019-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": true,
+        "checkName": "m0 / quality-aggregators",
+        "summaryCheck": "m0-quality-aggregators",
+        "rootScript": "check:aggregators",
+        "rootScriptCommandSha256": "a94b1bd0a39db3246230d218b9fa265c8c9b85ea9a0004d13214ec8036be1fcb"
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": ".github/workflows/ci.yml",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": ".github/workflows/main-review.yml",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": ".github/workflows/m0-exit.yml",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": ".github/workflows/release-dry-run.yml",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-design.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "report",
+          "path": "docs/engineering/m0-ci.md",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "docs/evidence/m0/reports/m0-019-github-actions-main-review.v1.json",
+          "immutable": true,
+          "sha256": "c5b2ee95f09b14c403e6d0b3c74581572d25fde6dec0a6b987f5a8ab92959aa6"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "main ?????HEAD b9cbca1??? m0 / main-review run 31080835495?Ubuntu 24.04????GitHub runner ??? corepack shim?? pnpm ?? PATH?check:toolchain pnpm ENOENT?turbo Unable to find package manager binary??designmd --version ? Linux ?? [log] 0.4.0?check:design ?????????????? job ? setup-node ??? corepack enable?scripts/check-design.mjs ? CLI ????????? [log] ????? 0.4.0?docs/engineering/m0-ci.md ?????????????HEAD 1fd3d99??? run 31081289668 / job 92550467563 ???verify:pr result=passed?nonce dd326b2d???REPO-FOUNDATION 3/3?DEPENDENCY-BOUNDARIES 2088/2088?TEST-RUNNERS 6/6?DETERMINISTIC-UI-A11Y 356/356?CI-ACTIVATION 21/21?? 6/6??? main push CI ????? merge queue required check???????? PR?merge-group ??????? Fork ????? Ubuntu ???????CI-ACTIVATION ? M0-019 ?? in_progress / partially_evidenced?"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v17",
+      "title": "M0 ???? v2?M0-019 ?? CI ??????",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-06T15:36:46+08:00",
+      "observedAt": "2026-08-06T15:36:46+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v16",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v17.json",
+          "immutable": true,
+          "sha256": "7a61c07bfa4fbeb348b31d61f10e5a42f78a915b911a652790eecbe8b311e81c"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "?? m0-ci-activation-m0-019-v2 ??? evidence-index v2?append-only ???? gate ???????????????? attestation ????? main push CI?run 31081289668????? merge queue required check???????? PR??? Fork ??? Ubuntu ?????CI-ACTIVATION ? M0-019 ?? in_progress / partially_evidenced???????? M0-019 ???"
     }
   ]
 }
