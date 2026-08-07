@@ -4,7 +4,7 @@
 
 当前真实入口：
 
-固定 Windows 工作树的当前六类 runner 均已有真实产品断言：Vitest `8 files / 215 tests`、RTL `1 file / 2 tests`、Storybook Chromium `1 file / 1 story test`、Playwright E2E `2 tests`、独立 axe `2 tests`、Playwright 视觉冒烟 `24 run / 18 passed / 6 designed skips`。结构化 `check:test-runners` 真实重跑六个根入口并返回 `6/6`；这仍只是 Windows HTTP 阶段结果，不代表 Ubuntu、GitHub Actions、公开 Fork、HTTPS／四 Origin、完整 WCAG 认证或真实设备矩阵，也不关闭 M0-016／TEST-RUNNERS／M0-018。
+固定 Windows 工作树的当前八类 runner 均已有真实产品断言：Vitest `17 files / 362 tests`、RTL `1 file / 2 tests`、Storybook Chromium `1 file / 1 story test`、Playwright storage `3 files / 13 tests`、Worker CSP `1 file / 3 tests`、Playwright E2E `2 tests`、独立 axe `2 tests`、Playwright 视觉冒烟 `24 run / 18 passed / 6 designed skips`。结构化 `check:test-runners` 真实重跑八个根入口并返回 `8/8`；这仍只是 Windows HTTP 阶段结果，不代表 Ubuntu、GitHub Actions、公开 Fork、HTTPS／四 Origin、完整 WCAG 认证或真实设备矩阵，也不关闭 M0-016／TEST-RUNNERS／M0-018／M0-032。
 
 - `unit/story-blueprint-schema.test.ts`：M0-011／048 的根级交叉契约；`test:unit` 先构建 workspace，再从三个包的公开 `dist` seam 使用 Vitest + Ajv 验证正式 `1.0.0` Story Schema、原始字节 hash、深只读边界、domain opaque ID 与四主题目录。放在根目录是因为它同时核对三个零内部 workspace 依赖的 workspace 的公开事实，不为任一包制造反向依赖。
 - `unit/story-blueprint-validator.test.ts`：M0-012／048 的公开 `dist` 合同；验证正式确定性生成物、正式根 bundle 不加载实验 validator、Node ESM／Vite no-write 探针、安全对象快照、资源上限、可信身份／引用、全局条件保持、区块条件收紧、版本化中文文本规则和最小 KPI 白名单。它不解析原始字符串／字节，也不冒充完整自然语言证明或产品应用构建。
@@ -18,7 +18,8 @@
 - `e2e/creator-viewer.spec.ts`：通过固定 `4173/4174` 端口、各 app cwd 的直接 Node／Vite CLI 启动两端 production preview，分别验证文档标题、应用身份、标题、KPI `23`、范围、evidence 和无 alert；直接 launcher 让 Playwright 在 Windows 上拥有并同步清理实际监听进程，连续 E2E／axe 运行不得复用残留服务；只证明本地 HTTP Chromium 近似，不证明 HTTPS、Cookie／存储隔离或完整产品链。
 - `a11y/creator-viewer-a11y.spec.ts`：对两端完整页面运行不排除产品节点、不禁用规则的 `@axe-core/playwright` 扫描；要求自动可检测违规为零，并要求实际评估的规则结果非零。axe 自动扫描不等于 WCAG 2.2 AA 人工与设备认证。
 - `visual/deterministic-ui-smoke.spec.ts`：M0-018 的固定视觉冒烟；复用与 E2E／axe 同一对严格 production HTTP preview 与各 app cwd 直启 Node／Vite CLI 生命周期，固定 `zh-CN`、`Asia/Shanghai`、弱动效和四主题 Token，覆盖 Creator／Viewer 桌面 `1280×720`、Viewer 平板 `834×1112` 与手机 `390×844` 视口，检查字体回退链、`:focus-visible` 焦点环、200% 缩放无水平溢出且核心内容不重叠、响应式不溢出与四主题视觉基线。`openStory` 显式调用 `page.emulateMedia({ reducedMotion: "reduce" })` 兜底 Playwright runner 级 `use.reducedMotion` 不生效的问题。Playwright 快照只是固定 Chromium 的自动近似，不是完整 WCAG 2.2 AA 人工与设备认证。
-- `../scripts/check-test-runners.mjs`：顺序真实运行 `test:unit`、`test:component`、`test:storybook`、`test:e2e`、`test:a11y` 和 `test:visual`，汇总退出状态为绑定 gate／nonce 的 `check=test-runners` 单行 JSON；任一子入口失败时最终非零且不把其他入口记为跳过。
+- `worker-csp/worker-csp.spec.ts`：M0-032 的真实 Chromium Worker CSP 网络通道否定与生命周期释放矩阵；由 spec 自持本地 HTTP server 提供文档严格 CSP 与 Worker 响应自身携带的 CSP，验证 fetch／WebSocket／EventSource／动态 import／importScripts／嵌套 Worker 与 sendBeacon 不产生请求（canary Origin 零请求／零升级），并驱动 BrowserWorkerAdapter 完成／取消／超时／失败四终态均 terminate 独占 Worker 与释放 transferable；spec 内服务器不触碰 Creator／Viewer 的 4173/4174 双 webServer 生命周期合同。
+- `../scripts/check-test-runners.mjs`：顺序真实运行 `test:unit`、`test:component`、`test:storybook`、`test:storage`、`test:worker-csp`、`test:e2e`、`test:a11y` 和 `test:visual`，汇总退出状态为绑定 gate／nonce 的 `check=test-runners` 单行 JSON；任一子入口失败时最终非零且不把其他入口记为跳过。
 - `fixtures/story-artifacts/formal/`：保存 M0-048 的单一正式 `1.0.0` 合成契约 fixture 与固定原始字节 SHA-256 manifest；该 manifest 与 fixture 一经证据记录即相对可信 merge-base 和长分支受保护提交整体永久不变，未来正式版本新建 manifest 路径。Creator、Viewer 分别读取独立字节副本，只按版本和 hash 对齐，不共享运行时存储，也不冒充产品发布样本。
 - `fixtures/metric-runtime/formal/`：保存 M0-049 的正式 accumulator／plan Schema hash 与 Creator／Viewer 黄金向量；`sum-f64-v1` fixture 固定非结合求和和 binary64 舍入位型，不包含原始行、真实用户数据或十进制精确性承诺。
 - `fixtures/manifest.v1.json` 与 `fixture-manifest.schema.v1.json`：M0-017 的统一合成 fixture catalog；登记现有四个领域集合的用途、具体 oracle、generator 版本、seed 适用性、子 manifest 及原始 bytes／SHA-256。`check:fixtures` 只读核对路径、库存和身份，不执行未来 generator，也不冒充 M0-047 `test:corpus`。

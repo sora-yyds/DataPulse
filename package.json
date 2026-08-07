@@ -17,6 +17,7 @@
     "test:e2e": "turbo run build && playwright test --config playwright.config.ts",
     "test:a11y": "turbo run build && playwright test --config playwright.a11y.config.ts",
     "test:visual": "turbo run build && playwright test --config playwright.visual.config.ts",
+    "test:worker-csp": "turbo run build && playwright test --config playwright.worker-csp.config.ts",
     "build": "turbo run build",
     "changeset": "changeset",
     "check:aggregators": "node ./scripts/check-aggregators.mjs --self-test",
