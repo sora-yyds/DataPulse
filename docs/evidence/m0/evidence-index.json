@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-07T16:30:00+08:00",
+  "updatedAt": "2026-08-07T17:10:00+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v33",
+      "latestRecordId": "m0-wave0-evidence-contract-v34",
       "blockerRefs": []
     },
     {
@@ -910,7 +910,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-local-analysis-browser-worker-v1",
+      "latestRecordId": "m0-local-analysis-worker-csp-v1",
       "blockerRefs": []
     },
     {
@@ -10347,6 +10347,226 @@
       ],
       "blockerRefs": [],
       "notes": "M0-031 Worker 外壳与 BrowserWorkerAdapter 阶段：packages/local-analysis 新增无运行时 import 的单文件模块 Worker 外壳与 BrowserWorkerAdapter，主线程预取并 SHA-256 校验固定 WASM 后经 bootstrap 消息结构化克隆传入；tests/unit/local-analysis-browser-worker.test.ts 20 项、test:unit 17 files/362 tests、check:workspace 545/545、check:dependencies 3268/3268、16 workspace；证据记录 m0-local-analysis-browser-worker-v1 为 WORKER-ISOLATION 首个部分取证记录。本凭证复核 13 个主题工件（证据 Schema、校验器、README、AGENTS.md、实施计划、路线图），result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v32。"
+    },
+    {
+      "id": "m0-local-analysis-worker-csp-v1",
+      "title": "M0-032 真实浏览器 Worker CSP 网络通道否定与生命周期释放矩阵",
+      "gateIds": [
+        "WORKER-ISOLATION"
+      ],
+      "epicIds": [
+        "M0-E4",
+        "M0-E6"
+      ],
+      "taskIds": [
+        "M0-031",
+        "M0-032",
+        "M0-059"
+      ],
+      "requirementIds": [
+        "FR-IMP-005",
+        "SEC-009"
+      ],
+      "adrIds": [
+        "ADR-0020",
+        "ADR-0031"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "local-https",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-07T17:10:00+08:00",
+      "observedAt": "2026-08-07T17:10:00+08:00",
+      "supersedesRecordId": "m0-local-analysis-browser-worker-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "test-result",
+          "path": "tests/worker-csp/worker-csp.spec.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/worker-csp-fixture/probe.js",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/worker-csp-fixture/probe-worker.js",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/worker-csp-fixture/index.html",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/worker-csp-fixture/lifecycle.html",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/worker-csp-fixture/stalled-worker.js",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/worker-csp-fixture/crash-worker.js",
+          "immutable": false
+        },
+        {
+          "kind": "configuration",
+          "path": "playwright.worker-csp.config.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-test-runners.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-032 阶段实现：新增 test:worker-csp（第八类 runner，1 file / 3 tests），由 spec 自持两个本地 HTTP server（主 Origin + canary Origin）在真实 Chromium 运行。文档严格 CSP（connect-src 'none'）验证页面侧 navigator.sendBeacon 不产生请求（Chromium 对 sendBeacon 在 CSP 下仍返回 true，以服务器侧请求日志为准）与 BrowserWorkerAdapter 的 WASM 预取被 CSP 拦截（LOCAL_ANALYSIS_WORKER_FAILED wasm-fetch-failed 且未派生 Worker）；Worker 脚本响应自身携带 CSP（default-src 'none'、script-src 'none'、connect-src 'none'、worker-src 'none'、child-src 'none'；Chromium 不把文档 CSP 继承进 Worker，符合 ROADMAP“Worker CSP 禁止连接、网络脚本源与嵌套 Worker”），验证 Worker 内 fetch（同源与跨源）、WebSocket、EventSource、动态 import、importScripts（Chromium module Worker 暴露占位函数但调用即抛）与嵌套 Worker 全部被拒绝，canary Origin 零请求／零升级、主 Origin 无 /prohibited 请求。生命周期释放矩阵：BrowserWorkerAdapter 完成（result + preparing/evaluating/finalizing + 每次 run 独占派生一个 module Worker 且终态 terminate）、取消（AbortSignal → LOCAL_ANALYSIS_CANCELLED abort-signal）、超时（stalled-worker 永不 ACK → worker-unreachable）、失败（crash-worker → worker-terminated）四终态均 terminate 并释放 Worker 引用；transferable 移交后主线程 detach（64→0）且 Worker 收到完整 64 字节；bundle 静态否定（无 import/export/import.meta/fetch/WebSocket/EventSource/sendBeacon/importScripts/XMLHttpRequest/嵌套 Worker/动态 import）在真实浏览器复验。check:test-runners 注册表扩为八类（8/8）。WORKER-ISOLATION gate 保持 in_progress/partially_evidenced、不激活日常且 m0 退出不满足；真实浏览器集成否定矩阵（伪造来源/nonce/超限消息、宽松 CORS、凭据携带与 Worker 禁网）仍待 M0-059；HTTPS／四 Origin 属于 M0-036～M0-039／M0-058。环境合同继承冻结 gate 的 environmentKind=local-https，本阶段实际执行仅发生在 Windows x64 本地含空格工作树的真实 Chromium（本地 HTTP 127.0.0.1 潜在可信 Origin），干净 Ubuntu 与 CI 复现未执行。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v34",
+      "title": "M0-032 真实浏览器 Worker CSP 与生命周期矩阵阶段证据及 AGENTS.md 同步复核",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-07T17:10:00+08:00",
+      "observedAt": "2026-08-07T17:10:00+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v33",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v34.json",
+          "immutable": true,
+          "sha256": "d6fd7fb5b253ba9cc2c21e2b498f2b679c9378cedea55c04d91a58228f5fd2e8"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-032 真实浏览器 Worker CSP 网络通道否定与生命周期释放矩阵阶段：新增 test:worker-csp（第八类 runner，1 file/3 tests），spec 自持本地 HTTP server 在真实 Chromium 验证 Worker 响应自身 CSP 拒绝 fetch/WebSocket/EventSource/动态 import/importScripts/嵌套 Worker（canary Origin 零请求/零升级），BrowserWorkerAdapter 完成/取消/超时/失败四终态均 terminate 独占 Worker 并释放 transferable；证据记录 m0-local-analysis-worker-csp-v1（supersedes m0-local-analysis-browser-worker-v1）；AGENTS.md 同步八类 runner 与 8/8。本凭证复核 13 个主题工件，result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v33。"
     }
   ]
 }
