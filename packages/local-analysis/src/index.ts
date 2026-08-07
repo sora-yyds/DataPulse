@@ -18,6 +18,7 @@ export {
   createInvalidRequestError,
   createStateTransitionInvalidError,
   createTransferLimitExceededError,
+  createWorkerFailedError,
   isLocalAnalysisError,
   type CancelledError,
   type InvalidRequestError,
@@ -27,6 +28,8 @@ export {
   type StateTransitionInvalidError,
   type TransferLimitExceededError,
   type TransferLimitReason,
+  type WorkerFailedError,
+  type WorkerFailedReason,
 } from "./errors.js";
 
 export {
@@ -49,3 +52,10 @@ export {
 } from "./contract.js";
 
 export { createInProcessTestAdapter } from "./in-process-adapter.js";
+
+export {
+  createBrowserWorkerAdapter,
+  type BrowserWorkerAdapterConfig,
+  type BrowserWorkerConstructor,
+  type BrowserWorkerLike,
+} from "./browser-worker-adapter.js";

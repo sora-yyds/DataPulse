@@ -9,6 +9,7 @@ export const LOCAL_ANALYSIS_ERROR_CODES = Object.freeze({
   transferLimitExceeded: "LOCAL_ANALYSIS_TRANSFER_LIMIT_EXCEEDED",
   stateTransitionInvalid: "LOCAL_ANALYSIS_STATE_TRANSITION_INVALID",
   cancelled: "LOCAL_ANALYSIS_CANCELLED",
+  workerFailed: "LOCAL_ANALYSIS_WORKER_FAILED",
 } as const);
 
 export type LocalAnalysisErrorCode =
@@ -26,11 +27,19 @@ export type InvalidRequestReason =
   | "transferable-count"
   | "transferable-bytes"
   | "payload-size"
+  | "wasm"
   | "phase"
   | "result"
   | "error";
 
 export type TransferLimitReason = "count" | "item-bytes" | "total-bytes";
+
+export type WorkerFailedReason =
+  | "wasm-fetch-failed"
+  | "wasm-hash-mismatch"
+  | "worker-unreachable"
+  | "worker-terminated"
+  | "worker-invalid-message";
 
 type FrozenError<Code extends string, Reason extends string> = Readonly<{
   code: Code;
@@ -65,11 +74,17 @@ export type CancelledError = Readonly<{
   details: Readonly<{ reason: "abort-signal" }>;
 }>;
 
+export type WorkerFailedError = Readonly<{
+  code: typeof LOCAL_ANALYSIS_ERROR_CODES.workerFailed;
+  details: Readonly<{ reason: WorkerFailedReason }>;
+}>;
+
 export type LocalAnalysisError =
   | InvalidRequestError
   | TransferLimitExceededError
   | StateTransitionInvalidError
-  | CancelledError;
+  | CancelledError
+  | WorkerFailedError;
 
 function freezeError<Code extends string, Reason extends string>(
   code: Code,
@@ -116,6 +131,10 @@ export function createStateTransitionInvalidError(
 
 export function createCancelledError(): CancelledError {
   return freezeError(LOCAL_ANALYSIS_ERROR_CODES.cancelled, { reason: "abort-signal" });
+}
+
+export function createWorkerFailedError(reason: WorkerFailedReason): WorkerFailedError {
+  return freezeError(LOCAL_ANALYSIS_ERROR_CODES.workerFailed, { reason });
 }
 
 const LOCAL_ANALYSIS_ERROR_CODE_VALUES: readonly LocalAnalysisErrorCode[] = Object.freeze(

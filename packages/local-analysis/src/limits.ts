@@ -29,6 +29,9 @@ export const LOCAL_ANALYSIS_LIMITS = Object.freeze({
   transferableMaxCount: 64,
   transferableMaxItemBytes: 1024 * 1024 * 1024,
   transferableMaxTotalBytes: 2 * 1024 * 1024 * 1024,
+
+  /** bootstrap fixed-WASM runtime byte bound (DuckDB-WASM size + margin; must stay within item bound). */
+  bootstrapWasmMaxBytes: 128 * 1024 * 1024,
 } as const);
 
 export const TRANSFERABLE_KINDS = Object.freeze([

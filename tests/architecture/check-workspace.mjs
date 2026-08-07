@@ -93,12 +93,16 @@ const requiredWorkspaces = [
     path: "packages/local-analysis",
     name: "@datapulse/local-analysis",
     dependencies: { "@datapulse/domain": "workspace:*" },
-    devDependencies: { "@types/node": "24.13.3" },
+    devDependencies: {
+      "@types/node": "24.13.3",
+      vite: "8.2.0",
+    },
     references: ["../domain"],
     entries: {
       ".": "index",
       "./message": "message",
     },
+    buildScript: "tsc --build tsconfig.json && vite build",
   },
   {
     kind: "package",

@@ -263,7 +263,7 @@ describe("M0-030 LocalAnalysis 消息 Schema 与运行时校验", () => {
     expect(schema.required).toContain("taskId");
     expect(schema.required).toContain("nonce");
     const kinds = schema.allOf.map((entry) => entry.if.properties.kind.const);
-    expect(kinds).toEqual(["request", "progress", "result", "error"]);
+    expect(kinds).toEqual(["request", "progress", "result", "error", "bootstrap"]);
 
     // 与校验器使用同一组 fixture 语义：request 必须携带 transferables。
     expect(validateLocalAnalysisMessage(requestFixture()).ok).toBe(true);
