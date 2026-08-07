@@ -274,7 +274,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-wave0-evidence-contract-v34",
+      "latestRecordId": "m0-wave0-evidence-contract-v35",
       "blockerRefs": []
     },
     {
@@ -10567,6 +10567,121 @@
       ],
       "blockerRefs": [],
       "notes": "M0-032 真实浏览器 Worker CSP 网络通道否定与生命周期释放矩阵阶段：新增 test:worker-csp（第八类 runner，1 file/3 tests），spec 自持本地 HTTP server 在真实 Chromium 验证 Worker 响应自身 CSP 拒绝 fetch/WebSocket/EventSource/动态 import/importScripts/嵌套 Worker（canary Origin 零请求/零升级），BrowserWorkerAdapter 完成/取消/超时/失败四终态均 terminate 独占 Worker 并释放 transferable；证据记录 m0-local-analysis-worker-csp-v1（supersedes m0-local-analysis-browser-worker-v1）；AGENTS.md 同步八类 runner 与 8/8。本凭证复核 13 个主题工件，result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v33。"
+    },
+    {
+      "id": "m0-wave0-evidence-contract-v35",
+      "title": "M0-033 analysis-engine DuckDB-WASM ????? AGENTS.md ????",
+      "gateIds": [
+        "WAVE0-EVIDENCE-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E1",
+        "M0-E5"
+      ],
+      "taskIds": [
+        "M0-001"
+      ],
+      "requirementIds": [
+        "NFR-QA-001",
+        "NFR-REL-006"
+      ],
+      "adrIds": [
+        "ADR-0037",
+        "ADR-0038",
+        "ADR-0040"
+      ],
+      "evidenceStatus": "passed",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "documentation",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-07T18:00:00+08:00",
+      "observedAt": "2026-08-07T18:00:00+08:00",
+      "supersedesRecordId": "m0-wave0-evidence-contract-v34",
+      "executionKind": "manual_review",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": false,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/evidence-index.schema.v2.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-subject-manifest.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-environment-profile.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/external-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/manual-review-attestation.schema.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-exit-manifest.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/m0-external-subject-policies.v1.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/validate-evidence-index.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/evidence/m0/README.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/IMPLEMENTATION_PLAN.md",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "docs/ROADMAP.md",
+          "immutable": false
+        },
+        {
+          "kind": "manual-review",
+          "path": "docs/evidence/m0/attestations/m0-wave0-evidence-contract-review.v35.json",
+          "immutable": true,
+          "sha256": "a0344c7b7349c64a5bb85bf8b82b78bf883bba24eb47e3321475259b5a0fddb6"
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-033 ????? AGENTS.md ????? packages/analysis-engine?? 17 ? workspace??test:unit 18 files/367 tests?check:workspace 574/574?check:dependencies 3499/3499?build 17 tasks ?????????? 13 ??????result=passed?failed=0?unresolvedHighSeverity=0?? append-only ??? v34?"
     },
     {
       "id": "m0-analysis-engine-duckdb-v1",
