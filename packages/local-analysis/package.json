@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "license": "AGPL-3.0-only",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -18,12 +20,13 @@
     }
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "build": "tsc --build tsconfig.json && vite build"
   },
   "dependencies": {
     "@datapulse/domain": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "24.13.3"
+    "@types/node": "24.13.3",
+    "vite": "8.2.0"
   }
 }

@@ -116,7 +116,23 @@ export type LocalAnalysisCancelMessage = Readonly<{
   nonce: AnalysisNonce;
 }>;
 
+export type LocalAnalysisBootstrapMessage = Readonly<{
+  schemaVersion: typeof LOCAL_ANALYSIS_MESSAGE_SCHEMA_VERSION;
+  kind: "bootstrap";
+  taskId: AnalysisTaskId;
+  nonce: AnalysisNonce;
+  transferables: readonly TransferableDescriptor[];
+  wasm: Readonly<{ byteLength: number; sha256: string }>;
+}>;
+
+/** postMessage ?????message ???????buffers ?????????/????? */
+export type LocalAnalysisTransportEnvelope = Readonly<{
+  message: LocalAnalysisMessage;
+  buffers: readonly ArrayBuffer[];
+}>;
+
 export type LocalAnalysisMessage =
+  | LocalAnalysisBootstrapMessage
   | LocalAnalysisRequestMessage
   | LocalAnalysisProgressMessage
   | LocalAnalysisResultMessage
@@ -130,6 +146,10 @@ export type ValidatedLocalAnalysisMessage = Readonly<LocalAnalysisMessage> & {
 };
 
 export type ValidatedLocalAnalysisRequest = Readonly<LocalAnalysisRequestMessage> & {
+  readonly [validatedLocalAnalysisMessageBrand]: true;
+};
+
+export type ValidatedLocalAnalysisBootstrap = Readonly<LocalAnalysisBootstrapMessage> & {
   readonly [validatedLocalAnalysisMessageBrand]: true;
 };
 
@@ -295,6 +315,61 @@ function validateRequestKind(value: Record<string, unknown>): RequestKindValidat
   return { ok: true, message };
 }
 
+function isSha256Hex(value: unknown): value is string {
+  return typeof value === "string" && /^[0-9a-f]{64}$/u.test(value);
+}
+
+type BootstrapKindValidation =
+  | { ok: true; message: LocalAnalysisBootstrapMessage }
+  | { ok: false; reason: InvalidRequestReason };
+
+function validateBootstrapKind(value: Record<string, unknown>): BootstrapKindValidation {
+  const taskId = value["taskId"];
+  const nonce = value["nonce"];
+  if (!isAnalysisTaskId(taskId)) {
+    return { ok: false, reason: "task-id" };
+  }
+  if (!isAnalysisNonce(nonce)) {
+    return { ok: false, reason: "nonce" };
+  }
+  const transferables = validateTransferables(value["transferables"]);
+  if (!transferables.ok) {
+    return { ok: false, reason: transferables.reason as InvalidRequestReason };
+  }
+  if (transferables.descriptors.length !== 1) {
+    return { ok: false, reason: "transferable-count" };
+  }
+  const wasm = value["wasm"];
+  if (!isRecord(wasm)) {
+    return { ok: false, reason: "wasm" };
+  }
+  const byteLength = wasm["byteLength"];
+  const sha256 = wasm["sha256"];
+  if (
+    !isBoundedCount(byteLength) ||
+    byteLength <= 0 ||
+    byteLength > LOCAL_ANALYSIS_LIMITS.bootstrapWasmMaxBytes ||
+    !isSha256Hex(sha256)
+  ) {
+    return { ok: false, reason: "wasm" };
+  }
+  const descriptor = transferables.descriptors[0] as TransferableDescriptor;
+  if (descriptor.kind !== "array-buffer" || descriptor.byteLength !== byteLength) {
+    return { ok: false, reason: "transferable" };
+  }
+  return {
+    ok: true,
+    message: Object.freeze({
+      schemaVersion: LOCAL_ANALYSIS_MESSAGE_SCHEMA_VERSION,
+      kind: "bootstrap",
+      taskId,
+      nonce,
+      transferables: transferables.descriptors,
+      wasm: Object.freeze({ byteLength, sha256 }),
+    }),
+  };
+}
+
 type NonRequestKindValidation =
   | { ok: true; message: LocalAnalysisMessage }
   | { ok: false; reason: InvalidRequestReason };
@@ -396,13 +471,22 @@ export function validateLocalAnalysisMessage(
     return invalidRequestFailure("message-size");
   }
   const kind = value["kind"];
-  if (kind !== "request" && kind !== "progress" && kind !== "result" && kind !== "error" && kind !== "cancel") {
+  if (
+    kind !== "request" &&
+    kind !== "progress" &&
+    kind !== "result" &&
+    kind !== "error" &&
+    kind !== "cancel" &&
+    kind !== "bootstrap"
+  ) {
     return invalidRequestFailure("kind");
   }
   const result =
     kind === "request"
       ? validateRequestKind(value)
-      : validateNonRequestKind(value, kind);
+      : kind === "bootstrap"
+        ? validateBootstrapKind(value)
+        : validateNonRequestKind(value, kind);
   if (!result.ok) {
     return invalidRequestFailure(result.reason);
   }
@@ -465,6 +549,50 @@ export function createLocalAnalysisResultMessage(
     taskId,
     nonce,
     result: Object.freeze(result),
+  });
+}
+
+export function createLocalAnalysisCancelMessage(
+  taskId: AnalysisTaskId,
+  nonce: AnalysisNonce,
+): LocalAnalysisCancelMessage {
+  if (!isAnalysisTaskId(taskId) || !isAnalysisNonce(nonce)) {
+    throw new RangeError("local-analysis taskId/nonce must be valid");
+  }
+  return Object.freeze({
+    schemaVersion: LOCAL_ANALYSIS_MESSAGE_SCHEMA_VERSION,
+    kind: "cancel",
+    taskId,
+    nonce,
+  });
+}
+
+export function createLocalAnalysisBootstrapMessage(
+  taskId: AnalysisTaskId,
+  nonce: AnalysisNonce,
+  wasmByteLength: number,
+  wasmSha256: string,
+): LocalAnalysisBootstrapMessage {
+  if (!isAnalysisTaskId(taskId) || !isAnalysisNonce(nonce)) {
+    throw new RangeError("local-analysis taskId/nonce must be valid");
+  }
+  if (
+    !isBoundedCount(wasmByteLength) ||
+    wasmByteLength <= 0 ||
+    wasmByteLength > LOCAL_ANALYSIS_LIMITS.bootstrapWasmMaxBytes ||
+    !isSha256Hex(wasmSha256)
+  ) {
+    throw new RangeError("local-analysis wasm bootstrap must be bounded");
+  }
+  return Object.freeze({
+    schemaVersion: LOCAL_ANALYSIS_MESSAGE_SCHEMA_VERSION,
+    kind: "bootstrap",
+    taskId,
+    nonce,
+    transferables: Object.freeze([
+      Object.freeze({ kind: "array-buffer", byteLength: wasmByteLength }),
+    ]),
+    wasm: Object.freeze({ byteLength: wasmByteLength, sha256: wasmSha256 }),
   });
 }
 

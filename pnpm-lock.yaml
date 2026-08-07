@@ -205,6 +205,9 @@ importers:
       '@types/node':
         specifier: 24.13.3
         version: 24.13.3
+      vite:
+        specifier: 8.2.0
+        version: 8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(yaml@2.9.0)
 
   packages/local-storage:
     dependencies:
