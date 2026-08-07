@@ -2,7 +2,7 @@
   "$schema": "./evidence-index.schema.v2.json",
   "schemaVersion": "2.0.0",
   "milestone": "M0",
-  "updatedAt": "2026-08-07T17:10:00+08:00",
+  "updatedAt": "2026-08-07T10:02:00+08:00",
   "dailyGatePolicy": "Only activated checks backed by real assertions enter the daily PR and merge-queue aggregate.",
   "exitGatePolicy": "Every gate in the immutable M0 exit manifest must be passed with a matching passed latest record, and every automated gate must be freshly rerun before the independent M0 exit aggregate can pass.",
   "exitGateManifest": {
@@ -876,7 +876,7 @@
         "activated": false
       },
       "m0ExitRequired": true,
-      "latestRecordId": "m0-local-analysis-contract-v1",
+      "latestRecordId": "m0-analysis-engine-duckdb-v1",
       "blockerRefs": []
     },
     {
@@ -10567,6 +10567,120 @@
       ],
       "blockerRefs": [],
       "notes": "M0-032 真实浏览器 Worker CSP 网络通道否定与生命周期释放矩阵阶段：新增 test:worker-csp（第八类 runner，1 file/3 tests），spec 自持本地 HTTP server 在真实 Chromium 验证 Worker 响应自身 CSP 拒绝 fetch/WebSocket/EventSource/动态 import/importScripts/嵌套 Worker（canary Origin 零请求/零升级），BrowserWorkerAdapter 完成/取消/超时/失败四终态均 terminate 独占 Worker 并释放 transferable；证据记录 m0-local-analysis-worker-csp-v1（supersedes m0-local-analysis-browser-worker-v1）；AGENTS.md 同步八类 runner 与 8/8。本凭证复核 13 个主题工件，result=passed、failed=0、unresolvedHighSeverity=0，按 append-only 链取代 v33。"
+    },
+    {
+      "id": "m0-analysis-engine-duckdb-v1",
+      "title": "M0-033 analysis-engine DuckDB-WASM 探针（AnalysisInput→COUNT_ROWS/SUM→AnalysisResult）",
+      "gateIds": [
+        "LOCAL-ANALYSIS-CONTRACT"
+      ],
+      "epicIds": [
+        "M0-E4"
+      ],
+      "taskIds": [
+        "M0-030",
+        "M0-033",
+        "M0-056"
+      ],
+      "requirementIds": [
+        "FR-ANA-011",
+        "FR-MET-009"
+      ],
+      "adrIds": [
+        "ADR-0020",
+        "ADR-0031"
+      ],
+      "evidenceStatus": "in_progress",
+      "requirementStatus": "partially_evidenced",
+      "milestoneScope": "M0",
+      "environmentKind": "ci",
+      "ownerRef": "github:@sora-yyds",
+      "recordedAt": "2026-08-07T10:02:00+08:00",
+      "observedAt": "2026-08-07T10:02:00+08:00",
+      "supersedesRecordId": "m0-local-analysis-contract-v1",
+      "executionKind": "automated",
+      "externalProvenance": null,
+      "dailyGate": {
+        "eligible": true,
+        "activated": false
+      },
+      "m0ExitRequired": true,
+      "fixtureRefs": [],
+      "subjectRefs": [],
+      "artifactRefs": [
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/src/limits.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/src/errors.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/src/contract.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/src/engine.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/src/index.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/src/emscripten-compat.d.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/package.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "packages/analysis-engine/tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "test-result",
+          "path": "packages/analysis-engine/tests/analysis-engine.test.ts",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tsconfig.json",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/check-workspace.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "tests/architecture/dependency-boundaries.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "scripts/check-release-dry-run.mjs",
+          "immutable": false
+        },
+        {
+          "kind": "contract",
+          "path": "AGENTS.md",
+          "immutable": false
+        }
+      ],
+      "blockerRefs": [],
+      "notes": "M0-033 阶段实现：新增 packages/analysis-engine（@datapulse/analysis-engine，第 17 个 workspace）——limits.ts 冻结 ANALYSIS_ENGINE_SCHEMA_VERSION=1.0.0、request ID（8-128 ASCII）、Arrow IPC 流单项 1 GiB（与 local-analysis transferable 单项上限对齐）、指标请求 1-64、SUM 列名严格标识符（1-64、^[A-Za-z_][A-Za-z0-9_]*$）；contract.ts 冻结 AnalysisInput（schemaVersion/requestId/arrow/metrics）与 AnalysisResult（schemaVersion/requestId/与输入同序的版本化 MetricAccumulator），validateAnalysisInput 以 type/shape/schema-version/request-id/arrow/metrics/metric-id/aggregate/column 封闭原因校验并冻结返回；errors.ts 定义 ANALYSIS_INPUT_INVALID/INPUT_LIMIT_EXCEEDED/ENGINE_UNAVAILABLE/EXECUTION_FAILED/CANCELLED 封闭错误；engine.ts 用 @duckdb/duckdb-wasm@1.32.0 blocking API（createDuckDB+NODE_RUNTIME+VoidLogger，Node blocking 构建需 EH wasm，固定 Node 24.19.0 自动选择 eh bundle）以 path=:memory: 打开内存数据库，insertArrowFromIPCStream 把输入 Arrow IPC 注册为固定内部表名 analysis_input（不接受调用方表名；SUM 列名经严格标识符校验后拼接 SQL，无注入面），按输入顺序执行 SELECT COUNT(*) 与 SELECT SUM(CAST(col AS DOUBLE))，只把标量经共享 metric-runtime createMetricAccumulator 转为版本化 accumulator，不读取原始行、不产出 Evidence/文案/Story 区块；完成/取消/失败路径均在 finally 中 conn.close()+db.reset() 释放；wasm 路径经本包 pnpm 布局内 new URL(../node_modules/@duckdb/duckdb-wasm/dist/...) 解析，不引入 node:module resolver；emscripten-compat.d.ts 补足 duckdb-wasm d.ts 引用的 Emscripten.WebAssemblyExports（@types/emscripten 1.41.5 未导出），devDeps 新增 @types/emscripten 与 vitest。packages/analysis-engine/tests/analysis-engine.test.ts 5 项全部通过（真实 duckdb-wasm 运行固定合成 Arrow IPC：黄金 COUNT_ROWS/SUM 与 metric-runtime 逐值一致并回灌 evaluateMetric 精确求值、小数/负值/空表、12 类输入校验与限额矩阵、SQL 注入列名、NaN/空 SUM/缺列/恶意 Arrow/取消稳定错误、连续 3 次独立实例结果稳定）；test:unit 全量 18 files/367 tests、check:workspace 574/574、check:dependencies 3499/3499、build 17 tasks 全部成功。LOCAL-ANALYSIS-CONTRACT gate 保持 in_progress/partially_evidenced、不激活日常且 m0 退出不满足；ImportResult→AnalysisInput→AnalysisResult 组合与 Evidence/文案/Story 生成分别待 M0-056/050。环境合同继承冻结 gate 的 environmentKind=ci，实际执行仅发生在 Windows x64 本地含空格工作树的 Node 单测；Arrow 字节限额分支未以真实 1 GiB 分配在单测中触发，由上游 transferable 限额与代码审查覆盖。"
     }
   ]
 }

@@ -20,6 +20,7 @@
     { "path": "./packages/crypto" },
     { "path": "./packages/local-storage" },
     { "path": "./packages/import-engine" },
-    { "path": "./packages/local-analysis" }
+    { "path": "./packages/local-analysis" },
+    { "path": "./packages/analysis-engine" }
   ]
 }
