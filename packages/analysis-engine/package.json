@@ -1,0 +1,29 @@
+{
+  "name": "@datapulse/analysis-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "@datapulse/domain": "workspace:*",
+    "@datapulse/metric-runtime": "workspace:*",
+    "@duckdb/duckdb-wasm": "1.32.0",
+    "apache-arrow": "17.0.0"
+  },
+  "devDependencies": {
+    "@types/emscripten": "1.41.5",
+    "@types/node": "24.13.3",
+    "vitest": "4.1.10"
+  }
+}

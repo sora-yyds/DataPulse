@@ -31,7 +31,7 @@ analyzeDependencyBoundaries({ repositoryRoot })
 
 ## 3. 完整方向策略
 
-策略目录从第一天登记规划中的全部 23 个 workspace；当前分析已经实例化的 11 个，不为延期 module 创建空实现。允许集合是上限，不要求尚无消费者的依赖提前出现。
+策略目录从第一天登记规划中的全部 23 个 workspace；当前分析已经实例化的 17 个，不为延期 module 创建空实现。允许集合是上限，不要求尚无消费者的依赖提前出现。
 
 ```text
 domain / story-schema / themes -> ∅  （内部 workspace 依赖）
@@ -62,6 +62,7 @@ Package `exports` 仍是生产者的公开解析 seam，不是按消费者访问
 
 M0-013／048 的 Story Migrations 只允许导入 Domain 根、Story Schema 根、`./formal-migration-support` 和 `./development-migration-support`。正式 subpath 只承载从正式 history 派生的版本／结构校验；开发 subpath 只承载未发布版本结构／语义校验，且二者都不能扩展成调用方可注入的 registry、decoder 或测试旁路。依赖检查禁止其他 workspace 使用这两个内部 seam；原始 artifact 调用方必须走 Reader 根 seam，不能复制 `TextDecoder + JSON.parse + object validator` 读取链，也不能从正式 Result 选择迁移来源、目标或步数。
 
+`analysis-engine -> domain + metric-runtime` 只表示内部 workspace 依赖。M0-033 为该包显式声明 `@duckdb/duckdb-wasm@1.32.0` 与 `apache-arrow@17.0.0` 运行时依赖：前者是 Node blocking WASM 执行引擎（固定 Node 24.19.0 检测 wasmExceptions=true 自动选择 EH bundle，mvp 仅补足类型要求），后者是 Arrow IPC 契约与 duckdb-wasm 结果类型的类型面；wasm 文件路径从本包 pnpm 布局内 `new URL(../node_modules/@duckdb/duckdb-wasm/dist/...)` 解析，源码禁止 `node:module` resolver。`@types/emscripten@1.41.5` 与 `vitest` 仅为开发依赖（前者补 duckdb-wasm d.ts 的 Emscripten 全局类型，后者供包内单测）。
 `story-schema -> ∅` 只表示没有内部 workspace 依赖。M0-012 为该包显式声明 `ajv@8.17.1` 运行时依赖和 `json-schema-to-typescript@15.0.4` 开发依赖；前者的正式公共运行时路径只加载正式 standalone validator 的静态 helper，实验 validator 仅从开发支持 subpath 可达，后者只由包级生成脚本导入。依赖检查会扫描该脚本并拒绝未声明 bare import、动态 resolver、运行时代码生成或浏览器源码中的 Node builtin。
 
 ## 4. 自动断言

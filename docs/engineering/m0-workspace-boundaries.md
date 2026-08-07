@@ -86,6 +86,6 @@ M0-016 的 RTL、Storybook、Playwright 与 axe 全部是根测试工具，不�
 
 ## 5. 延期验证
 
-Windows x64 使用固定 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8` 与 TypeScript `6.0.3` 验证冻结安装、12 个 workspace 构建、workspace 契约、M0-010 domain 合同、M0-011～013 Schema／对象校验／Reader、M0-048 正式 Story `1.0.0`／fixture 契约、M0-049 正式 Metric Runtime `1.0.0`／两端黄金契约，以及 M0-015 Renderer／独立 Creator／Viewer Vite 最小页面链。另以本地 HTTP 浏览器检查 Creator 桌面和 Viewer `1280×720`、`1024×768`、`390×844`，标题、KPI `23`、范围和证据引用均可见且无横向溢出；这不是 M0-018 固定视觉／无障碍矩阵或 HTTPS Origin 证据。
+Windows x64 使用固定 Node `24.19.0`、Corepack `0.35.0`、pnpm `11.20.0`、Turbo `2.10.8` 与 TypeScript `6.0.3` 验证冻结安装、17 个 workspace 构建、workspace 契约、M0-010 domain 合同、M0-011～013 Schema／对象校验／Reader、M0-048 正式 Story `1.0.0`／fixture 契约、M0-049 正式 Metric Runtime `1.0.0`／两端黄金契约，以及 M0-015 Renderer／独立 Creator／Viewer Vite 最小页面链。另以本地 HTTP 浏览器检查 Creator 桌面和 Viewer `1280×720`、`1024×768`、`390×844`，标题、KPI `23`、范围和证据引用均可见且无横向溢出；这不是 M0-018 固定视觉／无障碍矩阵或 HTTPS Origin 证据。
 
 当前执行面没有 WSL 发行版或容器运行时，因此干净 Ubuntu 未运行；真实 GitHub Actions 与统一人工边界复核也延期。这些项不会被记为 Windows 的 skipped，也不会被表述为通过。`M0-005`、`M0-006` 与 `REPO-FOUNDATION` 继续保持进行中；`DEPENDENCY-BOUNDARIES` 即使已有 M0-010 Windows 合同证据，仍保持 `in_progress / partially_evidenced`。日常 gate 的激活只表示当前真实根断言必须持续通过，不代表完整 gate 已完成。

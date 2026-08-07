@@ -106,6 +106,24 @@ const requiredWorkspaces = [
   },
   {
     kind: "package",
+    path: "packages/analysis-engine",
+    name: "@datapulse/analysis-engine",
+    dependencies: {
+      "@datapulse/domain": "workspace:*",
+      "@datapulse/metric-runtime": "workspace:*",
+      "@duckdb/duckdb-wasm": "1.32.0",
+      "apache-arrow": "17.0.0",
+    },
+    devDependencies: {
+      "@types/emscripten": "1.41.5",
+      "@types/node": "24.13.3",
+      vitest: "4.1.10",
+    },
+    references: ["../domain", "../metric-runtime"],
+    entries: { ".": "index" },
+  },
+  {
+    kind: "package",
     path: "packages/api-contracts",
     name: "@datapulse/api-contracts",
     dependencies: { "@datapulse/domain": "workspace:*" },
@@ -245,6 +263,7 @@ const rootReferences = [
   "./packages/local-storage",
   "./packages/import-engine",
   "./packages/local-analysis",
+  "./packages/analysis-engine",
 ];
 
 const deferredWorkspacePaths = [
